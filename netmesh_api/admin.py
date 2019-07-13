@@ -1,3 +1,10 @@
 from django.contrib import admin
+from netmesh_api import models
 
-# Register your models here.
+
+admin.site.register(models.Test)
+admin.site.register(models.DataPoint)
+admin.site.register(models.Server)
+admin.site.register(models.AgentProfile)
+admin.site.register(models.UserProfile)
+

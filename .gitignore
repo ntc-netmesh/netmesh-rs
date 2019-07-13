@@ -1,7 +1,7 @@
 __pycache__
 *.py[cod]
 .idea
-resultsserv/migrations/*
+netmesh_api/migrations/*
 *.sqlite3
 envdir
 */__pycache__/*

@@ -1,6 +1,6 @@
 from django.urls import path
-from netmesh_api.views import api1
+from netmesh_web.views import views
 
 urlpatterns = [
-
+    path('', views.index, name='index')
 ]

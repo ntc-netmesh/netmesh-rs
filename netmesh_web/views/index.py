@@ -5,7 +5,7 @@ from netmesh_api.models import DataPoint
 
 def home(request):
     tests = Test.objects.all()
-    data = DataPoint.objects.all()
+    data = DataPoint.objects.all().order_by('-pk')
     context = {
         'tests': tests,
         'data': data

@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'crispy_forms',
     'mathfilters',
+    'bootstrap4',
     'netmesh_api',
     'netmesh_web'
 ]

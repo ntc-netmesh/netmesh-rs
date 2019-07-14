@@ -1,11 +1,17 @@
 {% extends "base_generic.html" %}
 {% load mathfilters %}
 {% load humanize %}
+{# Load the tag library #}
+{% load bootstrap4 %}
+
+{# Load CSS and JavaScript #}
+{% bootstrap_css %}
+{% bootstrap_javascript jquery='full' %}
+
+{# Display django.contrib.messages as Bootstrap alerts #}
+{% bootstrap_messages %}
 
 {% block content %}
-  <h1>NetMesh Home</h1>
-  <p>Welcome to <em>Netmesh</em>!</p>
-
     <h1>Results</h1>
     <p>This is a sample landing page. Below are dummy values </p>
 

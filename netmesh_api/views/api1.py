@@ -60,7 +60,7 @@ class SubmitData(APIView):
                 return Response("ERROR: Invalid Server ID",
                             status=status.HTTP_400_BAD_REQUEST)
             new_data = DataPoint()
-            new_data = server
+            new_data.server = server
             new_data.date_tested = measurements[dataset]["ts"]
             new_data.rtt = measurements[dataset]["rtt"]
             new_data.upload_speed = measurements[dataset]["upload"]

@@ -1,3 +1,41 @@
-<a href="{% url 'index' %}">Home</a>
+{% extends "base_generic.html" %}
+{% load mathfilters %}
+{% load humanize %}
 
-{{tests}}
+{% block content %}
+  <h1>NetMesh Home</h1>
+  <p>Welcome to <em>Netmesh</em>!</p>
+
+    <h1>Results</h1>
+    <p>This is a sample landing page. Below are dummy values </p>
+
+    <style>
+    table, th, td {
+      border: 1px solid black;
+    }
+    </style>
+
+    <table style="width:100%">
+          <tr>
+            <th>Date Tested</th>
+            <th>Agent</th>
+            <th>Server</th>
+            <th>Upload Speed</th>
+            <th>Download Speed</th>
+            <th>RTT</th>
+          </tr>
+
+    {% for item in data.all %}
+          <tr>
+            <td>{{item.date_tested}}</td>
+            <td>{{item.test_id.agent.nickname}}</td>
+            <td>{{item.server.ip_address}} ({{item.server.type}})</td>
+            <td>{{item.upload_speed|div:1048576|stringformat:'0.2f'}} Mbps</td>
+            <td>{{item.download_speed|div:1048576|stringformat:'0.2f'}} Mbps</td>
+            <td>{{item.rtt}} ms</td>
+          </tr>
+
+    {% endfor %}
+    </table>
+
+{% endblock %}

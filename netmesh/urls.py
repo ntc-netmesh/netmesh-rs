@@ -26,11 +26,13 @@ urlpatterns = [
 
 urlpatterns += [
     path('api/', include('netmesh_api.urls')),
-    path('web/', include('netmesh_web.urls'))
+    path('web/', include('netmesh_web.urls')),
+    path('accounts/', include('django.contrib.auth.urls')),
 ]
 
 urlpatterns += [
-    path('', RedirectView.as_view(url='/web/', permanent=True))
+    path('', RedirectView.as_view(url='/web/', permanent=True)),
+    path('accounts', RedirectView.as_view(url='/accounts/login', permanent=True))
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

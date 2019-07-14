@@ -1,0 +1,40 @@
+{% extends "base_generic.html" %}
+{% load mathfilters %}
+{% load humanize %}
+
+{% block content %}
+  <h1>NetMesh Home</h1>
+  <p>Welcome to <em>Netmesh</em>!</p>
+
+
+    <h1>Agents</h1>
+    <p>List of all test agents. TODO: Logged in user should be able to add new test agents. </p>
+
+    <style>
+    table, th, td {
+      border: 1px solid black;
+    }
+    </style>
+
+    <table style="width:100%">
+          <tr>
+            <th>Date Created</th>
+            <th>UUID</th>
+            <th>Agent Nickname</th>
+            <th>NTC Region</th>
+            <th>Device</th>
+          </tr>
+
+    {% for agent in agents.all %}
+          <tr>
+            <td>{{agent.date_created}}</td>
+            <td>{{agent.uuid}}</td>
+            <td>{{agent.nickname}}</td>
+            <td>{{agent.ntc_region}} </td>
+            <td>{{agent.device}} </td>
+          </tr>
+
+    {% endfor %}
+    </table>
+
+{% endblock %}

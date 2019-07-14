@@ -14,6 +14,7 @@ from django.conf import settings
 from django.db.models.signals import post_save, pre_save
 from django.db import models
 from netmesh import choices
+from random import randint
 
 
 class UserProfile(models.Model):
@@ -32,8 +33,8 @@ class UserProfile(models.Model):
 
     class Meta:
         db_table = 'netmesh_api_userprofile'
-        verbose_name = 'User'
-        verbose_name_plural = 'Users'
+        verbose_name = 'UserProfile'
+        verbose_name_plural = 'UserProfiles'
         ordering = ['-id']
 
     def __str__(self):
@@ -50,7 +51,7 @@ class AgentProfile(models.Model):
     """ Extension of the User model specificall for the test clients (aka  Agents)"""
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     date_created = models.DateTimeField(auto_now_add=True)
-    uuid = models.CharField(default=uuid.uuid4, max_length=255, unique=True)
+    uuid = models.UUIDField(default=uuid.uuid4, unique=True)
     nickname = models.CharField(max_length=1024, null=True, blank=True)
     ntc_region = models.CharField(max_length=20, choices=choices.ntc_region_choices, default='unknown')
     device = models.CharField(max_length=20, choices=choices.device_choices, default='unknown')
@@ -82,8 +83,8 @@ class AgentProfile(models.Model):
 
 class Server(models.Model):
     """ Model for a NetMesh test server
-        pk serves as server_id
     """
+    uuid = models.UUIDField(default=uuid.uuid4, editable=False)
     nickname = models.CharField(max_length=200, null=True)
     ip_address = models.GenericIPAddressField()  # assumes that server has a fixed IP address
     type = models.CharField(max_length=20, choices=choices.server_choices, default='unknown')

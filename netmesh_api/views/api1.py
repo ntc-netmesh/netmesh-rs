@@ -42,7 +42,7 @@ class SubmitData(APIView):
             agent = AgentProfile.objects.get(uuid=report["uuid"])
         except ObjectDoesNotExist:
             return Response("ERROR: Invalid Agent ID",
-                            status=status.HTTP_401_UNAUTHORIZED)
+                            status=status.HTTP_400_BAD_REQUEST)
 
         test = Test()
         test.agent = agent
@@ -54,8 +54,13 @@ class SubmitData(APIView):
         measurements = report["results"]
 
         for dataset in measurements:
+            try:
+                server = Server.objects.get(uuid=measurements[dataset]["server"])
+            except ObjectDoesNotExist:
+                return Response("ERROR: Invalid Server ID",
+                            status=status.HTTP_400_BAD_REQUEST)
             new_data = DataPoint()
-            new_data.server = Server.objects.get(uuid=measurements[dataset]["server"])
+            new_data = server
             new_data.date_tested = measurements[dataset]["ts"]
             new_data.rtt = measurements[dataset]["rtt"]
             new_data.upload_speed = measurements[dataset]["upload"]

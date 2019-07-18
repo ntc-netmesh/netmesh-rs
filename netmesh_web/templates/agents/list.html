@@ -22,7 +22,7 @@
             <th>Device</th>
           </tr>
 
-    {% for agent in agents.all %}
+    {% for agent in agent_list.all %}
           <tr>
             <td>{{agent.date_created}}</td>
             <td>{{agent.uuid}}</td>
@@ -33,5 +33,25 @@
 
     {% endfor %}
     </table>
+
+   <div class="pagination">
+    <span class="step-links">
+        {% if agents.has_previous %}
+            <a href="?page=1">&laquo; first</a>
+            <a href="?page={{ agents.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ agents.number }} of {{ agents.paginator.num_pages }}.
+        </span>
+
+        {% if agents.has_next %}
+            <a href="?page={{ agents.next_page_number }}">next</a>
+            <a href="?page={{ agents.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+    </span>
+</div>
+
+
 
 {% endblock %}

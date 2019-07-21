@@ -15,9 +15,9 @@ djangorestframework==3.9.4
 idna==2.8
 itsdangerous==1.1.0
 Markdown==3.1.1
-pkg-resources==0.0.0
 pycparser==2.19
 pytz==2019.1
+psycopg2
 requests==2.22.0
 six==1.12.0
 snowflake==0.0.3

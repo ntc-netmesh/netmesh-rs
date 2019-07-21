@@ -3,6 +3,5 @@ __pycache__
 .idea
 netmesh_api/migrations/*
 *.sqlite3
-envdir
 */__pycache__/*
-
+envdir_prod/*

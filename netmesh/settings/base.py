@@ -25,7 +25,7 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', '6$%xet&hfkkrn@zny14n-=0)e^ypeg
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DJANGO_DEBUG', '') != 'False'
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost']  # ToDo: Check this later!
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '192.168.40.10']  # ToDo: Check this later!
 
 
 # Application definition
@@ -126,6 +126,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
+MEDIA_ROOT = "/var/www/netmesh/static/"
 STATIC_URL = '/static/'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
@@ -134,6 +135,7 @@ LOGIN_REDIRECT_URL = '/'
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
-
+MEDIA_ROOT = "/var/www/netmesh/media/"
+MEDIA_URL = "media/"
 
 

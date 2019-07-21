@@ -1,3 +1,5 @@
+import pytz
+
 registration_choices = [
         ('registered', 'Registered'),
         ('unregistered', 'Unregistered'),
@@ -50,3 +52,5 @@ test_type_choices = [
         ('1', 'RFC 6349'),
         ('2', 'other')
     ]
+
+timezone_choices = [(v, v) for v in pytz.common_timezones]

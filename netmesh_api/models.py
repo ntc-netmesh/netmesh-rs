@@ -1,20 +1,7 @@
 import uuid
-import pytz
-
-import django.utils.timezone
-import itsdangerous
-import pytz
-# import stripe
-from django.conf import settings
 from django.contrib.auth.models import Group, User
-# from django.contrib.gis.db import models as geomodels
-
-from django.contrib.auth.models import Group, User
-from django.conf import settings
-from django.db.models.signals import post_save, pre_save
 from django.db import models
 from netmesh import choices
-from random import randint
 
 
 class UserProfile(models.Model):
@@ -24,9 +11,8 @@ class UserProfile(models.Model):
     """
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     date_created = models.DateTimeField(auto_now_add=True)
-    timezone_choices = [(v, v) for v in pytz.common_timezones]
     timezone = models.CharField(max_length=50, default='UTC',
-                                choices=timezone_choices)
+                                choices=choices.timezone_choices)
     role = models.CharField(max_length=20, default='Cloud Admin')
     # Added for Password Expiry
     last_pwd_update = models.DateTimeField(auto_now=True)
@@ -48,7 +34,7 @@ class UserProfile(models.Model):
 
 
 class AgentProfile(models.Model):
-    """ Extension of the User model specificall for the test clients (aka  Agents)"""
+    """ Extension of the User model specifically for the test clients (aka  Agents)"""
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     date_created = models.DateTimeField(auto_now_add=True)
     uuid = models.UUIDField(default=uuid.uuid4, unique=True)
@@ -61,26 +47,6 @@ class AgentProfile(models.Model):
     secret = models.TextField(null=True)
 
 
-    @property
-    def latitude(self):
-        return self.location.y
-
-    @property
-    def longitude(self):
-        return self.location.x
-
-    def generate_jwt(self, data_dict):
-        """Generate a JSON web token for this Agent.
-
-        IMPORTANT: This is subject to replay attacks if there's not a nonce in
-        the JWT. It's the callers responsibility to include this in the data
-        dict if replay attacks are a concern (a random, unique msgid would
-        suffice).
-        """
-        serializer = itsdangerous.JSONWebSignatureSerializer(self.secret)
-        return serializer.dumps(data_dict)
-
-
 class Server(models.Model):
     """ Model for a NetMesh test server
     """
@@ -88,15 +54,11 @@ class Server(models.Model):
     nickname = models.CharField(max_length=200, null=True)
     ip_address = models.GenericIPAddressField()  # assumes that server has a fixed IP address
     type = models.CharField(max_length=20, choices=choices.server_choices, default='unknown')
-    gps = models.CharField(max_length=100, null=True)
-    # gps = geomodels.GeometryField(geography=True, default='POINT(16.647322, 121.071959)')
+    lat = models.DecimalField(max_digits=10, decimal_places=7, default=16.647322)
+    long = models.DecimalField(max_digits=10, decimal_places=7, default=121.071959)
     city = models.CharField(max_length=200, null=True)
     province = models.CharField(max_length=200, null=True)
     country = models.CharField(max_length=200, default='Philippines')
-
-
-class IpAddress(models.Model):
-    ip_address = models.GenericIPAddressField()
 
 
 class Test(models.Model):
@@ -107,8 +69,8 @@ class Test(models.Model):
     date_created = models.DateTimeField(auto_now_add=True)
     network_connection = models.CharField(max_length=10, choices=choices.network_choices, default='unknown')
     pcap = models.CharField(max_length=100, null=True)
-    gps = models.CharField(max_length=100, null=True)
-    # gps = geomodels.GeometryField(geography=True, default='POINT(16.647322, 121.071959)')
+    lat = models.DecimalField(max_digits=10, decimal_places=7, default=16.647322)
+    long = models.DecimalField(max_digits=10, decimal_places=7, default=121.071959)
 
 
 class DataPoint(models.Model):

@@ -52,6 +52,8 @@ class SubmitData(APIView):
         test.network_connection = report["network"]
         test.pcap = report["pcap"]
         test.ip_address = self.get_client_ip(request)
+        test.lat = report["lat"]
+        test.long = report["long"]
         test.save()
         measurements = report["results"]
 

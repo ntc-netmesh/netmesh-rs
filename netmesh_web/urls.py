@@ -1,6 +1,7 @@
 from django.urls import path
 from netmesh_web.views import index
 from netmesh_web.views import agents
+from netmesh_web.views import servers
 
 
 urlpatterns = []
@@ -12,5 +13,6 @@ urlpatterns += [
 
 """ Agents """
 urlpatterns += [
-    path('agents/', agents.agent_list, name='agents')
+    path('agents/', agents.agent_list, name='agents'),
+    path('servers/', servers.server_list, name='servers'),
 ]

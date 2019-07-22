@@ -22,7 +22,7 @@
             <th>Location</th>
           </tr>
 
-    {% for server in server_list.all %}
+    {% for server in servers %}
           <tr>
             <td>{{server.uuid}}</td>
             <td>{{server.nickname}}</td>
@@ -35,22 +35,22 @@
     </table>
 
    <div class="pagination">
-    <span class="step-links">
-        {% if servers.has_previous %}
-            <a href="?page=1">&laquo; first</a>
-            <a href="?page={{ servers.previous_page_number }}">previous</a>
-        {% endif %}
+        <span class="step-links">
+            {% if servers.has_previous %}
+                <a href="?page=1">&laquo; first</a>
+                <a href="?page={{ servers.previous_page_number }}">previous</a>
+            {% endif %}
 
-        <span class="current">
-            Page {{ servers.number }} of {{ servers.paginator.num_pages }}.
+            <span class="current">
+                Page {{ servers.number }} of {{ servers.paginator.num_pages }}.
+            </span>
+
+            {% if servers.has_next %}
+                <a href="?page={{ servers.next_page_number }}">next</a>
+                <a href="?page={{ servers.paginator.num_pages }}">last &raquo;</a>
+            {% endif %}
         </span>
-
-        {% if servers.has_next %}
-            <a href="?page={{ servers.next_page_number }}">next</a>
-            <a href="?page={{ servers.paginator.num_pages }}">last &raquo;</a>
-        {% endif %}
-    </span>
-</div>
+    </div>
 
 
 

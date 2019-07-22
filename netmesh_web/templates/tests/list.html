@@ -30,7 +30,7 @@
             <th>Location</th>
           </tr>
 
-    {% for item in tests.all %}
+    {% for item in tests %}
           <tr>
             <td>{{item.date_created}}</td>
             <td><a href="{% url 'test_detail' item.id %}"
@@ -41,8 +41,27 @@
           </tr>
 
     {% endfor %}
-
-
     </table>
 
+
+    <div class="pagination">
+        <span class="step-links">
+            {% if tests.has_previous %}
+                <a href="?page=1">&laquo; first</a>
+                <a href="?page={{ tests.previous_page_number }}">previous</a>
+            {% endif %}
+
+            <span class="current">
+                Page {{ tests.number }} of {{ tests.paginator.num_pages }}.
+            </span>
+
+            {% if tests.has_next %}
+                <a href="?page={{ tests.next_page_number }}">next</a>
+                <a href="?page={{ tests.paginator.num_pages }}">last &raquo;</a>
+            {% endif %}
+        </span>
+    </div>
+
 {% endblock %}
+
+

@@ -1,0 +1,58 @@
+{% extends "base_generic.html" %}
+{% load mathfilters %}
+{% load humanize %}
+{# Load the tag library #}
+{% load bootstrap4 %}
+
+{# Load CSS and JavaScript #}
+{% bootstrap_css %}
+{% bootstrap_javascript jquery='full' %}
+
+{# Display django.contrib.messages as Bootstrap alerts #}
+{% bootstrap_messages %}
+
+{% block content %}
+    <h1>Test {{test.id}}</h1>
+    <br>
+    <h2>Details:</h2>
+    <p>
+    <li><strong>Performed by:</strong> {{test.agent.nickname}} @ {{test.ip_address}}</li>
+    <li><strong>Test type:</strong> {{test.test_type}}</li>
+    <li><strong>Network connection:</strong> {{test.network_connection}}</li>
+    <li><strong>PCAP file:</strong> {{test.pcap}}</li>
+    <li><strong>Location:</strong> {{test.lat}}, {{test.long}}</li>
+
+    </p>
+
+    <h2>Measurements:</h2>
+
+    <style>
+    table, th, td {
+      border: 1px solid black;
+    }
+    </style>
+
+    <table style="width:100%">
+          <tr>
+            <th>Date</th>
+            <th>Server</th>
+            <th>Upload</th>
+            <th>Download</th>
+            <th>RTT</th>
+          </tr>
+
+    {% for item in measurements.all %}
+          <tr>
+            <td>{{item.date_tested}}</td>
+            <td>{{item.server.ip_address}} ({{item.server.type}})</td>
+            <td>{{item.upload_speed|div:1048576|stringformat:'0.2f'}} Mbps</td>
+            <td>{{item.download_speed|div:1048576|stringformat:'0.2f'}} Mbps</td>
+            <td>{{item.rtt}} ms</td>
+          </tr>
+
+    {% endfor %}
+
+
+    </table>
+
+{% endblock %}

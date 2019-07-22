@@ -1,0 +1,48 @@
+{% extends "base_generic.html" %}
+{% load mathfilters %}
+{% load humanize %}
+{# Load the tag library #}
+{% load bootstrap4 %}
+
+{# Load CSS and JavaScript #}
+{% bootstrap_css %}
+{% bootstrap_javascript jquery='full' %}
+
+{# Display django.contrib.messages as Bootstrap alerts #}
+{% bootstrap_messages %}
+
+{% block content %}
+    <h1>Results</h1>
+    <p>Click the UUID to view test details and measurements.</p>
+
+    <style>
+    table, th, td {
+      border: 1px solid black;
+    }
+    </style>
+
+    <table style="width:100%">
+          <tr>
+            <th>Date</th>
+            <th>ID</th>
+            <th>Test Type</th>
+            <th>Agent</th>
+            <th>Location</th>
+          </tr>
+
+    {% for item in tests.all %}
+          <tr>
+            <td>{{item.date_created}}</td>
+            <td><a href="{% url 'test_detail' item.id %}"
+                   title="View Test Details">{{ item.id }}</a></td>
+            <td>{{item.test_type}}</td>
+            <td>{{item.agent.nickname}}</td>
+            <td>{{item.lat}}, {{item.long}}</td>
+          </tr>
+
+    {% endfor %}
+
+
+    </table>
+
+{% endblock %}

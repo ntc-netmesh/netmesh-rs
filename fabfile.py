@@ -4,7 +4,6 @@ from fabric import task
 env = {
     'project_name': 'netmesh',
     'path': '/var/www/netmesh',
-    'ppath': '/var/www/netmesh',
     'release': 'current',
     'upload_path': 'netmesh',
     'project_folder': 'netmesh',
@@ -29,9 +28,11 @@ def lab(ctx):
     install_http_server(c)
     restart_http_server(c)
     install_database(c)
+    restart_services(c)
 
 
 def setup(c):
+    print('***Doing setup...***')
     c.sudo('apt update')
     c.sudo('apt install -y python python3-setuptools python3-pip')
     c.sudo('apt install -y unzip')
@@ -44,12 +45,13 @@ def setup(c):
 
 
 def install_requirements(c):
+    print('***Installing pip requirements...***')
     c.sudo('pip3 install -r %(upload_path)s/releases/%(release)s/requirements-dev.txt'
          % env, pty=True)
 
 
 def upload_tar_from_git(c):
-    print("upload tar from git")
+    print('***Upload tar from git***')
     """Create an archive from the current Git master branch
     and upload it.
     """
@@ -70,6 +72,7 @@ def upload_tar_from_git(c):
 
 
 def install_http_server(c):
+    print('***Install HTTP server...***')
     c.sudo('apt-get -y install nginx')
     c.sudo('pip3 install envdir')
     c.sudo('pip3 install gunicorn')
@@ -78,41 +81,31 @@ def install_http_server(c):
 
 
 def install_site(c):
-    print('INSTALL SITE')
-    # require('release', provided_by=[deploy, setup])
+    print('***Install site part 1... ***')
     c.sudo('cp -r %(upload_path)s/releases/%(release)s/* %(path)s/' % env)
-    with c.cd('/var/www/netmesh' % env):
-        c.run('pwd')
-        media_folder = '%(path)s/%(media_folder)s/' % env
-        c.sudo('chown -R www-data:www-data %s' % media_folder)
-        c.run('if [ -a /etc/nginx/sites-enabled/default ]; then unlink /etc/nginx/sites-enabled/default; fi' % env)
-        # c.sudo('unlink /etc/nginx/sites-enabled/default' % env)
-        c.sudo('cp %(path)s/deploy/nginx/nginx.conf /etc/nginx/nginx.conf' % env)
+    media_folder = '%(path)s/%(media_folder)s/' % env
+    c.sudo('chown -R www-data:www-data %s' % media_folder)
+    # c.sudo('if [ -a /etc/nginx/sites-enabled/default ]; then unlink /etc/nginx/sites-enabled/default; fi' % env)
+    c.sudo('unlink /etc/nginx/sites-enabled/default' % env)
+    c.sudo('cp %(path)s/deploy/nginx/nginx.conf /etc/nginx/nginx.conf' % env)
 
 
 def install_gunicorn_nginx_confs(c):
-    print('INSTALL gunicornd nginx confs')
-    """ Install gunicornnginx configs and other needed files. """
-
-    # require('release', provided_by=[deploy, setup])
-    with c.cd('/var/www/netmesh' % env):
-        c.sudo('cp %(path)s/deploy/gunicorn/gunicorn_start.sh '
-             '/bin/gunicorn_start.sh'
-             % env)
-        c.sudo('chown www-data:www-data /bin/gunicorn_start.sh')
-        c.sudo('chmod u+x /bin/gunicorn_start.sh')
-
-        c.sudo('mkdir -p /etc/nginx/sites-enabled/')
-        c.sudo('cp %(path)s/deploy/gunicorn/netmesh_nginx.conf '
-             '/etc/nginx/sites-enabled/netmesh_nginx.conf'
-             % env)
-        c.sudo('cp %(path)s/deploy/gunicorn/netmesh_gunicornd.conf '
-             '/etc/supervisor/conf.d/netmesh_gunicornd.conf'
-             % env)
+    print('***Installing gunicorn & nginx confs...***')
+    c.sudo('cp %(path)s/deploy/gunicorn/gunicorn_start.sh /bin/gunicorn_start.sh' % env)
+    c.sudo('chown www-data:www-data /bin/gunicorn_start.sh')
+    c.sudo('chmod u+x /bin/gunicorn_start.sh')
+    c.sudo('mkdir -p /etc/nginx/sites-enabled/')
+    c.sudo('cp %(path)s/deploy/gunicorn/netmesh_nginx.conf '
+         '/etc/nginx/sites-enabled/netmesh_nginx.conf'
+         % env)
+    c.sudo('cp %(path)s/deploy/gunicorn/netmesh_gunicornd.conf '
+         '/etc/supervisor/conf.d/netmesh_gunicornd.conf'
+         % env)
 
 
 def install_database(c):
-    print('install database')
+    print('***Install database...***')
     """Create the database tables for all apps in INSTALLED_APPS
     whose tables have not already been created"""
     if env["database"] == 'postgre':
@@ -122,20 +115,19 @@ def install_database(c):
             '"CREATE USER netmesh WITH PASSWORD \'netmesh\'; '
             'GRANT ALL PRIVILEGES ON DATABASE netmesh to netmesh;" || true')
 
-    with c.cd('/var/www/netmesh' % env):
-        c.run('pwd')
-        c.sudo('python3 manage.py makemigrations' % env)
-        c.sudo('python3 manage.py migrate auth' % env)
-        c.sudo('python3 manage.py migrate' % env)
-        # c.sudo('python manage.py loaddata netmesh/fixtures/config.json'
-        #      % env)
-        # cmd = 'echo \"from django.contrib.auth.models import User; ' \
-        #       'User.objects.create_superuser(' \
-        #       '\'netmesh\', \'netmesh@example.com\', \'netmesh\')\" ' \
-        #       '| python manage.py shell'
-        # c.sudo(cmd % env)
-        c.sudo('echo \"yes\" | python3 manage.py collectstatic' % env)
-        c.sudo('cp -r static/ netmesh/' % env)
+    print('***Install django site...***')
+    c.sudo('envshell %(path)s/envdir_prod')
+    c.sudo('python3 %(path)s/manage.py makemigrations' % env)
+    c.sudo('python3 %(path)s/manage.py migrate' % env)
+    # c.sudo('python manage.py loaddata netmesh/fixtures/config.json'
+    #      % env)
+    # cmd = 'echo \"from django.contrib.auth.models import User; ' \
+    #       'User.objects.create_superuser(' \
+    #       '\'netmesh\', \'netmesh@example.com\', \'netmesh\')\" ' \
+    #       '| python manage.py shell'
+    # c.sudo(cmd % env)
+    c.sudo('echo \"yes\" | sudo python3 %(path)s/manage.py collectstatic' % env)
+    # c.sudo('cp -r %(path)s/static/ %(path)s/netmesh/' % env)
 
 
 def restart_http_server(c):
@@ -151,3 +143,7 @@ def tune_server(c):
          '/etc/security/limits.conf' % env)
     c.sudo('echo \'www-data  hard  nofile  4096\' >> '
          '/etc/security/limits.conf' % env)
+
+def restart_services(c):
+    c.sudo('service supervisor restart')
+    c.sudo('service nginx restart')

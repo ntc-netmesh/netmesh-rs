@@ -17,6 +17,6 @@ DATABASES = {
         'USER': 'netmesh',
         'PASSWORD': 'netmesh',
         'HOST': 'localhost',
-        'PORT': '',
+        'PORT': '5432',
     }
 }

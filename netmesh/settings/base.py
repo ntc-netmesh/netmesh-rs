@@ -126,8 +126,8 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
-MEDIA_ROOT = "/var/www/netmesh/static/"
-STATIC_URL = '/static/'
+STATIC_ROOT = "/var/www/netmesh/static/"
+STATIC_URL = 'static/'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 

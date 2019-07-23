@@ -116,8 +116,10 @@ def install_database(c):
             'GRANT ALL PRIVILEGES ON DATABASE netmesh to netmesh;" || true')
 
     print('***Install django site...***')
-    c.sudo('envshell %(path)s/envdir_prod')
+    # c.sudo('envshell %(path)s/envs' % env)
+    print('***Starting migrations...***')
     c.sudo('python3 %(path)s/manage.py makemigrations' % env)
+    c.sudo('python3 %(path)s/manage.py makemigrations netmesh_api' % env)
     c.sudo('python3 %(path)s/manage.py migrate' % env)
     # c.sudo('python manage.py loaddata netmesh/fixtures/config.json'
     #      % env)

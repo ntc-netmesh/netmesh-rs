@@ -11,8 +11,7 @@ def home(request):
 
 def map(request):
     context = {
-        "datapoints": DataPoint.objects.all(),
-        "tests": Test.objects.all()
+        "datapoints": DataPoint.objects.all().order_by('test_id')
     }
     return render(request, 'map.html', context=context)
 

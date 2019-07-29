@@ -13,61 +13,41 @@
 
 {% block content %}
 
-<h1>Map</h1>
-<p>Dummy Test map. </p>
+<h1>Results Map</h1>
 
-<body onload="initialize_map(); {% for test in tests%} add_map_point({{test.lat}}, {{test.long}}); {% endfor %}">
-<div id="map" style="width: 50vw; height: 100vh;"></div>
-
+<div id="map" class="map map-home" style="height: 500px; margin-top: 50px"></div>
 
 {% block js %}
-<!--Reference: https://mediarealm.com.au/articles/openstreetmap-openlayers-map-markers/-->
 
-<link rel="stylesheet" href="https://openlayers.org/en/v4.6.5/css/ol.css" type="text/css">
-<script src="https://openlayers.org/en/v4.6.5/build/ol.js" type="text/javascript"></script>
+ <link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css"
+   integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+   crossorigin=""/>
+<script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js"
+   integrity="sha512-GffPMF3RvMeYyc1LWMHtK8EbPv0iNZ8/oTtHPx9/cc2ILxQ+u905qIwdpULaqDkyBKgOaB57QTMg7ztg8Jm2Og=="
+   crossorigin=""></script>
+
 
 <script>
-    /* OSM & OL example code provided by https://mediarealm.com.au/ */
-    var map;
+
     var mapLat = 12.683;
     var mapLng = 121.729;
-    var mapDefaultZoom = 5;
-    function initialize_map() {
-        map = new ol.Map({
-        target: "map",
-        layers: [
-            new ol.layer.Tile({
-            source: new ol.source.OSM({
-            url: "https://a.tile.openstreetmap.org/{z}/{x}/{y}.png"
-            })
-            })
-        ],
-        view: new ol.View({
-            center: ol.proj.fromLonLat([mapLng, mapLat]),
-            zoom: mapDefaultZoom
-           })
-        });
-    }
-    function add_map_point(lat, lng) {
-        var vectorLayer = new ol.layer.Vector({
-        source:new ol.source.Vector({
-            features: [new ol.Feature({
-            geometry: new ol.geom.Point(ol.proj.transform([parseFloat(lng), parseFloat(lat)], 'EPSG:4326', 'EPSG:3857')),
-                })]
-            }),
-        style: new ol.style.Style({
-        image: new ol.style.Icon({
-        anchor: [0.5, 0.5],
-        anchorXUnits: "fraction",
-        anchorYUnits: "fraction",
-        src: "https://upload.wikimedia.org/wikipedia/commons/e/ec/RedDot.svg"
-                })
-            })
-        });
-    map.addLayer(vectorLayer);
-    }
+    var map = L.map('map').setView([mapLat, mapLng], 5);
 
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+
+    {% for datapoint in datapoints %}
+        var popupHTML = 'Upload: {{ datapoint.upload_speed|div:1048576|stringformat:'0.2f'}} Mbps'
+        popupHTML += '<br>Download: {{datapoint.download_speed|div:1048576|stringformat:'0.2f'}} Mbps'
+        popupHTML += '<br>Ping: {{datapoint.rtt}} ms'
+        popupHTML += '<br>ID: <a href="{% url 'test_detail' datapoint.test_id.id %}" title="{{datapoint.test_id.id}}">{{ datapoint.test_id.id|truncatechars:9 }}</a>'
+        L.marker([{{datapoint.test_id.lat}}, {{datapoint.test_id.long}}]).addTo(map)
+            .bindPopup(popupHTML)
+            .openPopup();
+    {% endfor %}
 </script>
-{% endblock js %}
+
+{% endblock %}
 
 {% endblock %}

@@ -1,5 +1,6 @@
-.sidebar-nav {
-    margin-top: 20px;
-    padding: 20px;
-    list-style: none;
+@import url(http://fonts.googleapis.com/css?family=Oswald:400,300,700);
+
+h1 {
+    font-family: "Oswald", sans-serif;
+    color: #3d7fae;
 }

@@ -12,8 +12,8 @@ from netmesh_api.models import Server
 
 @login_required
 def server_list(request, template_name='servers/list.html'):
-    server_list = Server.objects.all()
-    paginator = Paginator(server_list, 15)
+    servers_list = Server.objects.all().order_by('-pk')
+    paginator = Paginator(servers_list, 15)
     page = request.GET.get('page')
     servers = paginator.get_page(page)
     context = {

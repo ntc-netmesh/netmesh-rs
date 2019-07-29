@@ -1,0 +1,53 @@
+{% extends "base_generic.html" %}
+{% load mathfilters %}
+{% load humanize %}
+{# Load the tag library #}
+{% load bootstrap4 %}
+
+{# Load CSS and JavaScript #}
+{% bootstrap_css %}
+{% bootstrap_javascript jquery='full' %}
+
+{# Display django.contrib.messages as Bootstrap alerts #}
+{% bootstrap_messages %}
+
+{% block content %}
+
+<h1>Results Map</h1>
+
+<div id="map" class="map map-home" style="height: 500px; margin-top: 50px"></div>
+
+{% block js %}
+
+ <link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css"
+   integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+   crossorigin=""/>
+<script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js"
+   integrity="sha512-GffPMF3RvMeYyc1LWMHtK8EbPv0iNZ8/oTtHPx9/cc2ILxQ+u905qIwdpULaqDkyBKgOaB57QTMg7ztg8Jm2Og=="
+   crossorigin=""></script>
+
+
+<script>
+
+    var mapLat = 12.683;
+    var mapLng = 121.729;
+    var map = L.map('map').setView([mapLat, mapLng], 5);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+
+    {% for datapoint in datapoints %}
+        var popupHTML = 'Upload: {{ datapoint.upload_speed|div:1048576|stringformat:'0.2f'}} Mbps'
+        popupHTML += '<br>Download: {{datapoint.download_speed|div:1048576|stringformat:'0.2f'}} Mbps'
+        popupHTML += '<br>Ping: {{datapoint.rtt}} ms'
+        popupHTML += '<br>ID: <a href="{% url 'test_detail' datapoint.test_id.id %}" title="{{datapoint.test_id.id}}">{{ datapoint.test_id.id|truncatechars:9 }}</a>'
+        L.marker([{{datapoint.test_id.lat}}, {{datapoint.test_id.long}}]).addTo(map)
+            .bindPopup(popupHTML)
+            .openPopup();
+    {% endfor %}
+</script>
+
+{% endblock %}
+
+{% endblock %}

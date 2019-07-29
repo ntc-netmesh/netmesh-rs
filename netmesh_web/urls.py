@@ -10,6 +10,7 @@ urlpatterns = []
 """ Main results page """
 urlpatterns += [
     path('', index.home, name='index'),
+    path('map/', index.map, name='map'),
 ]
 
 """ Agents """

@@ -46,12 +46,6 @@ class AgentProfile(models.Model):
     device = models.CharField(max_length=20, choices=choices.device_choices, default='unknown')
     registration_status = models.CharField(max_length=20, choices=choices.registration_choices, default='unregistered')
 
-    class Meta:
-        db_table = 'netmesh_api_agentprofile'
-        verbose_name = 'AgentProfile'
-        verbose_name_plural = 'AgentProfiles'
-        ordering = ['-id']
-
     def __str__(self):
         return "%s" % self.user
 

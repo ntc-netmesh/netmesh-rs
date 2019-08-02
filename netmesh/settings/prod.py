@@ -1,5 +1,6 @@
 from .base import *
 
+DEBUG = False
 
 # Security settings
 SECURE_HSTS_SECONDS = 30

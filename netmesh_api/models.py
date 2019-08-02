@@ -76,13 +76,13 @@ class Test(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     agent = models.ForeignKey(AgentProfile, null=False, on_delete=models.CASCADE)
     ip_address = models.GenericIPAddressField(null=False, protocol='IPv4')  # IP addr of agent when test was conducted
-    test_type = models.CharField(null=False, max_length=10, choices=choices.test_type_choices)
+    test_type = models.CharField(null=False, max_length=50, choices=choices.test_type_choices)
     date_created = models.DateTimeField(auto_now_add=True)
-    network_connection = models.CharField(max_length=10, choices=choices.network_choices, default='unknown')
+    network_connection = models.CharField(max_length=20, choices=choices.network_choices, default='unknown')
     pcap = models.CharField(max_length=100, null=True)
     lat = models.DecimalField(max_digits=10, decimal_places=7, default=14.654929)
     long = models.DecimalField(max_digits=10, decimal_places=7, default=121.064947)
-    mode = models.CharField(null=False, max_length=10, choices=choices.test_mode_choices, default='unknown')
+    mode = models.CharField(null=False, max_length=50, choices=choices.test_mode_choices, default='unknown')
 
     def __str__(self):
         return "Test %s" % self.id

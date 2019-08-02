@@ -1,5 +1,10 @@
 CHANGELOG
 
+08-02-2019
+- updated Datapoint model to reflect additional fields that will be submitted by client-side application
+- in concurrence, updated api views, templates as well
+- updated dummyclient.py
+
 07-29-2019
 - results map web page
 - apply bootstrap css templates to improve look of web ui

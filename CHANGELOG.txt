@@ -1,0 +1,12 @@
+CHANGELOG
+
+07-29-2019
+- results map web page
+- apply bootstrap css templates to improve look of web ui
+
+07-26-2019
+- Initial version release (v.0.1.0-alpha). Contains
+    - APIs for report submission
+    - User authentication
+    - basic web UI
+    - initial deploy scripts

@@ -1,22 +1,17 @@
-from django.shortcuts import render
-
+from django.contrib.auth import authenticate
+from django.core.exceptions import ObjectDoesNotExist
 from rest_framework import status
-from rest_framework.views import APIView
-from rest_framework.response import Response
 from rest_framework.authentication import TokenAuthentication
-from rest_framework.authentication import SessionAuthentication
+from rest_framework.authtoken.models import Token
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.renderers import JSONRenderer
-from rest_framework.authtoken.models import Token
-from django.core.exceptions import ObjectDoesNotExist
-from django.contrib.auth import authenticate
+from rest_framework.response import Response
+from rest_framework.views import APIView
 
-from django.utils import timezone as timezone
-
-from netmesh_api.models import Test
+from netmesh_api.models import AgentProfile
 from netmesh_api.models import DataPoint
 from netmesh_api.models import Server
-from netmesh_api.models import AgentProfile
+from netmesh_api.models import Test
 
 
 class SubmitData(APIView):
@@ -46,30 +41,49 @@ class SubmitData(APIView):
             return Response("ERROR: Invalid Agent ID",
                             status=status.HTTP_400_BAD_REQUEST)
 
-        test = Test()
-        test.agent = agent
-        test.test_type = report["test_type"]
-        test.network_connection = report["network"]
-        test.pcap = report["pcap"]
-        test.ip_address = self.get_client_ip(request)
-        test.lat = report["lat"]
-        test.long = report["long"]
-        test.save()
-        measurements = report["results"]
+        try:
+            test = Test()
+            test.agent = agent
+            test.test_type = report["test_type"]
+            test.network_connection = report["network"]
+            test.pcap = report["pcap"]
+            test.ip_address = self.get_client_ip(request)
+            test.lat = report["lat"]
+            test.long = report["long"]
+            test.mode = report["mode"]
+            test.save()
+            measurements = report["results"]
+        except Exception:  # TODO: find specific exception
+            return Response("ERROR: Data Save Failure",
+                            status=status.HTTP_400_BAD_REQUEST)
 
         for dataset in measurements:
+            # test first if server id in payload is valid
             try:
                 server = Server.objects.get(uuid=measurements[dataset]["server"])
             except ObjectDoesNotExist:
                 return Response("ERROR: Invalid Server ID",
-                            status=status.HTTP_400_BAD_REQUEST)
+                                status=status.HTTP_400_BAD_REQUEST)
             new_data = DataPoint()
-            new_data.server = server
-            new_data.date_tested = measurements[dataset]["ts"]
-            new_data.rtt = measurements[dataset]["rtt"]
-            new_data.upload_speed = measurements[dataset]["upload"]
-            new_data.download_speed = measurements[dataset]["download"]
             new_data.test_id = test
+            new_data.date_tested = measurements[dataset]["ts"]
+            new_data.direction = measurements[dataset]["direction"]
+            new_data.server = server
+            new_data.path_mtu = measurements[dataset]["path_mtu"]
+            new_data.baseline_rtt = measurements[dataset]["baseline_rtt"]
+            new_data.bottleneck_bw = measurements[dataset]["bottleneck_bw"]
+            new_data.bdp = measurements[dataset]["bdp"]
+            new_data.min_rwnd = measurements[dataset]["min_rwnd"]
+            new_data.ave_tcp_tput = measurements[dataset]["ave_tcp_tput"]
+            new_data.ideal_tcp_tput = measurements[dataset]["ideal_tcp_tput"]
+            new_data.actual_transfer_time = measurements[dataset]["actual_transfer_time"]
+            new_data.ideal_transfer_time = measurements[dataset]["ideal_transfer_time"]
+            new_data.tcp_ttr = measurements[dataset]["tcp_ttr"]
+            new_data.trans_bytes = measurements[dataset]["trans_bytes"]
+            new_data.retrans_bytes = measurements[dataset]["retrans_bytes"]
+            new_data.tcp_eff = measurements[dataset]["tcp_eff"]
+            new_data.ave_rtt = measurements[dataset]["ave_rtt"]
+            new_data.buffer_delay = measurements[dataset]["buffer_delay"]
             new_data.save()
 
         return Response('OK CREATED', status=status.HTTP_200_OK)

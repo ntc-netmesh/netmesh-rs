@@ -24,8 +24,10 @@
     <table style="width:100%">
           <tr>
             <th>Date</th>
-            <th>ID</th>
+            <th>Test ID</th>
             <th>Test Type</th>
+            <th>Test Mode</th>
+            <th>Network Connection</th>
             <th>Agent</th>
             <th>Location</th>
           </tr>
@@ -34,8 +36,10 @@
           <tr>
             <td>{{item.date_created}}</td>
             <td><a href="{% url 'test_detail' item.id %}"
-                   title="View Test Details">{{ item.id }}</a></td>
+                   title="View Test Details">{{ item.id|truncatechars:9 }}</a></td>
             <td>{{item.test_type}}</td>
+            <td>{{item.mode}}</td>
+            <td>{{item.network_connection}}</td>
             <td>{{item.agent.nickname}}</td>
             <td>{{item.lat}}, {{item.long}}</td>
           </tr>

@@ -1,0 +1,116 @@
+{% extends "base_generic.html" %}
+{% load mathfilters %}
+{% load humanize %}
+{# Load the tag library #}
+{% load bootstrap4 %}
+
+{# Load CSS and JavaScript #}
+{% bootstrap_css %}
+{% bootstrap_javascript jquery='full' %}
+
+{# Display django.contrib.messages as Bootstrap alerts #}
+{% bootstrap_messages %}
+
+{% block content %}
+<h1>From {{datapoint.test_id}}</h1>
+<br>
+
+<div class="table-responsive">
+    <table class="table table-sm">
+        <tr class="table-active">
+            <th>TEST CONDITIONS</th>
+            <th></th>
+        </tr>
+        <tr>
+            <th>Mode</th>
+            <td>{{datapoint.test_id.mode}}</td>
+        </tr>
+        <tr>
+            <th>Direction</th>
+            <td>{{datapoint.direction}}</td>
+        </tr>
+        <tr>
+            <th>Window Size</th>
+            <td>{{datapoint.min_rwnd}} Kbytes</td>
+        </tr>
+        <tr>
+            <th>Bandwidth Delay Product</th>
+            <td>{{datapoint.bdp}} bits</td>
+        </tr>
+        <tr>
+            <th>Path MTU</th>
+            <td>{{datapoint.path_mtu}} bytes</td>
+        </tr>
+        <tr>
+            <th>Baseline RTT</th>
+            <td>{{datapoint.baseline_rtt}} ms</td>
+        </tr>
+
+        <tr class="table-active">
+            <th>TCP THROUGHPUT</th>
+            <th></th>
+        </tr>
+        <tr>
+            <th>Average</th>
+            <td>{{datapoint.ave_tcp_tput}} Mbps</td>
+        </tr>
+        <tr>
+            <th>Ideal</th>
+            <td>{{datapoint.ideal_tcp_tput}} Mbps</td>
+        </tr>
+        <tr class="table-active">
+            <th>TRANSFER TIME</th>
+            <th></th>
+        </tr>
+        <tr>
+            <th>Ideal</th>
+            <td>{{datapoint.ideal_transfer_time}} secs</td>
+        </tr>
+        <tr>
+            <th>Actual</th>
+            <td>{{datapoint.actual_transfer_time}} secs</td>
+        </tr>
+        <tr>
+            <th>Transfer Time Ratio</th>
+            <td>{{datapoint.tcp_ttr}}</td>
+        </tr>
+
+        <tr class="table-active">
+            <th>DATA TRANSFER</th>
+            <th></th>
+        </tr>
+        <tr>
+            <th>Transmitted Bytes</th>
+            <td>{{datapoint.trans_bytes}} bytes</td>
+        </tr>
+        <tr>
+            <th>Retransmitted Bytes</th>
+            <td>{{datapoint.retrans_bytes}} bytes</td>
+        </tr>
+        <tr>
+            <th>TCP Efficiency</th>
+            <td>{{datapoint.tcp_eff}} %</td>
+        </tr>
+
+        <tr class="table-active">
+            <th>RTT</th>
+            <th></th>
+        </tr>
+        <tr>
+            <th>Baseline RTT</th>
+            <td>{{datapoint.baseline_rtt}} ms</td>
+        </tr>
+        <tr>
+            <th>Average RTT</th>
+            <td>{{datapoint.ave_rtt}} ms</td>
+        </tr>
+        <tr>
+            <th>Buffer Delay</th>
+            <td>{{datapoint.buffer_delay}} %</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+
+{% endblock %}

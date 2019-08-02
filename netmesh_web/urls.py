@@ -27,4 +27,5 @@ urlpatterns += [
 urlpatterns += [
     path('tests/', tests.test_list, name='tests'),
     path('tests/detail/<id>', tests.test_detail, name='test_detail'),
+    path('datapoint/detail/<id>', tests.datapoint_detail, name='datapoint_detail'),
 ]

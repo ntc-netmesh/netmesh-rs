@@ -10,39 +10,64 @@ import ast
 from datetime import datetime
 import random
 
-username = ""
+username = "agent1"
 password = ""
-uuid = ""
+uuid = "6817ca74-4e23-4e16-a004-feae757a45c0"
+url = "http://localhost:8000"
+server1 = "066182e8-e56b-40a8-8ee9-d92dce71e07e"
+server2 = "6e2a72bf-b5d1-4d32-ac83-8f6cd035d28e"
+server3 = "86023348-270a-4c94-bdac-877defdb17c6"
+
 
 data_point = {
     "uuid": uuid,
     "test_type": "RFC6349",
     "network": "dsl",
     "pcap": "sample.pcap",
-    "lat": "14.654929",
-    "long": "121.064947",
+    "lat": random.uniform(12, 13),
+    "long": random.uniform(120, 122),
+    "mode": random.choices(['normal', 'reverse', 'bidirectional', 'simultaneous'])[0],
     "results": {
         "set1": {
             "ts": datetime.now(),   # TODO: add timezone information, or assume that clients will always send in UTC
-            "server": "6067d5166e5741bfb5f7d596649e6916",
-            "rtt": random.randint(1, 1000),
-            "upload": random.randint(1, 10000000000),
-            "download": random.randint(1, 10000000000),
+            "server": random.choices([server1, server2, server3])[0],
+            "direction": random.choices(['forward', 'reverse'])[0],
+            "path_mtu": random.randint(1400, 1500),
+            "baseline_rtt": random.uniform(1, 1000),
+            "bottleneck_bw": random.uniform(1, 10000000000),
+            "bdp": random.uniform(1, 10000000000),
+            "min_rwnd": random.uniform(1, 65000),
+            "ave_tcp_tput": random.uniform(1, 10000000000),
+            "ideal_tcp_tput": random.uniform(1, 10000000000),
+            "actual_transfer_time": random.uniform(1, 100),
+            "ideal_transfer_time": random.uniform(1, 100),
+            "tcp_ttr": random.uniform(0,1),
+            "trans_bytes": random.uniform(1, 10000000000),
+            "retrans_bytes": random.uniform(1, 10000000000),
+            "tcp_eff": random.uniform(1, 100),
+            "ave_rtt": random.uniform(1, 1000),
+            "buffer_delay": random.uniform(1, 10000000000),
         },
         "set2": {
-            "ts": datetime.now(),
-            "server": "198208cbde9f4965b7cf1a14468c3f55",
-            "rtt": random.randint(1, 1000),
-            "upload": random.randint(1, 10000000000),
-            "download": random.randint(1, 10000000000),
+            "ts": datetime.now(),   # TODO: add timezone information, or assume that clients will always send in UTC
+            "server": random.choices([server1, server2, server3])[0],
+            "direction": random.choices(['forward', 'reverse'])[0],
+            "path_mtu": random.randint(1400, 1500),
+            "baseline_rtt": random.uniform(1, 1000),
+            "bottleneck_bw": random.uniform(1, 10000000000),
+            "bdp": random.uniform(1, 10000000000),
+            "min_rwnd": random.uniform(1, 65000),
+            "ave_tcp_tput": random.uniform(1, 10000000000),
+            "ideal_tcp_tput": random.uniform(1, 10000000000),
+            "actual_transfer_time": random.uniform(1, 100),
+            "ideal_transfer_time": random.uniform(1, 100),
+            "tcp_ttr": random.uniform(0, 1),
+            "trans_bytes": random.uniform(1, 10000000000),
+            "retrans_bytes": random.uniform(1, 10000000000),
+            "tcp_eff": random.uniform(1, 100),
+            "ave_rtt": random.uniform(1, 1000),
+            "buffer_delay": random.uniform(1, 10000000000),
         },
-        "set3": {
-            "ts": datetime.now(),
-            "server": "6077a99978634a9b81fcb040b3fce540",
-            "rtt": random.randint(1, 1000),
-            "upload": random.randint(1, 10000000000),
-            "download": random.randint(1, 10000000000),
-        }
     }
 }
 
@@ -53,7 +78,7 @@ creds = {
 }
 try:
     # Request for Agent token
-    r = requests.post(url="http://localhost:8000/api/register", data=creds)
+    r = requests.post(url=url+"/api/register", data=creds)
 except Exception as e:
     print(e)
 
@@ -72,7 +97,7 @@ headers = {
 }
 
 try:
-    r = requests.post("http://localhost:8000/api/submit",
+    r = requests.post(url+"/api/submit",
                       headers=headers,
                       data=data_json,
                       timeout=30)
@@ -83,6 +108,4 @@ except Exception as e:
 if r.status_code == 200:
     print("Submit success!")
 else:
-    print("Exiting due to status code %s" % r.status_code)
-
-quit()
+    print("Exiting due to status code %s: %s" % (r.status_code, r.text))

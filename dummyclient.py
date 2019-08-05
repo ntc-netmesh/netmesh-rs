@@ -4,11 +4,13 @@
     07-10-2019
 """
 
-import requests
-import json
 import ast
-from datetime import datetime
+import json
 import random
+from datetime import datetime
+
+import pytz
+import requests
 
 username = "agent1"
 password = ""
@@ -17,7 +19,6 @@ url = "http://localhost:8000"
 server1 = "066182e8-e56b-40a8-8ee9-d92dce71e07e"
 server2 = "6e2a72bf-b5d1-4d32-ac83-8f6cd035d28e"
 server3 = "86023348-270a-4c94-bdac-877defdb17c6"
-
 
 data_point = {
     "uuid": uuid,
@@ -29,7 +30,7 @@ data_point = {
     "mode": random.choices(['normal', 'reverse', 'bidirectional', 'simultaneous'])[0],
     "results": {
         "set1": {
-            "ts": datetime.now(),   # TODO: add timezone information, or assume that clients will always send in UTC
+            "ts": pytz.utc.localize(datetime.now()),
             "server": random.choices([server1, server2, server3])[0],
             "direction": random.choices(['forward', 'reverse'])[0],
             "path_mtu": random.randint(1400, 1500),
@@ -49,7 +50,7 @@ data_point = {
             "buffer_delay": random.uniform(1, 10000000000),
         },
         "set2": {
-            "ts": datetime.now(),   # TODO: add timezone information, or assume that clients will always send in UTC
+            "ts": pytz.utc.localize(datetime.now()),
             "server": random.choices([server1, server2, server3])[0],
             "direction": random.choices(['forward', 'reverse'])[0],
             "path_mtu": random.randint(1400, 1500),
@@ -80,10 +81,10 @@ try:
     # Request for Agent token
     r = requests.post(url=url+"/api/register", data=creds)
 except Exception as e:
-    print(e)
+    print("Exiting due to status code %s: %s" % (r.status_code, r.text))
 
 if r.status_code != 200:
-    print("Exiting due to status code %s" % r.status_code)
+    print("Exiting due to status code %s: %s" % (r.status_code, r.text))
     quit()
 
 mytoken = ast.literal_eval(r.text)['Token']

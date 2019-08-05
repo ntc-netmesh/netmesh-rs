@@ -3,6 +3,7 @@ from netmesh_web.views import index
 from netmesh_web.views import agents
 from netmesh_web.views import servers
 from netmesh_web.views import tests
+from netmesh_web.views import users
 
 
 urlpatterns = []
@@ -11,6 +12,11 @@ urlpatterns = []
 urlpatterns += [
     path('', index.home, name='index'),
     path('map/', index.map, name='map'),
+]
+
+""" Users """
+urlpatterns += [
+    path('tz/', users.set_timezone, name='set_timezone'),
 ]
 
 """ Agents """

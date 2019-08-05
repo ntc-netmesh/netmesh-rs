@@ -14,7 +14,7 @@ class UserProfile(models.Model):
     """
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     date_created = models.DateTimeField(auto_now_add=True)
-    timezone = models.CharField(max_length=50, default='UTC',
+    timezone = models.CharField(max_length=50, default='Asia/Manila',
                                 choices=choices.timezone_choices)
     role = models.CharField(max_length=20, default='Cloud Admin')
     # Added for Password Expiry

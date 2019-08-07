@@ -1,0 +1,39 @@
+{% extends "base_generic.html" %}
+{% load mathfilters %}
+{% load humanize %}
+{# Load the tag library #}
+{% load bootstrap4 %}
+
+{# Load CSS and JavaScript #}
+{% bootstrap_css %}
+{% bootstrap_javascript jquery='full' %}
+
+{# Display django.contrib.messages as Bootstrap alerts #}
+{% bootstrap_messages %}
+
+{% block content %}
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h1">About Us</h1>
+</div>
+
+<h3>What is NetMesh?</h3>
+<p>This project proposal aims to support Memorandum Circular (MC) 07-08-2015 of the National
+    Telecommunications Commission (NTC) that addresses the “Rules on the Measurement of Fixed
+    Broadband/Internet Access Service”. MC 07-08-2015 aims to monitor and measure network parameters
+    of internet quality from the perspective of a customer</p>
+
+<h3>What tests are conducted?</h3>
+<p>
+    Our tests are based on <a href="https://tools.ietf.org/html/rfc6349">RFC 6349</a>.
+    RFC 6349 describes a practical methodology for measuring end-
+    to-end TCP Throughput in a managed IP network. The goal is to
+    provide a better indication in regard to user experience. In this
+    framework, TCP and IP parameters are specified to optimize TCP
+    Throughput.
+</p>
+
+<h3>How can I help?</h3>
+<p>
+    You can help our cause by becoming a volunteer! Simply go to http://url or download the app (link) to contribute! 
+</p>
+{% endblock %}

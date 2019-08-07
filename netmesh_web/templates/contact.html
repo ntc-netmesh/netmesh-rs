@@ -1,0 +1,30 @@
+{% extends "base_generic.html" %}
+{% load mathfilters %}
+{% load humanize %}
+{# Load the tag library #}
+{% load bootstrap4 %}
+
+{# Load CSS and JavaScript #}
+{% bootstrap_css %}
+{% bootstrap_javascript jquery='full' %}
+
+{# Display django.contrib.messages as Bootstrap alerts #}
+{% bootstrap_messages %}
+
+{% block content %}
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h1">Contact Us</h1>
+</div>
+
+<p>
+BIR Road, East Triangle, Diliman,
+Quezon City, Metro Manila, Philippines,
+1101
+</p>
+
+<p>
+    NTC-NCR:
+ntcncr@ntc.gov.ph
+</p>
+
+{% endblock %}

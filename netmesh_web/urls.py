@@ -10,8 +10,10 @@ urlpatterns = []
 
 """ Main results page """
 urlpatterns += [
-    path('', index.home, name='index'),
+    path('', index.map, name='index'),
     path('map/', index.map, name='map'),
+    path('about/', index.about, name='about'),
+    path('contact/', index.contact, name='contact'),
 ]
 
 """ Users """

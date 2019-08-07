@@ -4,9 +4,15 @@ from netmesh_api.models import DataPoint
 
 
 def home(request):
-    context = {
-    }
-    return render(request, 'index.html', context=context)
+    return render(request, 'index.html', {})
+
+
+def about(request):
+    return render(request, 'about.html', {})
+
+
+def contact(request):
+    return render(request, 'contact.html', {})
 
 
 def map(request):

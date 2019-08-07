@@ -11,12 +11,16 @@
 {# Display django.contrib.messages as Bootstrap alerts #}
 {% bootstrap_messages %}
 
-{% block content %}
+<link href="https://getbootstrap.com/docs/4.0/examples/cover/cover.css" rel="stylesheet">
 
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-    <h1 class="h1">Results Map</h1>
+    <h1 class="h1">Welcome!</h1>
 </div>
-
+<h3></h3>
+<p class="lead">NetMesh aims to monitor and measure network parameters
+        of internet quality from the perspective of a customer.</p>
+<p>The interactive map below tracks measurement reports across the country.
+    Data is acquired from NTC regional units and citizen volunteers.</p>
 <div id="map" class="map map-home" style="height: 500px; margin-top: 50px"></div>
 
 {% block js %}

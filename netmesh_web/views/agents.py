@@ -13,6 +13,9 @@ from netmesh_api.models import AgentProfile
 
 
 class UserForm(forms.ModelForm):
+    password = forms.CharField(widget=forms.PasswordInput)
+    confirm_password = forms.CharField(widget=forms.PasswordInput)
+
     def __init__(self, *args, **kwargs):
         super(UserForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper(self)
@@ -21,9 +24,17 @@ class UserForm(forms.ModelForm):
         self.helper.field_class = 'col-sm-8'
         self.helper.form_tag = False
 
+    def is_password(field):
+        return isinstance(field.field.widget, forms.PasswordInput)
+
+    def clean(self, *args, **kwargs):
+        if self.cleaned_data['password'] != self.cleaned_data['confirm_password']:
+            raise forms.ValidationError('The passwords do not match!')
+        return super(UserForm, self).clean(*args, **kwargs)
+
     class Meta:
         model = User
-        fields = ['username', 'password']
+        fields = ['username', 'password', 'confirm_password']
 
 
 class AgentForm(forms.ModelForm):
@@ -78,11 +89,10 @@ def agent_create(request, template_name='agents/form.html'):
 
 
 @login_required
-def agent_update(request, pk, template_name='agents/form.html'):
+def agent_update(request, pk, template_name='agents/update.html'):
     agent = get_object_or_404(AgentProfile, pk=pk)
-    user = agent.user
-    user.password = ""  # so that we wont see hash of the old password
-    user_form = UserForm(request.POST or None, instance=user)
+    user_form = UserForm(request.POST or None, instance=agent.user)
+
     agent_form = AgentForm(request.POST or None, instance=agent)
 
     if user_form.is_valid() and agent_form.is_valid():

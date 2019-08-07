@@ -1,6 +1,7 @@
 from django.contrib.auth import authenticate
 from django.core.exceptions import ObjectDoesNotExist
 from rest_framework import status
+from rest_framework import viewsets
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.authtoken.models import Token
 from rest_framework.permissions import IsAuthenticated
@@ -12,6 +13,7 @@ from netmesh_api.models import AgentProfile
 from netmesh_api.models import DataPoint
 from netmesh_api.models import Server
 from netmesh_api.models import Test
+from netmesh_api.serializers import ServerSerializer
 
 
 class SubmitData(APIView):
@@ -118,3 +120,16 @@ class Register(APIView):
 
         return Response({'Token': token.key},
                         status=status.HTTP_200_OK)
+
+
+class ServerViewSet(viewsets.ReadOnlyModelViewSet):
+    """
+        API endpoint to retrieve list of servers
+        <base_url>/api/servers/?
+        GET method with token auth required
+    """
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (IsAuthenticated,)
+
+    queryset = Server.objects.all().order_by('pk')
+    serializer_class = ServerSerializer

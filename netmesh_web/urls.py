@@ -22,11 +22,15 @@ urlpatterns += [
 """ Agents """
 urlpatterns += [
     path('agents/', agents.agent_list, name='agents'),
+    path('agents/create/', agents.agent_create, name='agent_create'),
+    path('agents/update/<pk>', agents.agent_update, name='agent_update'),
 ]
 
 """ Servers """
 urlpatterns += [
     path('servers/', servers.server_list, name='servers'),
+    path('servers/create', servers.server_create, name='server_create'),
+    path('servers/update/<uuid>', servers.server_update, name='server_update'),
 ]
 
 """ Tests """

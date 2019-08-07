@@ -12,17 +12,19 @@
 {% bootstrap_messages %}
 
 {% block content %}
-    <h1>Results</h1>
-    <p>Click the UUID to view test details and measurements.</p>
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h1">Test Results</h1>
+    <div class="btn-toolbar mb-2 mb-md-0">
+        <div class="btn-group mr-2">
+            <a href="{% url 'map' %}" class="btn btn-sm btn-outline-secondary">View Map</a>
+        </div>
+    </div>
+</div>
 
-    <style>
-    table, th, td {
-      border: 1px solid black;
-    }
-    </style>
-
-    <table style="width:100%">
-          <tr>
+<div class="table-responsive">
+    <table class="table table-striped table-sm">
+        <thead>
+        <tr class="table-active">
             <th>Date</th>
             <th>Test ID</th>
             <th>Test Type</th>
@@ -31,7 +33,8 @@
             <th>Agent</th>
             <th>Location</th>
           </tr>
-
+        </thead>
+        <tbody>
     {% for item in tests %}
           <tr>
             <td>{{item.date_created}}</td>
@@ -40,11 +43,12 @@
             <td>{{item.test_type}}</td>
             <td>{{item.mode}}</td>
             <td>{{item.network_connection}}</td>
-            <td>{{item.agent.nickname}}</td>
+            <td>{{item.agent}}</td>
             <td>{{item.lat}}, {{item.long}}</td>
           </tr>
 
     {% endfor %}
+        </tbody>
     </table>
 
 

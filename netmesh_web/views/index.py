@@ -1,6 +1,6 @@
 from django.shortcuts import render
+
 from netmesh_api.models import DataPoint
-from netmesh_api.models import Test
 
 
 def home(request):

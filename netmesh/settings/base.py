@@ -116,6 +116,11 @@ STATIC_ROOT = "/var/www/netmesh/static/"
 STATIC_URL = '/static/'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+CRISPY_CLASS_CONVERTERS = {
+    'textinput': "form-control form-control-sm",
+    'numberinput': "form-control form-control-sm",
+    "select": "form-control form-control-sm",
+}
 
 LOGIN_REDIRECT_URL = '/'
 

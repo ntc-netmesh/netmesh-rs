@@ -41,9 +41,8 @@ class AgentProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     date_created = models.DateTimeField(auto_now_add=True)
     uuid = models.UUIDField(default=uuid.uuid4, unique=True)
-    nickname = models.CharField(max_length=1024, null=True, blank=True)
     ntc_region = models.CharField(max_length=20, choices=choices.ntc_region_choices, default='unknown')
-    device = models.CharField(max_length=20, choices=choices.device_choices, default='unknown')
+    device = models.CharField(max_length=20, choices=choices.device_choices, default='computer')
     registration_status = models.CharField(max_length=20, choices=choices.registration_choices, default='unregistered')
 
     def __str__(self):

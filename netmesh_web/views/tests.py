@@ -1,8 +1,9 @@
-from django.shortcuts import render
-from netmesh_api.models import Test
-from netmesh_api.models import DataPoint
+from django.core.paginator import Paginator
 from django.shortcuts import get_object_or_404
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.shortcuts import render
+
+from netmesh_api.models import DataPoint
+from netmesh_api.models import Test
 
 
 def test_detail(request, id, template_name='tests/detail.html'):

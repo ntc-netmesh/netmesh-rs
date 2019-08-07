@@ -1,0 +1,13 @@
+{% extends "base_generic.html" %}
+{% load mathfilters %}
+{% load humanize %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+    <h1>Update Server</h1>
+    <br>
+    {% block dashboard-content %}
+		{% crispy form %}
+    {% endblock %}
+{% endblock %}

@@ -126,10 +126,8 @@ class ServerViewSet(viewsets.ReadOnlyModelViewSet):
     """
         API endpoint to retrieve list of servers
         <base_url>/api/servers/?
-        GET method with token auth required
     """
-    authentication_classes = (TokenAuthentication,)
-    permission_classes = (IsAuthenticated,)
+    renderer_classes = (JSONRenderer,)
 
     queryset = Server.objects.all().order_by('pk')
     serializer_class = ServerSerializer

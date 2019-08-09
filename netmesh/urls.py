@@ -19,6 +19,7 @@ from django.urls import include
 from django.views.generic import RedirectView
 from django.conf import settings
 from django.conf.urls.static import static
+from netmesh_web.views import users
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -27,6 +28,8 @@ urlpatterns = [
 urlpatterns += [
     path('api/', include('netmesh_api.urls')),
     path('web/', include('netmesh_web.urls')),
+    path('accounts/login/', users.loginview, name='login'),
+    path('accounts/auth/', users.auth_and_login, name='auth-and-login'),
     path('accounts/', include('django.contrib.auth.urls')),
 ]
 

@@ -1,40 +1,43 @@
 {% extends "base_generic.html" %}
+{% load mathfilters %}
+{% load humanize %}
 
 {% block content %}
 
-{% if form.errors %}
-  <p>Your username and password didn't match. Please try again.</p>
-{% endif %}
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h1">Login</h1>
 
-{% if next %}
-  {% if user.is_authenticated %}
-    <p>Your account doesn't have access to this page. To proceed,
-    please login with an account that has access.</p>
-  {% else %}
-    <p>Please login to see this page.</p>
-  {% endif %}
-{% endif %}
+</div>
 
-<form method="post" action="{% url 'login' %}">
-{% csrf_token %}
-<table>
-
-<tr>
-  <td>{{ form.username.label_tag }}</td>
-  <td>{{ form.username }}</td>
-</tr>
-
-<tr>
-  <td>{{ form.password.label_tag }}</td>
-  <td>{{ form.password }}</td>
-</tr>
-</table>
-
-<input type="submit" value="login" />
-<input type="hidden" name="next" value="{{ next }}" />
+<form action="{% url 'auth-and-login' %}" method="POST" role="form"> {% csrf_token %}
+    <div class="form-group">
+        <label for="username">Username</label>
+        <input type="text" class="form-control form-control-sm" placeholder="Username" autofocus name="username" id="username"
+               value=""/>
+    </div>
+    <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" class="form-control form-control-sm" placeholder="Password" autofocus name="password" id="password"
+               value=""/>
+    </div>
+    <input type="hidden" name="next" value="{{ next }}">
+    <button type="submit" id='login-button' class="btn btn-sm btn-secondary btn-block">Sign in</button>
+    {% for message in messages %}
+    <br>
+    <div class='alert alert-danger message'>{{ message }}</div>
+    {% endfor %}
 </form>
 
-{# Assumes you setup the password_reset view in your URLconf #}
-<p><a href="{% url 'password_reset' %}">Lost password?</a></p>
+{% endblock %}
 
+{% block js %}
+<script>
+  $(function() {
+    // Fade out all messages after a delay.
+    setTimeout(function() {
+      $('.alert.message').fadeOut(500);
+    }, 4000);
+  });
+
+</script>
 {% endblock %}

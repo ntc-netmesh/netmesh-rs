@@ -22,56 +22,108 @@
             <th></th>
         </tr>
         <tr>
-            <th>Mode</th>
+            <th>Mode
+                <i class="far fa-question-circle" data-toggle="popover" title="Mode"
+                   data-content="This refers to the type of test conducted:
+                   either Normal, Reverse, Bidirectional or Simultaneous"></i>
+            </th>
             <td>{{datapoint.test_id.mode}}</td>
         </tr>
         <tr>
-            <th>Direction</th>
+            <th>Direction
+                <i class="far fa-question-circle" data-toggle="popover" title="Direction"
+                   data-content="Direction of packet flow.
+                   Forward for local to remote. Reverse if remote to local. "></i>
+            </th>
             <td>{{datapoint.direction}}</td>
         </tr>
         <tr>
-            <th>Window Size</th>
+            <th>Window Size
+                <i class="far fa-question-circle" data-toggle="popover" title="Window Size"
+                   data-content="The window size is used by the receiver to indicate to the sender the
+                   amount of data that it is able to accept."></i>
+            </th>
+            </th>
             <td>{{datapoint.min_rwnd}} Kbytes</td>
         </tr>
         <tr>
-            <th>Bandwidth Delay Product</th>
+            <th>Bandwidth Delay Product
+                <i class="far fa-question-circle" data-toggle="popover" title="Bandwidth Delay Product"
+                   data-content="This refers to the product of a data
+                    link's capacity (in bits per second) and its end-to-end delay (in seconds)."></i>
+            </th>
+            </th>
             <td>{{datapoint.bdp}} bits</td>
         </tr>
         <tr>
-            <th>Path MTU</th>
+            <th>Path MTU
+                <i class="far fa-question-circle" data-toggle="popover" title="Path MTU"
+                   data-content="This is the size of the largest protocol data unit (PDU) that can be communicated
+                   in a single network layer transaction."></i>
+            </th>
+            </th>
             <td>{{datapoint.path_mtu}} bytes</td>
         </tr>
         <tr>
-            <th>Baseline RTT</th>
+            <th>Baseline RTT
+                <i class="far fa-question-circle" data-toggle="popover" title="Baseline RTT"
+                   data-content="The baseline RTT is the Round-Trip Time inherent to
+                    the network path under non-congested conditions."></i>
+            </th>
             <td>{{datapoint.baseline_rtt}} ms</td>
         </tr>
 
         <tr class="table-active">
-            <th>TCP THROUGHPUT</th>
+            <th>TCP THROUGHPUT
+            <i class="far fa-question-circle" data-toggle="popover" title="TCP Throughput"
+                   data-content="TCP Throughput is that amount of data per unit of time
+                        that TCP transports when in the TCP Equilibrium state."></i>
+            </th>
             <th></th>
         </tr>
         <tr>
-            <th>Average</th>
-            <td>{{datapoint.ave_tcp_tput}} Mbps</td>
-        </tr>
-        <tr>
-            <th>Ideal</th>
+            <th>Ideal
+                <i class="far fa-question-circle" data-toggle="popover" title="Ideal TCP Throughput"
+                   data-content="This refers to the maximum throughput that is achievable over the network link."></i>
+            </th>
             <td>{{datapoint.ideal_tcp_tput}} Mbps</td>
         </tr>
+        <tr>
+            <th>Average
+                <i class="far fa-question-circle" data-toggle="popover" title="Average TCP Throughput"
+                   data-content="This refers to the actual and average throughput that
+                   was measured over the network link."></i>
+            </th>
+            <td>{{datapoint.ave_tcp_tput}} Mbps</td>
+        </tr>
+
         <tr class="table-active">
             <th>TRANSFER TIME</th>
             <th></th>
         </tr>
         <tr>
-            <th>Ideal</th>
+            <th>Ideal
+                <i class="far fa-question-circle" data-toggle="popover" title="Ideal Transfer Time"
+                   data-content="The Ideal TCP Transfer Time is the predicted time for which a block
+                    of data SHOULD transfer across TCP connection(s)."></i>
+            </th>
             <td>{{datapoint.ideal_transfer_time}} secs</td>
         </tr>
         <tr>
-            <th>Actual</th>
+            <th>Actual
+                <i class="far fa-question-circle" data-toggle="popover" title="Actual Transfer Time"
+                   data-content=" The Actual TCP Transfer Time is simply the time it takes to transfer
+                    a block of data across TCP connection(s)."></i>
+            </th>
             <td>{{datapoint.actual_transfer_time}} secs</td>
         </tr>
         <tr>
-            <th>Transfer Time Ratio</th>
+            <th>Transfer Time Ratio
+                <i class="far fa-question-circle" data-toggle="popover" title="Transfer Time Ratio"
+                   data-content="This is the
+                   ratio between the Actual TCP Transfer Time versus the Ideal TCP
+                   Transfer Time."></i>
+            </th>
             <td>{{datapoint.tcp_ttr}}</td>
         </tr>
 
@@ -80,15 +132,29 @@
             <th></th>
         </tr>
         <tr>
-            <th>Transmitted Bytes</th>
+            <th>Transmitted Bytes
+                <i class="far fa-question-circle" data-toggle="popover" title="Transmitted Bytes"
+                   data-content="Transmitted bytes are the total number of TCP Bytes to be
+                    transmitted, including the original and the retransmitted Bytes."></i>
+            </th>
             <td>{{datapoint.trans_bytes}} bytes</td>
         </tr>
         <tr>
-            <th>Retransmitted Bytes</th>
+            <th>Retransmitted Bytes
+                <i class="far fa-question-circle" data-toggle="popover" title="Retransmitted Bytes"
+                   data-content="Retransmitted bytes are the total number of TCP bytes that
+                   needs to be retransmitted. Retransmitted Bytes may have occurred more than once;
+                   if so, then these multiple retransmissions are added to the
+                   Retransmitted Bytes and to the Transmitted Bytes counts."></i>
+            </th>
             <td>{{datapoint.retrans_bytes}} bytes</td>
         </tr>
         <tr>
-            <th>TCP Efficiency</th>
+            <th>TCP Efficiency
+                <i class="far fa-question-circle" data-toggle="popover" title="TCP Efficiency"
+                   data-content="This represents the percentage of Bytes that were not
+                    retransmitted."></i>
+            </th>
             <td>{{datapoint.tcp_eff}} %</td>
         </tr>
 
@@ -97,20 +163,46 @@
             <th></th>
         </tr>
         <tr>
-            <th>Baseline RTT</th>
+            <th>Baseline RTT
+                <i class="far fa-question-circle" data-toggle="popover" title="Baseline RTT"
+                   data-content="The baseline RTT is the Round-Trip Time inherent to
+                    the network path under non-congested conditions."></i>
+            </th>
             <td>{{datapoint.baseline_rtt}} ms</td>
         </tr>
         <tr>
-            <th>Average RTT</th>
+            <th>Average RTT
+                <i class="far fa-question-circle" data-toggle="popover" title="Average RTT"
+                   data-content="The average RTT is derived from the total of all
+                   measured RTTs during the actual test at every second divided by the
+                   test duration in seconds."></i>
+            </th>
             <td>{{datapoint.ave_rtt}} ms</td>
         </tr>
         <tr>
-            <th>Buffer Delay</th>
+            <th>Buffer Delay
+                <i class="far fa-question-circle" data-toggle="popover" title="Buffer Delay"
+                   data-content="This represents the
+                   increase in RTT during a TCP Throughput test versus the inherent or
+                   baseline RTT."></i>
+            </th>
             <td>{{datapoint.buffer_delay}} %</td>
         </tr>
         </tbody>
     </table>
 </div>
 
+{% block js %}
+
+<script>
+    $(document).ready(function(){
+        $('[data-toggle="popover"]').popover({
+            trigger: 'hover'
+        })
+    });
+</script>
 
 {% endblock %}
+
+{% endblock %}
+

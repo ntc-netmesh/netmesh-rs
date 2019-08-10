@@ -30,7 +30,7 @@ data_point = {
     "mode": random.choices(['normal', 'reverse', 'bidirectional', 'simultaneous'])[0],
     "results": {
         "set1": {
-            "ts": pytz.utc.localize(datetime.now()),
+            "ts": pytz.utc.localize(datetime.utcnow()),
             "server": random.choices([server1, server2, server3])[0],
             "direction": random.choices(['forward', 'reverse'])[0],
             "path_mtu": random.randint(1400, 1500),
@@ -50,7 +50,7 @@ data_point = {
             "buffer_delay": random.uniform(1, 10000000000),
         },
         "set2": {
-            "ts": pytz.utc.localize(datetime.now()),
+            "ts": pytz.utc.localize(datetime.utcnow()),
             "server": random.choices([server1, server2, server3])[0],
             "direction": random.choices(['forward', 'reverse'])[0],
             "path_mtu": random.randint(1400, 1500),

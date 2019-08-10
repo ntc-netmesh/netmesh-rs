@@ -21,7 +21,6 @@
     <table class="table table-striped table-sm">
         <thead>
         <tr class="table-active">
-            <th>Date Created</th>
             <th>UUID</th>
             <th>Username</th>
             <th>NTC Region</th>
@@ -32,7 +31,6 @@
         <tbody>
         {% for agent in agents %}
         <tr>
-            <td>{{agent.date_created}}</td>
             <td>{{agent.uuid}}</td>
             <td>{{agent.user}}</td>
             <td>{{agent.ntc_region}}</td>

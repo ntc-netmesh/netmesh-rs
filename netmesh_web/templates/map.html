@@ -33,8 +33,13 @@
         integrity="sha512-GffPMF3RvMeYyc1LWMHtK8EbPv0iNZ8/oTtHPx9/cc2ILxQ+u905qIwdpULaqDkyBKgOaB57QTMg7ztg8Jm2Og=="
         crossorigin=""></script>
 
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/MarkerCluster.css' %}" />
+<link rel="stylesheet" href="{% static 'css/MarkerCluster.Default.css' %}" />
+<script src="{% static 'js/leaflet.markercluster-src.js' %}"></script>
 
 <script>
+
 
     var mapLat = 12.683;
     var mapLng = 121.729;
@@ -43,15 +48,18 @@
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(map);
+    var markers = L.markerClusterGroup();
 
     {% for datapoint in datapoints %}
-        var popupHTML = 'Throughput: {{ datapoint.ave_tcp_tput|stringformat:'0.2f'}} Mbps'
-        popupHTML += '<br>RTT: {{datapoint.ave_rtt|stringformat:'0.2f'}} ms'
-        popupHTML += '<br>ID: <a href="{% url 'test_detail' datapoint.test_id.id %}" title="{{datapoint.test_id.id}}">{{ datapoint.test_id.id|truncatechars:9 }}</a>'
-        L.marker([{{datapoint.test_id.lat}}, {{datapoint.test_id.long}}]).addTo(map)
-            .bindPopup(popupHTML)
-            .openPopup();
+			var title = "Throughput: {{datapoint.ave_tcp_tput|stringformat:'0.2f'}} Mbps";
+			title += "<br>RTT: {{datapoint.ave_rtt|stringformat:'0.2f'}} ms";
+            title += '<br>ID: <a href="{% url 'test_detail' datapoint.test_id.id %}" title="{{datapoint.test_id.id}}">{{ datapoint.test_id.id|truncatechars:9 }}</a>';
+			var marker = L.marker(new L.LatLng({{datapoint.test_id.lat}}, {{datapoint.test_id.long}}), { title: title });
+			marker.bindPopup(title);
+			markers.addLayer(marker);
     {% endfor %}
+
+    map.addLayer(markers);
 
 </script>
 

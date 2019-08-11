@@ -3,6 +3,7 @@
 {% load humanize %}
 {# Load the tag library #}
 {% load bootstrap4 %}
+{% load tz %}
 
 {# Load CSS and JavaScript #}
 {% bootstrap_css %}
@@ -53,7 +54,9 @@
 
         {% for item in measurements.all %}
               <tr>
+                  {% timezone 'Asia/Manila' %}
                 <td>{{item.date_tested}}</td>
+                  {% endtimezone %}
                 <td>{{item.server.ip_address}} ({{item.server.type}})</td>
                 <td>{{item.direction}}</td>
                 <td><a href="{% url 'datapoint_detail' item.id %}"

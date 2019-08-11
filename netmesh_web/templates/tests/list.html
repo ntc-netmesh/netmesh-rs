@@ -3,6 +3,7 @@
 {% load humanize %}
 {# Load the tag library #}
 {% load bootstrap4 %}
+{% load tz %}
 
 {# Load CSS and JavaScript #}
 {% bootstrap_css %}
@@ -36,7 +37,9 @@
         <tbody>
     {% for item in tests %}
           <tr>
+              {% timezone 'Asia/Manila' %}
             <td>{{item.date_created}}</td>
+              {% endtimezone %}
             <td><a href="{% url 'test_detail' item.id %}"
                    title="View Test Details">{{ item.id|truncatechars:9 }}</a></td>
             <td>{{item.test_type}}</td>

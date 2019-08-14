@@ -54,7 +54,7 @@
 			var title = "Throughput: {{datapoint.ave_tcp_tput|stringformat:'0.2f'}} Mbps";
 			title += "<br>RTT: {{datapoint.ave_rtt|stringformat:'0.2f'}} ms";
             title += '<br>ID: <a href="{% url 'test_detail' datapoint.test_id.id %}" title="{{datapoint.test_id.id}}">{{ datapoint.test_id.id|truncatechars:9 }}</a>';
-			var marker = L.marker(new L.LatLng({{datapoint.test_id.lat}}, {{datapoint.test_id.long}}), { title: title });
+			var marker = L.marker(new L.LatLng({{datapoint.test_id.lat|stringformat:'0.3f'}}, {{datapoint.test_id.long|stringformat:'0.3f'}}), { title: title });
 			marker.bindPopup(title);
 			markers.addLayer(marker);
     {% endfor %}

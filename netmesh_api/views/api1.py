@@ -13,7 +13,9 @@ from netmesh_api.models import AgentProfile
 from netmesh_api.models import DataPoint
 from netmesh_api.models import Server
 from netmesh_api.models import Test
+from netmesh_api.models import Traceroute, Hop
 from netmesh_api.serializers import ServerSerializer
+from netmesh_api.utils import get_client_ip
 
 
 class SubmitData(APIView):
@@ -23,15 +25,6 @@ class SubmitData(APIView):
     renderer_classes = (JSONRenderer,)
     authentication_classes = (TokenAuthentication,)
     permission_classes = (IsAuthenticated,)
-
-    @staticmethod
-    def get_client_ip(request):
-        x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
-        if x_forwarded_for:
-            ip = x_forwarded_for.split(',')[0]
-        else:
-            ip = request.META.get('REMOTE_ADDR')
-        return ip
 
     def post(self, request):
         """ POST method for submitting a report """
@@ -49,7 +42,7 @@ class SubmitData(APIView):
             test.test_type = report["test_type"]
             test.network_connection = report["network"]
             test.pcap = report["pcap"]
-            test.ip_address = self.get_client_ip(request)
+            test.ip_address = get_client_ip(request)
             test.lat = report["lat"]
             test.long = report["long"]
             test.mode = report["mode"]
@@ -131,3 +124,42 @@ class ServerViewSet(viewsets.ReadOnlyModelViewSet):
 
     queryset = Server.objects.all().order_by('pk')
     serializer_class = ServerSerializer
+
+
+class SubmitTraceroute(APIView):
+    """ Submit traceroute data
+            <base_url>/api/submit/?
+        """
+    renderer_classes = (JSONRenderer,)
+
+    def post(self, request):
+
+        traceroute = request.data
+        try:
+            tr = Traceroute()
+            tr.origin_ip = get_client_ip(request)
+            tr.dest_ip = traceroute["dest_ip"]
+            tr.save()
+        except Exception as e:  # TODO: find specific exception
+            print(e)
+            return Response("ERROR: Data Save Failure",
+                            status=status.HTTP_400_BAD_REQUEST)
+
+        try:
+            for index in traceroute["hops"]:
+                newhop = Hop()
+                newhop.traceroute = tr
+                newhop.hop_index = index
+                newhop.host_ip = traceroute["hops"][index]["hostip"]
+                newhop.host_name = traceroute["hops"][index]["hostname"]
+                newhop.time1 = traceroute["hops"][index]["t1"]
+                newhop.time2 = traceroute["hops"][index]["t2"]
+                newhop.time3 = traceroute["hops"][index]["t3"]
+                newhop.save()
+        except Exception as e:  # TODO: find specific exception
+            print(e)
+            return Response("ERROR: Data Save Failure",
+                            status=status.HTTP_400_BAD_REQUEST)
+
+        return Response("OK", status=status.HTTP_200_OK)
+

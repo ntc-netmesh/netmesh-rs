@@ -15,4 +15,5 @@ urlpatterns += [
 urlpatterns += [
     path('submit', api1.SubmitData.as_view()),
     path('register', api1.Register.as_view()),
+    path('submit/traceroute', api1.SubmitTraceroute.as_view()),
 ]

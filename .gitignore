@@ -4,4 +4,3 @@ __pycache__
 netmesh_api/migrations/*
 *.sqlite3
 */__pycache__/*
-envs/prod/*

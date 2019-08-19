@@ -1,5 +1,15 @@
 CHANGELOG
 
+08-19-2019
+- UI additions
+    - Put results map in index url.
+    - Add “Learn More” page. I.e. info on the tests performed, link to RFC 6349.
+    - Information for each of the test parameters
+- Point clustering in results map
+    - round off GPS locations to 3 decimal places to obfuscate exact location
+- Include traceroute information
+- Timezone config in webUI. Web UI gets UTC from DB and will display to PHT
+
 08-02-2019
 - updated Datapoint model to reflect additional fields that will be submitted by client-side application
 - in concurrence, updated api views, templates as well

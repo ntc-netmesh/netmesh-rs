@@ -139,6 +139,7 @@ class SubmitTraceroute(APIView):
             tr = Traceroute()
             tr.origin_ip = get_client_ip(request)
             tr.dest_ip = traceroute["dest_ip"]
+            tr.dest_name = traceroute["dest_name"]
             tr.save()
         except Exception as e:  # TODO: find specific exception
             print(e)

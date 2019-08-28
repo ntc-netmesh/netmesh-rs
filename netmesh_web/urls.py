@@ -4,6 +4,7 @@ from netmesh_web.views import agents
 from netmesh_web.views import servers
 from netmesh_web.views import tests
 from netmesh_web.views import users
+from netmesh_web.views import traceroutes
 
 
 urlpatterns = []
@@ -40,4 +41,10 @@ urlpatterns += [
     path('tests/', tests.test_list, name='tests'),
     path('tests/detail/<id>', tests.test_detail, name='test_detail'),
     path('datapoint/detail/<id>', tests.datapoint_detail, name='datapoint_detail'),
+]
+
+""" Traceroutes """
+urlpatterns += [
+    path('traceroutes/', traceroutes.traceroute_list, name='traceroutes'),
+    path('traceroutes/detail/<id>', traceroutes.traceroute_detail, name='traceroute_detail'),
 ]

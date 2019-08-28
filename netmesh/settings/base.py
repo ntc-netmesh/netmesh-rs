@@ -134,6 +134,7 @@ CRISPY_CLASS_CONVERTERS = {
     'textinput': "form-control form-control-sm",
     'numberinput': "form-control form-control-sm",
     "select": "form-control form-control-sm",
+    'urlinput': "form-control form-control-sm",
     "passwordinput": "form-control form-control-sm",
 }
 

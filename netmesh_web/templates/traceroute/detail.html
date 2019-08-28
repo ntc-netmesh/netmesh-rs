@@ -1,0 +1,65 @@
+{% extends "base_generic.html" %}
+{% load mathfilters %}
+{% load humanize %}
+{# Load the tag library #}
+{% load bootstrap4 %}
+{% load tz %}
+
+{# Load CSS and JavaScript #}
+{% bootstrap_css %}
+{% bootstrap_javascript jquery='full' %}
+
+{# Display django.contrib.messages as Bootstrap alerts #}
+{% bootstrap_messages %}
+
+{% block content %}
+    <h1>Traceroute details</h1>
+    <br>
+    <div class="table-responsive">
+        <table class="table-sm">
+            <tr>
+                <th>Date</th>
+                <td>{{traceroute.date}}</td>
+            </tr>
+            <tr>
+                <th>Origin</th>
+                <td>{{traceroute.origin_ip}}</td>
+            </tr>
+            <tr>
+                <th>Destination</th>
+                <td>{{traceroute.dest_ip}} ({{traceroute.dest_name}})</td>
+            </tr>
+        </table>
+    </div>
+
+    <br>
+    <h2>Hops:</h2>
+
+    <div class="table-responsive">
+        <table class="table table-striped table-sm">
+              <tr>
+                <th>Index</th>
+                <th>Host IP</th>
+                <th>Host Name</th>
+                <th>Time 1</th>
+                <th>Time 2</th>
+                <th>Time 3</th>
+              </tr>
+
+        {% for item in hops.all %}
+              <tr>
+                <td>{{item.hop_index}}</td>
+                <td>{{item.host_ip}}</td>
+                <td>{{item.host_name}}</td>
+                <td>{{item.time1}}</td>
+                <td>{{item.time2}}</td>
+                <td>{{item.time3}}</td>
+              </tr>
+
+        {% endfor %}
+
+
+        </table>
+    </div>
+
+{% endblock %}

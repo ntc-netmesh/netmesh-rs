@@ -1,0 +1,70 @@
+{% extends "base_generic.html" %}
+{% load mathfilters %}
+{% load humanize %}
+{# Load the tag library #}
+{% load bootstrap4 %}
+{% load tz %}
+
+{# Load CSS and JavaScript #}
+{% bootstrap_css %}
+{% bootstrap_javascript jquery='full' %}
+
+{# Display django.contrib.messages as Bootstrap alerts #}
+{% bootstrap_messages %}
+
+{% block content %}
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h1">Traceroutes</h1>
+</div>
+
+<div class="table-responsive">
+    <table class="table table-striped table-sm">
+        <thead>
+        <tr class="table-active">
+            <th>Date</th>
+            <th>Origin IP</th>
+            <th>Destination IP</th>
+            <th>Destination Name</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+    {% for item in traceroutes %}
+          <tr>
+              {% timezone 'Asia/Manila' %}
+            <td>{{item.date}}</td>
+              {% endtimezone %}
+
+            <td>{{item.origin_ip}}</td>
+            <td>{{item.dest_ip}}</td>
+            <td>{{item.dest_name}}</td>
+            <td><a href="{% url 'traceroute_detail' item.id %}"
+               title="View Traceroute Details">View Detail</a></td>
+          </tr>
+
+    {% endfor %}
+        </tbody>
+    </table>
+
+
+    <div class="pagination">
+        <span class="step-links">
+            {% if traceroutes.has_previous %}
+                <a href="?page=1">&laquo; first</a>
+                <a href="?page={{ traceroutes.previous_page_number }}">previous</a>
+            {% endif %}
+
+            <span class="current">
+                Page {{ traceroutes.number }} of {{ traceroutes.paginator.num_pages }}.
+            </span>
+
+            {% if traceroutes.has_next %}
+                <a href="?page={{ traceroutes.next_page_number }}">next</a>
+                <a href="?page={{ traceroutes.paginator.num_pages }}">last &raquo;</a>
+            {% endif %}
+        </span>
+    </div>
+
+{% endblock %}
+
+

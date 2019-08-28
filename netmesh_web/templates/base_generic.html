@@ -70,6 +70,12 @@
                         </a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link" href="http://localhost:5000">
+                            <span data-feather="file"></span>
+                            Speedtest
+                        </a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" href="{% url 'about' %}">
                             <span data-feather="shopping-cart"></span>
                             About Us
@@ -101,6 +107,12 @@
                         <a class="nav-link" href="{% url 'servers'%}?next={{request.path}}">
                             <span data-feather="file-text"></span>
                             Servers
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'traceroutes'%}?next={{request.path}}">
+                            <span data-feather="file-text"></span>
+                            Traceroutes
                         </a>
                     </li>
                     <li class="nav-item">

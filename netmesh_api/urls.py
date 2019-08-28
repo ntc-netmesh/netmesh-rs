@@ -1,6 +1,7 @@
 from django.urls import path
 from django.urls import include
 from netmesh_api.views import api1
+from netmesh_api.views import api_speedest
 from rest_framework import routers
 
 router = routers.DefaultRouter()
@@ -16,4 +17,5 @@ urlpatterns += [
     path('submit', api1.SubmitData.as_view()),
     path('register', api1.Register.as_view()),
     path('submit/traceroute', api1.SubmitTraceroute.as_view()),
+    path('submit/speedtest', api_speedest.SubmitSpeedtestData.as_view()),
 ]

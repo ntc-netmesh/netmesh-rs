@@ -16,7 +16,7 @@ from netmesh_api.models import Test
 from netmesh_api.models import Traceroute, Hop
 from netmesh_api.serializers import ServerSerializer
 from netmesh_api.utils import get_client_ip
-
+from netmesh_api.validators import check_lat, check_long
 
 class SubmitData(APIView):
     """ Submit measurement data
@@ -43,13 +43,13 @@ class SubmitData(APIView):
             test.network_connection = report["network"]
             test.pcap = report["pcap"]
             test.ip_address = get_client_ip(request)
-            test.lat = report["lat"]
-            test.long = report["long"]
+            test.lat = check_lat(report["lat"])
+            test.long = check_long(report["long"])
             test.mode = report["mode"]
             test.save()
             measurements = report["results"]
-        except Exception:  # TODO: find specific exception
-            return Response("ERROR: Data Save Failure",
+        except Exception as e:  # TODO: find specific exception
+            return Response("ERROR: Data Save Failure, %s" % e,
                             status=status.HTTP_400_BAD_REQUEST)
 
         for dataset in measurements:

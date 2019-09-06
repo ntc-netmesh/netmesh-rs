@@ -3,6 +3,7 @@ import uuid
 from django.contrib.auth.models import User
 from django.db import models
 from django.utils import timezone as timezone
+from django.core.validators import MaxValueValidator, MinValueValidator
 
 from netmesh_api import choices
 
@@ -61,8 +62,8 @@ class Server(models.Model):
     nickname = models.CharField(max_length=200, null=True)
     ip_address = models.GenericIPAddressField()  # assumes that server has a fixed IP address
     type = models.CharField(max_length=20, choices=choices.server_choices, default='unknown')
-    lat = models.DecimalField(max_digits=10, decimal_places=7, default=16.647322)
-    long = models.DecimalField(max_digits=10, decimal_places=7, default=121.071959)
+    lat = models.FloatField(default=16.647322, validators=[MaxValueValidator(90.0), MinValueValidator(-90.0)])
+    long = models.FloatField(default=121.071959, validators=[MaxValueValidator(180.0), MinValueValidator(-180.0)])
     city = models.CharField(max_length=200, null=True)
     province = models.CharField(max_length=200, null=True)
     country = models.CharField(max_length=200, default='Philippines')
@@ -81,8 +82,8 @@ class Test(models.Model):
     date_created = models.DateTimeField(auto_now_add=True)
     network_connection = models.CharField(max_length=20, choices=choices.network_choices, default='unknown')
     pcap = models.CharField(max_length=100, null=True)
-    lat = models.DecimalField(max_digits=10, decimal_places=7, default=14.654929)
-    long = models.DecimalField(max_digits=10, decimal_places=7, default=121.064947)
+    lat = models.FloatField(default=16.647322, validators=[MaxValueValidator(90.0), MinValueValidator(-90.0)])
+    long = models.FloatField(default=121.071959, validators=[MaxValueValidator(180.0), MinValueValidator(-180.0)])
     mode = models.CharField(null=False, max_length=50, choices=choices.test_mode_choices, default='unknown')
 
     def __str__(self):
@@ -138,4 +139,3 @@ class Speedtest(models.Model):
     rtt = models.FloatField(null=False)
     upload_speed = models.FloatField(null=False)
     download_speed = models.FloatField(null=False)
-

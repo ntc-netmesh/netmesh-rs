@@ -9,12 +9,12 @@
         <!--        <link rel="stylesheet" href="{% static 'css/zerogrid.css' %}">-->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js"></script>
 
-        <div class="zerogrid">
+        <div class="container">
 			<div class="row">
-				<div class="col-5-5" align='right'>
+				<div class="col-5-5" align='left'>
 				<h1 style="color:#efefef">Netmesh Web Speedtest</h1>
                 <!-- Preload custom font here before use. This is a workaround. -->
-                <span style="font-family:M1m; color:#efefef">Add description here</span>
+                <span style="font-family:M1m; color:#efefef">Connecting from {{client_ip}}</span>
                 <span style="font-family:MuseoSans_900-webfont">&nbsp</span>
 				<hr>
 				</div>
@@ -38,6 +38,15 @@
         </div><!-- END GRID -->
         <div class="clear"></div>
         <!-- script entry point -->
+
+        <!-- retrieve list of servers -->
+        <script>
+            let serverList = [
+                {% for server in server_list %}
+                      {nickname:'{{server.nickname}}', url:'{{server.hostname}}'},
+                {% endfor %}
+            ];
+        </script>
         <script type="text/javascript" src="{% static 'scripts/lib/require.js' %}"></script>
         <script type="text/javascript">require(["{% static 'scripts/init.js' %}"])</script>
 

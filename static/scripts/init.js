@@ -16,11 +16,6 @@ require([
 ],
 function () {
 	var socket = null;
-	// TODO: get server list from python server
-	let serverList = [{nickname:'DOST-ASTI', url:'http://localhost:5000/speedtest'},
-					  {nickname:'ABC', url:'555.666.777.888'},
-					  {nickname:'DEF', url:'999.AAA.BBB.CCC'},
-					  {nickname:'GHI', url:'DDD.EEE.FFF.000'}];
 
 	// Dashboard layout
 	Dashboard.Init("dashboard", 480, 480);							// canvas ID, width, height
@@ -147,7 +142,7 @@ function () {
 		//console.log(ev);
 		let selectedServer = serverForm.selectedServer;
 		serverLabel.text = selectedServer;
-		serverIP.label = getServerUrl(selectedServer);
+//		serverIP.label = getServerUrl(selectedServer);
 		//close form
 		console.log (`Server changed to: ${serverIP.label}`);
 		serverForm.parent.removeChild(serverForm.newForm);
@@ -264,7 +259,7 @@ function () {
 		// emulate long ping-ping-ping before socket connection established
 		setTimeout(() => {
 			serverLabel.text = serverList[0].nickname;
-			serverIP.label = getServerUrl(serverList[0].nickname);
+//			serverIP.label = getServerUrl(serverList[0].nickname);
 			goButton.enable = true;
 			multiButton.enable = true;
 			serverButton.enable = true;

@@ -44,6 +44,7 @@ server_choices = [
     ('local', 'Local'),
     ('overseas', 'Overseas'),
     ('ix', 'Internet Exchange'),
+    ('web-based', 'Web-based'),
     ('unknown', 'Unknown')
 ]
 

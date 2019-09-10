@@ -11,11 +11,11 @@ from netmesh_api.utils import get_client_ip
 
 @csrf_exempt
 def do_speedtest(request, template_name='speedtest/main.html'):
-    server_list = Server.objects.all().order_by('-pk')
+    server_list = Server.objects.filter(type='web-based').values_list('nickname', 'hostname', named=True).order_by(
+        'nickname')
     client_ip = get_client_ip(request)
-    server_default = Server.objects.get(pk=1)
     context = {
         'server_list': server_list,
-        'def_server': server_default,
+        'client_ip': client_ip
     }
     return render(request, template_name, context=context)

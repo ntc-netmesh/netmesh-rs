@@ -9,7 +9,6 @@ from netmesh_api.models import Server
 from netmesh_api.utils import get_client_ip
 
 
-@csrf_exempt
 def do_speedtest(request, template_name='speedtest/main.html'):
     server_list = Server.objects.filter(type='web-based').values_list('nickname', 'hostname', named=True).order_by(
         'nickname')

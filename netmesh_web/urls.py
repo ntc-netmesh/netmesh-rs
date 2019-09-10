@@ -5,6 +5,7 @@ from netmesh_web.views import servers
 from netmesh_web.views import tests
 from netmesh_web.views import users
 from netmesh_web.views import traceroutes
+from netmesh_web.views import speedtest
 
 
 urlpatterns = []
@@ -47,4 +48,9 @@ urlpatterns += [
 urlpatterns += [
     path('traceroutes/', traceroutes.traceroute_list, name='traceroutes'),
     path('traceroutes/detail/<id>', traceroutes.traceroute_detail, name='traceroute_detail'),
+]
+
+""" Speedtests """
+urlpatterns += [
+    path('speedtest/', speedtest.do_speedtest, name='speedtest')
 ]

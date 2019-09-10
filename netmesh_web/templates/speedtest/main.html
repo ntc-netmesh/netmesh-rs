@@ -1,0 +1,44 @@
+{% extends "base_generic.html" %}
+{% load mathfilters %}
+{% load humanize %}
+
+{% load static %}
+
+{% block content %}
+        <link rel="stylesheet" href="{% static 'css/style.css' %}">
+        <!--        <link rel="stylesheet" href="{% static 'css/zerogrid.css' %}">-->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js"></script>
+
+        <div class="zerogrid">
+			<div class="row">
+				<div class="col-5-5" align='right'>
+				<h1 style="color:#efefef">Netmesh Web Speedtest</h1>
+                <!-- Preload custom font here before use. This is a workaround. -->
+                <span style="font-family:M1m; color:#efefef">Add description here</span>
+                <span style="font-family:MuseoSans_900-webfont">&nbsp</span>
+				<hr>
+				</div>
+			</div>
+            <div class="row">
+                <div class="col-5-5">
+                    <div class="wrap-col">
+                        <canvas id="dashboard" class="col-full" oncontextmenu="return false;" onselectstart="return false;">
+                            Your browser does not appear to support HTML5.  Try upgrading your browser to the latest version.
+                        </canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-5-5">
+                    <div id="footer">
+                        &copy; Copyright 2019
+                    </div>
+                </div>
+            </div>
+        </div><!-- END GRID -->
+        <div class="clear"></div>
+        <!-- script entry point -->
+        <script type="text/javascript" src="{% static 'scripts/lib/require.js' %}"></script>
+        <script type="text/javascript">require(["{% static 'scripts/init.js' %}"])</script>
+
+{% endblock %}

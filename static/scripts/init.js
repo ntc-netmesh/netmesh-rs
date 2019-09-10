@@ -156,7 +156,7 @@ function () {
 	}
 	function getServerUrl(name) {
 		for (let l of serverList) {
-			if (l.nickname == name) return l.url;
+			if (l.nickname == name) return (l.url + '/speedtest');
 		}
 		return '/speedtest';
 	}
@@ -250,22 +250,35 @@ function () {
 	try {
 		aboutButton.enable = true;
 		console.log('at connect, check server ping here')
-		// TODO: do ping-ping-ping-ping-ping
+
+		min = 1000000000;  // initialize to an arbitrarily large number
+		nearest_server = serverList[0];
+
+		// Try to ping each server and select server with lowest ping
 		for (let server of serverList) {
-			console.log(`ping ${server.url}, return latency`)
-		}
-		server = serverList[0];
-		// TODO: find lowest latency, select as default server
-		// emulate long ping-ping-ping before socket connection established
+		    start = (new Date).getTime();
+		    tempsocket = io(server.url + '/pingpong');
+
+		    tempsocket.on('pong', function(msg, cb) {
+                latency = (new Date).getTime() - start;
+                console.log(server.nickname + ', ' + latency);
+
+                // find lowest latency, select as default server
+                if (latency <= min){
+                    min = latency;
+		            nearest_server = server;
+		         }
+                tempsocket.emit('disconnect');
+		    });
+        }
+
 		setTimeout(() => {
-			serverLabel.text = serverList[0].nickname;
-//			serverIP.label = getServerUrl(serverList[0].nickname);
+			serverLabel.text = nearest_server.nickname;
 			goButton.enable = true;
 			multiButton.enable = true;
 			serverButton.enable = true;
-
-			connectToServer('DOST-ASTI');
-		}, 500);
+			connectToServer(nearest_server.nickname);
+		}, 1000);
 
 	}
 	catch(e) {

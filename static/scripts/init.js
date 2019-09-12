@@ -251,20 +251,27 @@ function () {
 		aboutButton.enable = true;
 		console.log('at connect, check server ping here')
 
-
-
         let promises = [];
         for (let server of serverList) {
             let p = new Promise((resolve, reject) => {
+                let wdt = true;
                 let tempsocket = io(server.url + '/pingpong');   // add a setTimeout delay if you want
                 let start = (new Date).getTime();
 
                 tempsocket.on('pong', (ev) => {
+                    wdt = false;
                     promise_watchdog = false;
                     latency = (new Date).getTime() - start;
                     tempsocket.disconnect();
                     resolve({s:server, l:latency});  // or resolve(ev);
                 });
+
+                setTimeout(() => {
+                    if (wdt == true) {
+                        tempsocket.disconnect();
+                        resolve(9999999999999999999999999); // a very large dummy value
+                   }
+               }, 2000);
             })
             promises.push(p);
         }
@@ -276,12 +283,28 @@ function () {
 		        nearest_server = null;
 
                 for (let item of values){
-                    console.log(item);
                     if (item.l <= min){
                         nearest_server = item.s;
                         min = item.l;
                     }
                 }
+
+                setTimeout(() => {
+                    if (nearest_server != null){
+                        serverLabel.text = nearest_server.nickname;
+                        goButton.enable = true;
+                        multiButton.enable = true;
+                        serverButton.enable = true;
+                        connectToServer(nearest_server.nickname);
+                    }
+                    else {
+                        serverLabel.text = 'Server connection failed.'
+                        goButton.enable = false;
+                        multiButton.enable = false;
+                        serverButton.enable = false;
+                        testEnd(false, `Server connection failure. Please reload the page to try again.`);
+                    }
+                }, 1000);
             })
             .catch(error => { // <- optional
                 console.error(error.message)
@@ -289,15 +312,7 @@ function () {
 
 
 
-		setTimeout(() => {
-		    if (nearest_server != null){
-                serverLabel.text = nearest_server.nickname;
-                goButton.enable = true;
-                multiButton.enable = true;
-                serverButton.enable = true;
-                connectToServer(nearest_server.nickname);
-		    }
-		}, 1000);
+
 
 	}
 	catch(e) {

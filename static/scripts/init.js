@@ -42,7 +42,7 @@ function () {
 							colors:textColors,
 							height: 25,
 							label:'SERVER: ', offset:40,			// x-offset from label if needed
-							text:'Checking...'});
+							text:'Checking connection to server...'});
 	let serverIP = new Label({id:'serverIP',
 							rect:new Rect(340,35,400,40),
 							colors:textColors,
@@ -251,33 +251,52 @@ function () {
 		aboutButton.enable = true;
 		console.log('at connect, check server ping here')
 
-		min = 1000000000;  // initialize to an arbitrarily large number
-		nearest_server = null;
 
-		// Try to ping each server and select server with lowest ping
-		for (let server of serverList) {
-		    start = (new Date).getTime();
-		    tempsocket = io(server.url + '/pingpong');
 
-		    tempsocket.on('pong', function(msg, cb) {
-                latency = (new Date).getTime() - start;
-                console.log(server.nickname + ', ' + latency);
+        let promises = [];
+        for (let server of serverList) {
+            let p = new Promise((resolve, reject) => {
+                let tempsocket = io(server.url + '/pingpong');   // add a setTimeout delay if you want
+                let start = (new Date).getTime();
 
-                // find lowest latency, select as default server
-                if (latency <= min){
-                    min = latency;
-		            nearest_server = server;
-		         }
-                tempsocket.emit('disconnect');
-		    });
+                tempsocket.on('pong', (ev) => {
+                    promise_watchdog = false;
+                    latency = (new Date).getTime() - start;
+                    tempsocket.disconnect();
+                    resolve({s:server, l:latency});  // or resolve(ev);
+                });
+            })
+            promises.push(p);
         }
 
+        Promise.all(promises)
+            .then(values => {
+                // process values here
+                min = 1000000000;  // initialize to an arbitrarily large number
+		        nearest_server = null;
+
+                for (let item of values){
+                    console.log(item);
+                    if (item.l <= min){
+                        nearest_server = item.s;
+                        min = item.l;
+                    }
+                }
+            })
+            .catch(error => { // <- optional
+                console.error(error.message)
+             });
+
+
+
 		setTimeout(() => {
-			serverLabel.text = nearest_server.nickname;
-			goButton.enable = true;
-			multiButton.enable = true;
-			serverButton.enable = true;
-			connectToServer(nearest_server.nickname);
+		    if (nearest_server != null){
+                serverLabel.text = nearest_server.nickname;
+                goButton.enable = true;
+                multiButton.enable = true;
+                serverButton.enable = true;
+                connectToServer(nearest_server.nickname);
+		    }
 		}, 1000);
 
 	}

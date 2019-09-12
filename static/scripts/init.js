@@ -252,7 +252,7 @@ function () {
 		console.log('at connect, check server ping here')
 
 		min = 1000000000;  // initialize to an arbitrarily large number
-		nearest_server = serverList[0];
+		nearest_server = null;
 
 		// Try to ping each server and select server with lowest ping
 		for (let server of serverList) {

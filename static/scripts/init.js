@@ -269,7 +269,7 @@ function () {
                 setTimeout(() => {
                     if (wdt == true) {
                         tempsocket.disconnect();
-                        resolve(9999999999999999999999999); // a very large dummy value
+                        resolve(Number.MAX_VALUE); // a very large dummy value
                    }
                }, 2000);
             })
@@ -279,7 +279,7 @@ function () {
         Promise.all(promises)
             .then(values => {
                 // process values here
-                min = 1000000000;  // initialize to an arbitrarily large number
+                min = Number.MAX_VALUE;  // initialize to an arbitrarily large number
 		        nearest_server = null;
 
                 for (let item of values){
@@ -309,10 +309,6 @@ function () {
             .catch(error => { // <- optional
                 console.error(error.message)
              });
-
-
-
-
 
 	}
 	catch(e) {

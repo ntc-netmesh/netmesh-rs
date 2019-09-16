@@ -41,7 +41,7 @@
 
         <!-- retrieve list of servers -->
         <script>
-            let serverList = [
+            let MasterServerList = [
                 {% for server in server_list %}
                       {nickname:'{{server.nickname}}', url:'{{server.hostname}}'},
                 {% endfor %}

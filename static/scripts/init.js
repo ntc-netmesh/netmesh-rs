@@ -19,6 +19,7 @@ function () {
 
 	// Dashboard layout
 	Dashboard.Init("dashboard", 480, 480);							// canvas ID, width, height
+	let serverList = [];
 	let speedGauge = new DualGauge({id:'speed', 					// ID, linear scale by default
 							rect:new Rect(100,100,380,380), 			// x,y,width,height
 							colors:['Cyan','Orange'],				// creates gradient, choose only colors with 'dark' versions
@@ -31,16 +32,16 @@ function () {
 							range:[-1,3,1,0.5],						// minValue, maxValue, majorTick, minorTick: in log scale
 							text:['PING','ms']});					// speed0, units
 	let textColors = ['Khaki', 'White'];
-	let IpLabel = new Label({id:'ipaddr',
-							rect:new Rect(20,10,400,40),			// x,y,width,height
-							colors:textColors,						// label, text
-							height: 25,
-							label:'IP: ',
-							text:''});
+//	let IpLabel = new Label({id:'ipaddr',
+//							rect:new Rect(20,10,400,40),			// x,y,width,height
+//							colors:textColors,						// label, text
+//							height: 25,
+//							label:'IP: ',
+//							text:''});
 	let serverLabel = new Label({id:'server',
-							rect:new Rect(260,10,400,40),
+							rect:new Rect(20,10,400,40),
 							colors:textColors,
-							height: 25,
+							height: 20,
 							label:'SERVER: ', offset:40,			// x-offset from label if needed
 							text:'Checking connection to server...'});
 	let serverIP = new Label({id:'serverIP',
@@ -252,7 +253,7 @@ function () {
 		console.log('at connect, check server ping here')
 
         let promises = [];
-        for (let server of serverList) {
+        for (let server of MasterServerList) {
             let p = new Promise((resolve, reject) => {
                 let wdt = true;
                 let tempsocket = io(server.url + '/pingpong');   // add a setTimeout delay if you want
@@ -286,6 +287,7 @@ function () {
                     if (item.l <= min){
                         nearest_server = item.s;
                         min = item.l;
+                        serverList.push({nickname: item.s.nickname, url: item.s.url });
                     }
                 }
 

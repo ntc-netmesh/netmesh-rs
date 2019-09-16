@@ -227,9 +227,9 @@ function () {
                         break;
                     }
                     case 100: {  // Results state
-                        speedGauge.speed0 = parseFloat(msg.results.dl*8)/(1024*1024);	// to Mbps
+                        speedGauge.speed0 = parseFloat(msg.results.dl)/(1024*1024);	// to Mbps
                         pingGauge.ping = Math.log(parseFloat(msg.results.rttAve*1000))/Math.LN10;
-                        speedGauge.speed1 = parseFloat(msg.results.ul*8)/(1024*1024);	// to Mbps
+                        speedGauge.speed1 = parseFloat(msg.results.ul)/(1024*1024);	// to Mbps
                         break;
                     }
                     case 101: { // Test

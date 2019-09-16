@@ -11,6 +11,7 @@ from rest_framework.views import APIView
 
 from netmesh_api.models import Speedtest
 from netmesh_api.models import Server
+from netmesh_api import utils
 
 
 class SubmitSpeedtestData(APIView):
@@ -29,7 +30,7 @@ class SubmitSpeedtestData(APIView):
             sp = Speedtest()
             sp.test_id = request.data['test_id']
             sp.sid = request.data['sid']
-            sp.ip_address = request.data['ip_address']
+            sp.ip_address = utils.get_client_ip(request)
             sp.server = server
             sp.rtt_ave = request.data['result']['rttAve']
             sp.rtt_min = request.data['result']['rttMin']

@@ -14,7 +14,7 @@
 
 {% block content %}
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-    <h1 class="h1">RFC-6349 Test Results</h1>
+    <h1 class="h1">Web-based Speedtest Results</h1>
     <div class="btn-toolbar mb-2 mb-md-0">
         <div class="btn-group mr-2">
             <a href="{% url 'map' %}" class="btn btn-sm btn-outline-secondary">View Map</a>
@@ -29,23 +29,27 @@
             <th>Date</th>
             <th>Test ID</th>
             <th>Test Type</th>
-            <th>Test Mode</th>
-            <th>Network Connection</th>
-            <th>Agent</th>
+            <th>IP Address</th>
+            <th>RTT (Min/Ave/Max)</th>
+            <th>Download Speed</th>
+            <th>Upload Speed</th>
           </tr>
         </thead>
         <tbody>
-    {% for item in tests %}
+    {% for item in speedtests %}
           <tr>
               {% timezone 'Asia/Manila' %}
-            <td>{{item.date_created}}</td>
+            <td>{{item.date}}</td>
               {% endtimezone %}
             <td><a href="{% url 'test_detail' item.id %}"
-                   title="View Test Details">{{ item.id|truncatechars:9 }}</a></td>
-            <td>{{item.test_type}}</td>
-            <td>{{item.mode}}</td>
-            <td>{{item.network_connection}}</td>
-            <td>{{item.agent}}</td>
+                   title="View Test Details">{{ item.test_id|truncatechars:9 }}</a></td>
+            <td>Web-based</td>
+            <td>{{item.ip_address}}</td>
+            <td>{{item.rtt_min|mul:1000|stringformat:'0.2f'}} ms /
+                {{item.rtt_ave|mul:1000|stringformat:'0.2f'}} ms /
+                {{item.rtt_max|mul:1000|stringformat:'0.2f'}} ms</td>
+            <td>{{item.download_speed|div:1048576|stringformat:'0.2f'}} Mbps</td>
+            <td>{{item.upload_speed|div:1048576|stringformat:'0.2f'}} Mbps</td>
           </tr>
 
     {% endfor %}
@@ -55,18 +59,18 @@
 
     <div class="pagination">
         <span class="step-links">
-            {% if tests.has_previous %}
+            {% if speedtests.has_previous %}
                 <a href="?page=1">&laquo; first</a>
-                <a href="?page={{ tests.previous_page_number }}">previous</a>
+                <a href="?page={{ speedtests.previous_page_number }}">previous</a>
             {% endif %}
 
             <span class="current">
-                Page {{ tests.number }} of {{ tests.paginator.num_pages }}.
+                Page {{ speedtests.number }} of {{ speedtests.paginator.num_pages }}.
             </span>
 
             {% if tests.has_next %}
-                <a href="?page={{ tests.next_page_number }}">next</a>
-                <a href="?page={{ tests.paginator.num_pages }}">last &raquo;</a>
+                <a href="?page={{ speedtests.next_page_number }}">next</a>
+                <a href="?page={{ speedtests.paginator.num_pages }}">last &raquo;</a>
             {% endif %}
         </span>
     </div>

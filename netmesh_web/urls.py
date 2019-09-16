@@ -52,5 +52,6 @@ urlpatterns += [
 
 """ Speedtests """
 urlpatterns += [
-    path('speedtest/', speedtest.do_speedtest, name='speedtest')
+    path('speedtest/', speedtest.do_speedtest, name='speedtest'),
+    path('speedtest/list', speedtest.speedtest_list, name='speedtest_list'),
 ]

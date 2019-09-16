@@ -37,6 +37,7 @@
 	}
 	}
 
+
     </style>
 
     <link href="https://getbootstrap.com/docs/4.3/examples/dashboard/dashboard.css" rel="stylesheet">
@@ -67,10 +68,22 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'tests' %}">
-                            <span data-feather="file"></span>
-                            Test Results
-                        </a>
+                        <div class="dropdown show">
+                            <a class="nav-link dropdown-toggle" id="dropdownMenuLink"
+                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Results
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                <a class="nav-link" href="{% url 'tests' %}">
+                                    <span data-feather="file"></span>
+                                    RFC-6349
+                                </a>
+                                <a class="nav-link" href="{% url 'speedtest_list' %}">
+                                    <span data-feather="file"></span>
+                                    Web-based
+                                </a>
+                            </div>
+                        </div>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'speedtest'%}">

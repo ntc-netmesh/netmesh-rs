@@ -287,6 +287,8 @@ function () {
                     if (item.l <= min){
                         nearest_server = item.s;
                         min = item.l;
+                    }
+                    if (item.l < Number.MAX_VALUE){
                         serverList.push({nickname: item.s.nickname, url: item.s.url });
                     }
                 }

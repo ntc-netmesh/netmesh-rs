@@ -23,7 +23,7 @@ function () {
 	let speedGauge = new DualGauge({id:'speed', 					// ID, linear scale by default
 							rect:new Rect(100,100,380,380), 			// x,y,width,height
 							colors:['Cyan','Orange'],				// creates gradient, choose only colors with 'dark' versions
-							range:[0,25,10,5],						// minValue(always 0), maxValue, majorTick, minorTick
+							range:[0,30,10,5],						// minValue(always 0), maxValue, majorTick, minorTick
 							text:['DOWNLOAD','UPLOAD','Mbps'],		// speed0, speed1, units
 							showPeak:true});
 	let pingGauge = new PieGauge({id:'latency', 					// ID, log scale by default

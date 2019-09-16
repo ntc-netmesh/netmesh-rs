@@ -36,6 +36,7 @@ class ServerForm {
 
         // add close button
         this.addClose('Close');
+        window.dispatchEvent(new Event('resize'));
     }
     get selectedServer () {
         let ctrl = document.getElementById(SELECT_NAME);
@@ -113,6 +114,7 @@ class AboutBox {
         this.addTextarea(ABOUT_NAME, param.message);
         // add close button
         this.addClose('Close');
+        window.dispatchEvent(new Event('resize'));
     }
     addTextarea(id, msg) {
         let element = document.createElement("textarea");

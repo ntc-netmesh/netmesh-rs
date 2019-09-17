@@ -135,7 +135,7 @@ function () {
 		console.log ('About button clicked!');
 		aboutButton.enable = false;
 		aboutBox = new AboutBox({id:'About',
-						message:'This is a sample message',
+						message:'For more info, go to ntc.gov.ph.',
 						onClose:closeAbout});
 	}
 	// Form callbacks

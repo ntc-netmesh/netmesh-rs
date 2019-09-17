@@ -11,28 +11,38 @@
 
         <div class="container">
 			<div class="row">
-				<div class="col-5-5" align='left'>
-				<h1 style="color:#efefef">Netmesh Web Speedtest</h1>
-                <!-- Preload custom font here before use. This is a workaround. -->
-                <span style="font-family:M1m; color:#efefef">Connecting from {{client_ip}}</span>
-                <span style="font-family:MuseoSans_900-webfont">&nbsp</span>
-				<hr>
-				</div>
-			</div>
-            <div class="row">
-                <div class="col-5-5">
+				<div style="float:left; width:50%">
+                    <h1>Netmesh Web Speedtest</h1>
+                    <!-- Preload custom font here before use. This is a workaround. -->
+                    <span style="font-family:M1m; color:#efefef">Connecting from {{client_ip}}</span>
+                    <span style="font-family:MuseoSans_900-webfont">&nbsp</span>
+                    <hr>
+
                     <div class="wrap-col">
                         <canvas id="dashboard" class="col-full" oncontextmenu="return false;" onselectstart="return false;">
                             Your browser does not appear to support HTML5.  Try upgrading your browser to the latest version.
                         </canvas>
                     </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-5-5">
+
                     <div id="footer">
                         &copy; Copyright 2019
                     </div>
+                </div>
+
+                <div style="padding:50px; float:left; width:50%">
+
+                    <h5>About the test</h5>
+                    <span style="font-family:M1m; color:#efefef">
+                        This test measures the application-level throughput
+                        (<a href="https://en.wikipedia.org/wiki/Goodput">aka goodput</a>)
+                        between your computer and the selected test server.
+                    </span>
+                    <hr>
+                    <h5>Disclaimer</h5>
+                    <span style="font-family:M1m; color:#efefef">
+                        By running this test, you agree to the <a href="#">NetMesh data policy</a>,
+                        which includes retention and publication of IP addresses.
+                    </span>
                 </div>
             </div>
         </div><!-- END GRID -->

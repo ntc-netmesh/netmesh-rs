@@ -27,9 +27,8 @@
         <thead>
         <tr class="table-active">
             <th>Date</th>
-            <th>Test ID</th>
-            <th>Test Type</th>
             <th>IP Address</th>
+            <th>ISP</th>
             <th>RTT (Min/Ave/Max)</th>
             <th>Download Speed</th>
             <th>Upload Speed</th>
@@ -41,10 +40,8 @@
               {% timezone 'Asia/Manila' %}
             <td>{{item.date}}</td>
               {% endtimezone %}
-            <td><a href="{% url 'test_detail' item.id %}"
-                   title="View Test Details">{{ item.test_id|truncatechars:9 }}</a></td>
-            <td>Web-based</td>
-            <td>{{item.ip_address}}</td>
+            <td>{{item.ip_address.ip_address}}</td>
+            <td>{{item.ip_address.isp}}</td>
             <td>{{item.rtt_min|mul:1000|stringformat:'0.2f'}} ms /
                 {{item.rtt_ave|mul:1000|stringformat:'0.2f'}} ms /
                 {{item.rtt_max|mul:1000|stringformat:'0.2f'}} ms</td>

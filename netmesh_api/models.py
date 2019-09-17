@@ -130,11 +130,33 @@ class Hop(models.Model):
     host_ip = models.GenericIPAddressField(null=True)
 
 
+class IPaddress(models.Model):
+    date = models.DateTimeField(default=timezone.now)
+    ip_address = models.GenericIPAddressField(null=False)
+    country = models.CharField(max_length=50)
+    country_code = models.CharField(max_length=10)
+    region = models.CharField(max_length=50)
+    region_name = models.CharField(max_length=50)
+    city = models.CharField(max_length=50)
+    zip = models.CharField(max_length=10)
+    lat = models.FloatField(default=0, validators=[MaxValueValidator(90.0), MinValueValidator(-90.0)])
+    long = models.FloatField(default=0, validators=[MaxValueValidator(180.0), MinValueValidator(-180.0)])
+    timezone = models.CharField(max_length=50, default='Asia/Manila',
+                                choices=choices.timezone_choices)
+    isp = models.CharField(max_length=100)
+    org = models.CharField(max_length=100)
+    as_num = models.CharField(max_length=100)
+    as_name = models.CharField(max_length=100)
+    reverse = models.CharField(max_length=200)
+    mobile = models.BooleanField(default=False)
+    proxy = models.BooleanField(default=False)
+
+
 class Speedtest(models.Model):
     date = models.DateTimeField(default=timezone.now)
     test_id = models.UUIDField(null=False, editable=False, unique=True)
     sid = models.CharField(max_length=32, null=False, editable=False)
-    ip_address = models.GenericIPAddressField(null=False)
+    ip_address = models.ForeignKey(IPaddress, on_delete=models.CASCADE)
     server = models.ForeignKey(Server, on_delete=models.CASCADE)
     rtt_ave = models.FloatField(null=False)
     rtt_min = models.FloatField(null=False)

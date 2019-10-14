@@ -115,7 +115,7 @@ class RegisterClientDevice(APIView):
         device.hash = hash
         device.save()
 
-        return Response({'SUCCES'}, status=status.HTTP_200_OK)
+        return Response({'SUCCESS'}, status=status.HTTP_200_OK)
 
 
 class GetToken(APIView):

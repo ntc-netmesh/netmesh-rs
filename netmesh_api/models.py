@@ -58,7 +58,7 @@ class AgentProfile(models.Model):
 
 class RFC6349TestDevice(models.Model):
     date_created = models.DateTimeField(auto_now_add=True)
-    hash = models.UUIDField(null=False)
+    hash = models.CharField(max_length=64, unique=True, null=False)
     created_by = models.ForeignKey(UserProfile, null=False, on_delete=models.CASCADE)
 
 
@@ -91,6 +91,7 @@ class Test(models.Model):
     lat = models.FloatField(default=16.647322, validators=[MaxValueValidator(90.0), MinValueValidator(-90.0)])
     long = models.FloatField(default=121.071959, validators=[MaxValueValidator(180.0), MinValueValidator(-180.0)])
     mode = models.CharField(null=False, max_length=50, choices=choices.test_mode_choices, default='unknown')
+    device = models.ForeignKey(RFC6349TestDevice, null=False, on_delete=models.CASCADE)
 
     def __str__(self):
         return "Test %s" % self.id

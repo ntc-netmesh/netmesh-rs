@@ -56,6 +56,12 @@ class AgentProfile(models.Model):
             return self.user.username
 
 
+class RFC6349TestDevice(models.Model):
+    date_created = models.DateTimeField(auto_now_add=True)
+    hash = models.UUIDField(null=False)
+    created_by = models.ForeignKey(UserProfile, null=False, on_delete=models.CASCADE)
+
+
 class Server(models.Model):
     """ Model for a NetMesh test server """
     uuid = models.UUIDField(default=uuid.uuid4, editable=False)

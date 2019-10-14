@@ -15,7 +15,8 @@ urlpatterns += [
 
 urlpatterns += [
     path('submit', api1.SubmitData.as_view()),
-    path('register', api1.Register.as_view()),
+    path('register', api1.RegisterClientDevice.as_view()),
+    path('gettoken', api1.GetToken.as_view()),
     path('submit/traceroute', api1.SubmitTraceroute.as_view()),
     path('submit/speedtest', api_speedest.SubmitSpeedtestData.as_view()),
 ]

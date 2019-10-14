@@ -2,7 +2,7 @@ from django.contrib.auth import authenticate
 from django.core.exceptions import ObjectDoesNotExist
 from rest_framework import status
 from rest_framework import viewsets
-from rest_framework.authentication import TokenAuthentication
+from rest_framework.authentication import TokenAuthentication, BasicAuthentication
 from rest_framework.authtoken.models import Token
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.renderers import JSONRenderer
@@ -10,9 +10,11 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from netmesh_api.models import AgentProfile
+from netmesh_api.models import UserProfile
 from netmesh_api.models import DataPoint
 from netmesh_api.models import Server
 from netmesh_api.models import Test
+from netmesh_api.models import RFC6349TestDevice
 from netmesh_api.models import Traceroute, Hop
 from netmesh_api.serializers import ServerSerializer
 from netmesh_api.utils import get_client_ip
@@ -84,30 +86,54 @@ class SubmitData(APIView):
         return Response('OK CREATED', status=status.HTTP_200_OK)
 
 
-class Register(APIView):
-    """ API endpoint to get Agent token
+class RegisterClientDevice(APIView):
+    """ API endpoint to register a client device
         <base_url>/api/register/?
     """
     renderer_classes = (JSONRenderer,)
+    authentication_classes = (BasicAuthentication,)
+    permission_classes = (IsAuthenticated,)
 
     def post(self, request):
-        username = request.data["username"]
-        password = request.data["password"]
-        uuid = request.data["uuid"]
+        username = request.user
+        hash = request.data["hash"]
 
         try:
-            AgentProfile.objects.get(uuid=uuid)
+            user = UserProfile.objects.get(user__username=username)
+        except ObjectDoesNotExist:
+            return Response({'ERROR': 'User does not exist'}, status=status.HTTP_404_NOT_FOUND)
+
+        if user in AgentProfile.objects.all():
+            return Response({'ERROR': 'Not authorized'}, status=status.HTTP_401_UNAUTHORIZED)
+
+        # TODO: need hash verifier
+        # if hash is bad, return error
+
+        # passes all checks, save device uuid
+        device = RFC6349TestDevice()
+        device.created_by = user
+        device.hash = hash
+        device.save()
+
+        return Response({'SUCCES'}, status=status.HTTP_200_OK)
+
+
+class GetToken(APIView):
+    """ API endpoint to get Agent token
+        <base_url>/api/gettoken/?
+    """
+    renderer_classes = (JSONRenderer,)
+    authentication_classes = (BasicAuthentication,)
+    permission_classes = (IsAuthenticated,)
+
+    def post(self, request):
+        user = request.user
+        hash = request.data["hash"]
+
+        try:
+            AgentProfile.objects.get(uuid=hash)
         except ObjectDoesNotExist:
             return Response("ERROR: Invalid Agent ID", status=status.HTTP_400_BAD_REQUEST)
-
-        if username is None or password is None:
-            return Response({'ERROR': 'Please provide both username and password'},
-                            status=status.HTTP_400_BAD_REQUEST)
-
-        user = authenticate(username=username, password=password)
-
-        if not user:
-            return Response({'ERROR': 'Invalid Credentials'}, status=status.HTTP_404_NOT_FOUND)
 
         token, _ = Token.objects.get_or_create(user=user)
 

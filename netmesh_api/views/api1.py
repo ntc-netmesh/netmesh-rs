@@ -1,5 +1,5 @@
 from django.contrib.auth import authenticate
-from django.core.exceptions import ObjectDoesNotExist
+from django.core import exceptions
 from rest_framework import status
 from rest_framework import viewsets
 from rest_framework.authentication import TokenAuthentication
@@ -32,7 +32,10 @@ class SubmitData(APIView):
 
         try:
             agent = AgentProfile.objects.get(uuid=report["uuid"])
-        except ObjectDoesNotExist:
+        except exceptions.ValidationError or exceptions.ValueError:
+            return Response("ERROR: Malformed UUID",
+                            status=status.HTTP_400_BAD_REQUEST)
+        except exceptions.ObjectDoesNotExist:
             return Response("ERROR: Invalid Agent ID",
                             status=status.HTTP_400_BAD_REQUEST)
 

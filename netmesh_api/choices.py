@@ -49,10 +49,11 @@ server_choices = [
 ]
 
 test_type_choices = [
-        ('0', 'unknown'),
-        ('1', 'RFC 6349'),
-        ('2', 'other')
-    ]
+    ('0', 'unknown'),
+    ('1', 'other'),
+    ('2', 'RFC 6349'),
+    ('3', 'Web-based'),
+]
 
 timezone_choices = [(v, v) for v in pytz.common_timezones]
 

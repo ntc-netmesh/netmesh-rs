@@ -68,6 +68,7 @@ class Server(models.Model):
     nickname = models.CharField(max_length=200, null=True)
     ip_address = models.GenericIPAddressField()  # assumes that server has a fixed IP address
     type = models.CharField(max_length=20, choices=choices.server_choices, default='unknown')
+    test_method = models.CharField(null=False, max_length=50, choices=choices.test_type_choices, default='0')
     lat = models.FloatField(default=16.647322, validators=[MaxValueValidator(90.0), MinValueValidator(-90.0)])
     long = models.FloatField(default=121.071959, validators=[MaxValueValidator(180.0), MinValueValidator(-180.0)])
     city = models.CharField(max_length=200, null=True)

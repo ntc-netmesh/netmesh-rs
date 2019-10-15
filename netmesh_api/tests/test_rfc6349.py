@@ -115,8 +115,11 @@ class RFC6349TestCase(APITestCase):
     @classmethod
     def tearDownClass(cls):
         cls.server.delete()
+        cls.device.delete()
         cls.agentprofile.delete()
+        cls.userprofile.delete()
         cls.agent.delete()
+        cls.staff.delete()
 
     def test_submit_normal(self):
         """ We should be able to submit a normal data payload"""

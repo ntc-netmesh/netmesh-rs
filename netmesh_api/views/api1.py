@@ -36,12 +36,12 @@ class SubmitData(APIView):
         hash = request.data["hash"]
 
         if len(hash) != 64:
-            return Response({'ERROR': 'Invalid hash'}, status=status.HTTP_400_BAD_REQUEST)
+            return Response('ERROR: Invalid hash', status=status.HTTP_400_BAD_REQUEST)
 
         try:
             device = RFC6349TestDevice.objects.get(hash=hash)
         except ObjectDoesNotExist:
-            return Response({'ERROR': 'Invalid hash'}, status=status.HTTP_400_BAD_REQUEST)
+            return Response('ERROR: Invalid hash', status=status.HTTP_400_BAD_REQUEST)
         try:
             agent = AgentProfile.objects.get(user=user)
         except ObjectDoesNotExist as e:
@@ -113,13 +113,13 @@ class RegisterClientDevice(APIView):
         try:
             user = UserProfile.objects.get(user__username=username)
         except ObjectDoesNotExist:
-            return Response({'ERROR': 'User does not exist'}, status=status.HTTP_404_NOT_FOUND)
+            return Response('ERROR: User does not exist', status=status.HTTP_404_NOT_FOUND)
 
         if user in AgentProfile.objects.all():
-            return Response({'ERROR': 'User not authorized'}, status=status.HTTP_401_UNAUTHORIZED)
+            return Response('ERROR: User not authorized', status=status.HTTP_401_UNAUTHORIZED)
 
         if len(hash) != 64:
-            return Response({'ERROR': 'Invalid hash'}, status=status.HTTP_400_BAD_REQUEST)
+            return Response('ERROR: Invalid hash', status=status.HTTP_400_BAD_REQUEST)
 
         try:
             # try to save device uuid hash
@@ -127,10 +127,10 @@ class RegisterClientDevice(APIView):
             device.created_by = user
             device.hash = hash
             device.save()
-            return Response({'SUCCESS'}, status=status.HTTP_200_OK)
+            return Response('SUCCESS', status=status.HTTP_200_OK)
         except IntegrityError:
             # hash is not unique!
-            return Response({'ERROR': 'Hash already exists'}, status=status.HTTP_400_BAD_REQUEST)
+            return Response('ERROR: Hash already exists', status=status.HTTP_400_BAD_REQUEST)
 
 
 class GetToken(APIView):
@@ -146,12 +146,12 @@ class GetToken(APIView):
         hash = request.data["hash"]
 
         if len(hash) != 64:
-            return Response({'ERROR': 'Invalid hash'}, status=status.HTTP_400_BAD_REQUEST)
+            return Response('ERROR: Invalid hash', status=status.HTTP_400_BAD_REQUEST)
 
         try:
             device = RFC6349TestDevice.objects.get(hash=hash)
         except ObjectDoesNotExist:
-            return Response({'ERROR': 'Invalid hash'}, status=status.HTTP_400_BAD_REQUEST)
+            return Response('ERROR: Invalid hash', status=status.HTTP_400_BAD_REQUEST)
 
         try:
             AgentProfile.objects.get(user=user)

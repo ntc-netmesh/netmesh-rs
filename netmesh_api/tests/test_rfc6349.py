@@ -16,16 +16,19 @@ from rest_framework.test import APIRequestFactory
 
 from netmesh_api import models
 from netmesh_api.tests.utils import random_ip
-
+import secrets
 
 class RFC6349TestCase(APITestCase):
 
     @classmethod
     def setUpClass(cls):
         cls.username = "agent1"
+        cls.staff_username = "staff1"
         cls.password = "6ff98bf9d"
         cls.agent = models.User(username=cls.username, password=cls.password)
         cls.agent.save()
+        cls.staff = models.User(username=cls.staff_username, password=cls.password)
+        cls.staff.save()
         cls.token, _ = Token.objects.get_or_create(user=cls.agent)
         print(cls.token)
 
@@ -33,6 +36,13 @@ class RFC6349TestCase(APITestCase):
         cls.agentprofile = models.AgentProfile(user=cls.agent)
         cls.agentprofile.save()
         cls.uuid = cls.agentprofile.uuid
+        cls.userprofile = models.UserProfile(user=cls.staff)
+        cls.userprofile.save()
+
+        # create RFC6349 test device
+        cls.hash = secrets.token_hex(nbytes=32)
+        cls.device = models.RFC6349TestDevice(hash=cls.hash, created_by=cls.userprofile)
+        cls.device.save()
 
         cls.server = models.Server()
         cls.server.nickname = "test server"
@@ -49,7 +59,7 @@ class RFC6349TestCase(APITestCase):
 
     def setUp(cls):
         cls.data_point = {
-            "uuid": cls.uuid,
+            "hash": cls.hash,
             "test_type": "RFC6349",
             "network": "dsl",
             "pcap": "sample.pcap",
@@ -134,44 +144,57 @@ class RFC6349TestCase(APITestCase):
         self.assertEqual(0, models.Test.objects.all().count())
         self.assertEqual(0, models.DataPoint.objects.all().count())
 
-    def test_malformed_agent_uuid(self):
-        """ Requests with missing or invalid agent uuids should fail """
+    def test_malformed_device_hash(self):
+        """ Requests with missing or invalid device hash should fail """
         self.assertEqual(0, models.Test.objects.all().count())
         self.assertEqual(0, models.DataPoint.objects.all().count())
 
-        self.data_point['uuid'] = 'bad uuid'
+        self.data_point['hash'] = 'bad hash'
         url = '/api/submit'
         self.client.credentials(HTTP_AUTHORIZATION='Token ' + self.agent.auth_token.key)
         response = self.client.post(url, data=self.data_point, format='json')
         self.assertEqual(400, response.status_code)
-        self.assertEqual('ERROR: Malformed UUID', response.data)
+        self.assertEqual('ERROR: Invalid hash', response.data)
         self.assertEqual(0, models.Test.objects.all().count())
         self.assertEqual(0, models.DataPoint.objects.all().count())
 
-    def test_empty_agent_uuid(self):
-        """ Requests with missing or invalid agent uuids should fail """
+    def test_empty_device_hash(self):
+        """ Requests with missing or invalid device hash should fail """
         self.assertEqual(0, models.Test.objects.all().count())
         self.assertEqual(0, models.DataPoint.objects.all().count())
 
-        self.data_point['uuid'] = ""
+        self.data_point['hash'] = ""
         url = '/api/submit'
         self.client.credentials(HTTP_AUTHORIZATION='Token ' + self.agent.auth_token.key)
         response = self.client.post(url, data=self.data_point, format='json')
         self.assertEqual(400, response.status_code)
-        self.assertEqual('ERROR: Malformed UUID', response.data)
+        self.assertEqual('ERROR: Invalid hash', response.data)
         self.assertEqual(0, models.Test.objects.all().count())
         self.assertEqual(0, models.DataPoint.objects.all().count())
 
-    def test_well_formed_but_invalid_agent_uuid(self):
+    def test_well_formed_but_invalid_device_hash(self):
         """ Requests with missing or invalid agent uuids should fail """
         self.assertEqual(0, models.Test.objects.all().count())
         self.assertEqual(0, models.DataPoint.objects.all().count())
 
-        self.data_point['uuid'] = uuid.uuid4()
+        self.data_point['hash'] = uuid.uuid4()
         url = '/api/submit'
         self.client.credentials(HTTP_AUTHORIZATION='Token ' + self.agent.auth_token.key)
         response = self.client.post(url, data=self.data_point, format='json')
         self.assertEqual(400, response.status_code)
-        self.assertEqual('ERROR: Invalid Agent ID', response.data)
+        self.assertEqual('ERROR: Invalid hash', response.data)
+        self.assertEqual(0, models.Test.objects.all().count())
+        self.assertEqual(0, models.DataPoint.objects.all().count())
+
+    def test_submit_bad_token(self):
+        """ Submitting using bad tokens should fail """
+        self.assertEqual(0, models.Test.objects.all().count())
+        self.assertEqual(0, models.DataPoint.objects.all().count())
+
+        url = '/api/submit'
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + 'bad token')
+        response = self.client.post(url, data=self.data_point, format='json')
+
+        self.assertEqual(401, response.status_code)
         self.assertEqual(0, models.Test.objects.all().count())
         self.assertEqual(0, models.DataPoint.objects.all().count())

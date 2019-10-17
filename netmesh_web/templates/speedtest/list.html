@@ -65,7 +65,7 @@
                 Page {{ speedtests.number }} of {{ speedtests.paginator.num_pages }}.
             </span>
 
-            {% if tests.has_next %}
+            {% if speedtests.has_next %}
                 <a href="?page={{ speedtests.next_page_number }}">next</a>
                 <a href="?page={{ speedtests.paginator.num_pages }}">last &raquo;</a>
             {% endif %}

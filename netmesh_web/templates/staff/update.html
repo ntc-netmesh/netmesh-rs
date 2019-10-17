@@ -1,0 +1,19 @@
+{% extends "base_generic.html" %}
+{% load mathfilters %}
+{% load humanize %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<h1>Update Staff</h1>
+<br>
+<form method="post" class="form-horizontal">
+    {% csrf_token %}
+    {% crispy user_form %}
+    {% crispy staff_form %}
+    <div class="mr-2">
+        <button type="submit" class="btn btn-sm btn-primary">Save</button>
+        <a href="{% url 'staff' %}" class="btn btn-sm btn-outline-secondary">Cancel</a>
+    </div>
+</form>
+{% endblock %}

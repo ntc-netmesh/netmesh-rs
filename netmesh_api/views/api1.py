@@ -19,7 +19,9 @@ from netmesh_api.models import RFC6349TestDevice
 from netmesh_api.models import Traceroute, Hop
 from netmesh_api.serializers import ServerSerializer
 from netmesh_api.utils import get_client_ip
+from netmesh_api.utils import get_isp
 from netmesh_api.validators import check_lat, check_long
+
 
 class SubmitData(APIView):
     """ Submit measurement data
@@ -49,13 +51,16 @@ class SubmitData(APIView):
             return Response("ERROR: Invalid Agent ID",
                             status=status.HTTP_400_BAD_REQUEST)
 
+        ip_add = get_client_ip(request)
+        ip = get_isp(ip_add)
+
         try:
             test = Test()
             test.agent = agent
             test.test_type = report["test_type"]
             test.network_connection = report["network"]
             test.pcap = report["pcap"]
-            test.ip_address = get_client_ip(request)
+            test.ip_address = ip
             test.lat = check_lat(report["lat"])
             test.long = check_long(report["long"])
             test.mode = report["mode"]

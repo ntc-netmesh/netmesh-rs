@@ -19,7 +19,7 @@
         <table class="table-sm">
             <tr>
                 <th>Performed by</th>
-                <td>{{test.agent}} @ {{test.ip_address}}</td>
+                <td>{{test.agent}} @ {{test.ip_address.ip_address}}</td>
             </tr>
             <tr>
                 <th>Test type</th>
@@ -30,8 +30,8 @@
                 <td>{{test.mode}}</td>
             </tr>
             <tr>
-                <th>Network Connection</th>
-                <td>{{test.network_connection}}</td>
+                <th>ISP</th>
+                <td>{{test.ip_address.isp}}</td>
             </tr>
             <tr>
                 <th>PCAP File</th>

@@ -1,9 +1,8 @@
 import uuid
-
 from django.contrib.auth.models import User
+from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 from django.utils import timezone as timezone
-from django.core.validators import MaxValueValidator, MinValueValidator
 
 from netmesh_api import choices
 
@@ -56,10 +55,26 @@ class AgentProfile(models.Model):
             return self.user.username
 
 
-class RFC6349TestDevice(models.Model):
-    date_created = models.DateTimeField(auto_now_add=True)
-    hash = models.CharField(max_length=64, unique=True, null=False)
-    created_by = models.ForeignKey(UserProfile, null=False, on_delete=models.CASCADE)
+class IPaddress(models.Model):
+    date = models.DateTimeField(default=timezone.now)
+    ip_address = models.GenericIPAddressField(null=False)
+    country = models.CharField(max_length=50)
+    country_code = models.CharField(max_length=10)
+    region = models.CharField(max_length=50)
+    region_name = models.CharField(max_length=50)
+    city = models.CharField(max_length=50)
+    zip = models.CharField(max_length=10)
+    lat = models.FloatField(default=0, validators=[MaxValueValidator(90.0), MinValueValidator(-90.0)])
+    long = models.FloatField(default=0, validators=[MaxValueValidator(180.0), MinValueValidator(-180.0)])
+    timezone = models.CharField(max_length=50, default='Asia/Manila',
+                                choices=choices.timezone_choices)
+    isp = models.CharField(max_length=100)
+    org = models.CharField(max_length=100)
+    as_num = models.CharField(max_length=100)
+    as_name = models.CharField(max_length=100)
+    reverse = models.CharField(max_length=200)
+    mobile = models.BooleanField(default=False)
+    proxy = models.BooleanField(default=False)
 
 
 class Server(models.Model):
@@ -81,10 +96,17 @@ class Server(models.Model):
         return "Server %s (%s)" % (self.nickname, self.uuid)
 
 
+class RFC6349TestDevice(models.Model):
+    date_created = models.DateTimeField(auto_now_add=True)
+    hash = models.CharField(max_length=64, unique=True, null=False)
+    created_by = models.ForeignKey(UserProfile, null=False, on_delete=models.CASCADE)
+
+
 class Test(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     agent = models.ForeignKey(AgentProfile, null=False, on_delete=models.CASCADE)
-    ip_address = models.GenericIPAddressField(null=False, protocol='IPv4')  # IP addr of agent when test was conducted
+    # ip_address = models.GenericIPAddressField(null=False, protocol='IPv4')  # IP addr of agent when test was conducted
+    ip_address = models.ForeignKey(IPaddress, on_delete=models.CASCADE)
     test_type = models.CharField(null=False, max_length=50, choices=choices.test_type_choices)
     date_created = models.DateTimeField(auto_now_add=True)
     network_connection = models.CharField(max_length=20, choices=choices.network_choices, default='unknown')
@@ -136,28 +158,6 @@ class Hop(models.Model):
     time3 = models.FloatField(null=True)
     host_name = models.CharField(max_length=200)  # domain name or fallback to IP address if no domain name
     host_ip = models.GenericIPAddressField(null=True)
-
-
-class IPaddress(models.Model):
-    date = models.DateTimeField(default=timezone.now)
-    ip_address = models.GenericIPAddressField(null=False)
-    country = models.CharField(max_length=50)
-    country_code = models.CharField(max_length=10)
-    region = models.CharField(max_length=50)
-    region_name = models.CharField(max_length=50)
-    city = models.CharField(max_length=50)
-    zip = models.CharField(max_length=10)
-    lat = models.FloatField(default=0, validators=[MaxValueValidator(90.0), MinValueValidator(-90.0)])
-    long = models.FloatField(default=0, validators=[MaxValueValidator(180.0), MinValueValidator(-180.0)])
-    timezone = models.CharField(max_length=50, default='Asia/Manila',
-                                choices=choices.timezone_choices)
-    isp = models.CharField(max_length=100)
-    org = models.CharField(max_length=100)
-    as_num = models.CharField(max_length=100)
-    as_name = models.CharField(max_length=100)
-    reverse = models.CharField(max_length=200)
-    mobile = models.BooleanField(default=False)
-    proxy = models.BooleanField(default=False)
 
 
 class Speedtest(models.Model):

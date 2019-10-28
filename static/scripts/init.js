@@ -3,18 +3,19 @@ require.config({
 	paths: {
 		lib: 'lib',
 		app: 'app',
+		socketio: 'https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io',
 	},
 	waitSeconds: 0
 });
 
 require([
-	//"lib/socket.io",
+	"socketio",
 	"app/gauge",
 	"app/ui",
 	"app/form",
 	"app/main",
 ],
-function () {
+function (io) {
 	var socket = null;
 
 	// Dashboard layout

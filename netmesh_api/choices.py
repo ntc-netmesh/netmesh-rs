@@ -58,15 +58,14 @@ test_type_choices = [
 timezone_choices = [(v, v) for v in pytz.common_timezones]
 
 direction_choices = [
-    ('forward', 'Forward'),
-    ('reverse', 'Reverse'),
+    ('forward', 'Forward'),  # client to test server
+    ('reverse', 'Reverse'),  # test server to client
     ('unknown', 'Unknown')
 ]
 
 test_mode_choices = [
-    ('normal', 'Normal Mode'),
-    ('reverse', 'Reverse Mode'),
-    ('bidirectional', 'Bidirectional Mode'),
+    ('upload', 'Upload Mode'),      # formerly normal mode
+    ('download', 'Download Mode'),  # formerly reverse mode
     ('simultaneous', 'Simultaneous Mode'),
     ('unknown', 'Unknown')
 ]

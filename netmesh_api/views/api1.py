@@ -132,10 +132,18 @@ class RegisterClientDevice(APIView):
             device.created_by = user
             device.hash = hash
             device.save()
-            return Response('SUCCESS', status=status.HTTP_200_OK)
+            resp = {
+                "status": 'SUCCESS',
+                "dev_id": device.device_id
+            }
+            return Response(resp, status=status.HTTP_200_OK)
         except IntegrityError:
             # hash is not unique!
-            return Response('ERROR: Hash already exists', status=status.HTTP_400_BAD_REQUEST)
+            resp = {
+                "status": 'ERROR: Hash already exists',
+                "dev_id": None
+            }
+            return Response(resp, status=status.HTTP_400_BAD_REQUEST)
 
 
 class GetToken(APIView):

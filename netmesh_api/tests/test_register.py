@@ -67,8 +67,10 @@ class RegisterTestCase(APITestCase):
         credentials = base64.b64encode(('%s:%s' % (self.staff_username, self.password)).encode()).decode()
         self.client.credentials(HTTP_AUTHORIZATION='Basic ' + credentials)
         response = self.client.post(url, data=self.data_point, format='json')
+        device = models.RFC6349TestDevice.objects.all()[0]
         self.assertEqual(200, response.status_code)
-        self.assertEqual('SUCCESS', response.data)
+        self.assertEqual({'status': 'SUCCESS', 'dev_id': device.device_id},
+                         response.data)
         self.assertEqual(1, models.RFC6349TestDevice.objects.all().count())
 
     def test_register_using_agent_account(self):
@@ -109,4 +111,4 @@ class RegisterTestCase(APITestCase):
         self.client.credentials(HTTP_AUTHORIZATION='Basic ' + credentials)
         response = self.client.post(url, data=self.data_point, format='json')
         self.assertEqual(400, response.status_code)
-        self.assertEqual('ERROR: Hash already exists', response.data)
+        self.assertEqual({'status': 'ERROR: Hash already exists', 'dev_id': None}, response.data)

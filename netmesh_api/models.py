@@ -102,6 +102,11 @@ class RFC6349TestDevice(models.Model):
     created_by = models.ForeignKey(UserProfile, null=False, on_delete=models.CASCADE)
     device_id = models.UUIDField(default=uuid.uuid4, unique=True)
 
+    class Meta:
+        verbose_name = 'RFC6349 Test Device'
+        verbose_name_plural = 'RFC6349 Test Devices'
+        ordering = ['-id']
+
 
 class Test(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)

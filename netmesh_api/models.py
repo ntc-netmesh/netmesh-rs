@@ -110,7 +110,7 @@ class Test(models.Model):
     ip_address = models.ForeignKey(IPaddress, on_delete=models.CASCADE)
     test_type = models.CharField(null=False, max_length=50, choices=choices.test_type_choices)
     date_created = models.DateTimeField(auto_now_add=True)
-    network_connection = models.CharField(max_length=20, choices=choices.network_choices, default='unknown')
+    network_connection = models.CharField(max_length=20, null=False, default='unknown')
     pcap = models.CharField(max_length=100, null=True)
     lat = models.FloatField(default=16.647322, validators=[MaxValueValidator(90.0), MinValueValidator(-90.0)])
     long = models.FloatField(default=121.071959, validators=[MaxValueValidator(180.0), MinValueValidator(-180.0)])

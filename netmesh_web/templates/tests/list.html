@@ -4,6 +4,7 @@
 {# Load the tag library #}
 {% load bootstrap4 %}
 {% load tz %}
+{% load crispy_forms_tags %}
 
 {# Load CSS and JavaScript #}
 {% bootstrap_css %}
@@ -18,8 +19,18 @@
     <div class="btn-toolbar mb-2 mb-md-0">
         <div class="btn-group mr-2">
             <a href="{% url 'map' %}" class="btn btn-sm btn-outline-secondary">View Map</a>
+            <a href="{% url 'tests_csv' %}" class="btn btn-sm btn-outline-secondary">Export CSV</a>
         </div>
     </div>
+</div>
+
+{% for message in messages %}
+<div class='alert alert-info message'>{{ message }}</div>
+{% endfor %}
+
+<div>
+    {% crispy form %}
+    <br>
 </div>
 
 <div class="table-responsive">
@@ -33,14 +44,14 @@
             <th>IP Address</th>
             <th>ISP</th>
             <th>Agent</th>
-          </tr>
+        </tr>
         </thead>
         <tbody>
-    {% for item in tests %}
-          <tr>
-              {% timezone 'Asia/Manila' %}
+        {% for item in tests %}
+        <tr>
+            {% timezone 'Asia/Manila' %}
             <td>{{item.date_created}}</td>
-              {% endtimezone %}
+            {% endtimezone %}
             <td><a href="{% url 'test_detail' item.id %}"
                    title="View Test Details">{{ item.id|truncatechars:9 }}</a></td>
             <td>{{item.test_type}}</td>
@@ -48,11 +59,12 @@
             <td>{{item.ip_address.ip_address}}</td>
             <td>{{item.ip_address.isp}}</td>
             <td>{{item.agent}}</td>
-          </tr>
+        </tr>
 
-    {% endfor %}
+        {% endfor %}
         </tbody>
     </table>
+</div>
 
 
     <div class="pagination">
@@ -73,6 +85,15 @@
         </span>
     </div>
 
+    {% block js %}
+    <script>
+      $(function() {
+        // Fade out all messages after a delay.
+        setTimeout(function() {
+          $('.alert.message').fadeOut(500);
+        }, 3000);
+      });
+    </script>
+    {% endblock %}
+
 {% endblock %}
-
-

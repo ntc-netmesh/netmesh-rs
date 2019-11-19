@@ -43,6 +43,7 @@ urlpatterns += [
     path('tests/', tests.test_list, name='tests'),
     path('tests/detail/<id>', tests.test_detail, name='test_detail'),
     path('datapoint/detail/<id>', tests.datapoint_detail, name='datapoint_detail'),
+    path('tests/csv', tests.get_csv, name='tests_csv'),
 ]
 
 """ Traceroutes """
@@ -55,6 +56,7 @@ urlpatterns += [
 urlpatterns += [
     path('speedtest/', speedtest.do_speedtest, name='speedtest'),
     path('speedtest/list', speedtest.speedtest_list, name='speedtest_list'),
+    path('speedtest/csv', speedtest.get_csv, name='speedtest_csv'),
 ]
 
 """ Staff """

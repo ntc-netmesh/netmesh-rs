@@ -35,7 +35,7 @@ class LoginForm(AuthenticationForm):
 
 
 class SearchForm(forms.Form):
-    search = forms.CharField(max_length=500)
+    search = forms.CharField(max_length=500, label="Input your search keywords here. Max 500 chars")
 
     def __init__(self, *args, **kwargs):
         self.form_action = kwargs.pop('form_action')
@@ -43,7 +43,7 @@ class SearchForm(forms.Form):
 
         self.helper = FormHelper()
         self.helper.form_method = 'GET'
-        self.helper.form_class = 'form-inline'
-        self.helper.form_show_labels = False
+        # self.helper.form_class = 'form-inline'
+        self.helper.form_show_labels = True
         self.helper.form_action = reverse_lazy(self.form_action)
-        self.helper.add_input(Submit('', 'Search', css_class='btn-primary'))
+        self.helper.add_input(Submit('', 'Filter Results', css_class='btn-sm btn-secondary'))

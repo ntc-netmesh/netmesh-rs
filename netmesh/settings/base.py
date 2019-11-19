@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'mathfilters',
     'bootstrap4',
     'guardian',
+    'django_tables2',
     'netmesh_api',
     'netmesh_web'
 ]
@@ -144,3 +145,37 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 MEDIA_ROOT = "/var/www/netmesh/media/"
 MEDIA_URL = "media/"
+
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [
+            'netmesh_web/templates',
+        ],
+        'OPTIONS': {
+            'context_processors': [
+                # The default context processors.
+                "django.contrib.auth.context_processors.auth",
+                "django.template.context_processors.debug",
+                "django.template.context_processors.i18n",
+                "django.template.context_processors.media",
+                "django.template.context_processors.static",
+                "django.template.context_processors.tz",
+                "django.contrib.messages.context_processors.messages",
+                "django.template.context_processors.request",
+            ],
+            'loaders': [
+                'django.template.loaders.filesystem.Loader',
+                'django.template.loaders.app_directories.Loader',
+            ],
+            # We'll be conservative and assume a prod environment unless
+            # told otherwise
+            'debug': DEBUG,  # noqa: F405 (star import)
+        },
+    },
+]
+
+TEMPLATE_CONSTANTS = {
+    'SITENAME': os.environ.get('NETMESH_SITENAME', "NTC-NetMesh"),
+    'SUPPORT_EMAIL': os.environ.get('SUPPORT_EMAIL', "support@ntc.gov.ph"),
+}

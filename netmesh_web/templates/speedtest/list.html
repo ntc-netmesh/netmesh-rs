@@ -4,6 +4,7 @@
 {# Load the tag library #}
 {% load bootstrap4 %}
 {% load tz %}
+{% load crispy_forms_tags %}
 
 {# Load CSS and JavaScript #}
 {% bootstrap_css %}
@@ -18,8 +19,18 @@
     <div class="btn-toolbar mb-2 mb-md-0">
         <div class="btn-group mr-2">
             <a href="{% url 'map' %}" class="btn btn-sm btn-outline-secondary">View Map</a>
+            <a href="{% url 'speedtest_csv' %}" class="btn btn-sm btn-outline-secondary">Export CSV</a>
         </div>
     </div>
+</div>
+
+{% for message in messages %}
+<div class='alert alert-info message'>{{ message }}</div>
+{% endfor %}
+
+<div>
+    {% crispy form %}
+    <br>
 </div>
 
 <div class="table-responsive">
@@ -52,6 +63,7 @@
     {% endfor %}
         </tbody>
     </table>
+</div>
 
 
     <div class="pagination">
@@ -71,6 +83,18 @@
             {% endif %}
         </span>
     </div>
+
+   {% block js %}
+    <script>
+          $(function() {
+            // Fade out all messages after a delay.
+            setTimeout(function() {
+              $('.alert.message').fadeOut(500);
+            }, 3000);
+          });
+    </script>
+
+    {% endblock %}
 
 {% endblock %}
 

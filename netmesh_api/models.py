@@ -37,7 +37,9 @@ class UserProfile(models.Model):
 
 
 class AgentProfile(models.Model):
-    """ Extension of the User model specifically for the test clients (aka  Agents)"""
+    """
+        Extension of the User model specifically for the test clients (aka  Agents)
+    """
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     date_created = models.DateTimeField(auto_now_add=True)
     uuid = models.UUIDField(default=uuid.uuid4, unique=True)
@@ -56,6 +58,9 @@ class AgentProfile(models.Model):
 
 
 class IPaddress(models.Model):
+    """
+        Model for IP addresses containing its geolocation & ISP data
+    """
     date = models.DateTimeField(default=timezone.now)
     ip_address = models.GenericIPAddressField(null=False)
     country = models.CharField(max_length=50)
@@ -78,7 +83,10 @@ class IPaddress(models.Model):
 
 
 class Server(models.Model):
-    """ Model for a NetMesh test server """
+    """
+        Model for a NetMesh test server
+        The same model is used for both RFC-6349 test servers and Web-based speedtest servers
+    """
     uuid = models.UUIDField(default=uuid.uuid4, editable=False)
     nickname = models.CharField(max_length=200, null=True)
     ip_address = models.GenericIPAddressField()  # assumes that server has a fixed IP address
@@ -97,6 +105,9 @@ class Server(models.Model):
 
 
 class RFC6349TestDevice(models.Model):
+    """
+        Model for the hardware device used by the RFC-6349 test agents
+    """
     date_created = models.DateTimeField(auto_now_add=True)
     hash = models.CharField(max_length=64, unique=True, null=False)
     created_by = models.ForeignKey(UserProfile, null=False, on_delete=models.CASCADE)
@@ -109,6 +120,10 @@ class RFC6349TestDevice(models.Model):
 
 
 class Test(models.Model):
+    """
+        Model to represent results from an RFC-6349 Test
+        Each test can contain multiple datapoints (i.e. forward, reverse).
+    """
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     agent = models.ForeignKey(AgentProfile, null=False, on_delete=models.CASCADE)
     # ip_address = models.GenericIPAddressField(null=False, protocol='IPv4')  # IP addr of agent when test was conducted
@@ -127,7 +142,9 @@ class Test(models.Model):
 
 
 class DataPoint(models.Model):
-    """Model for a data point which is acquired by the test client against a test server"""
+    """
+        Model for an RFC-6349 test datapoint
+    """
     date_tested = models.DateTimeField(blank=True, default=timezone.now)
     test_id = models.ForeignKey(Test, null=False, on_delete=models.CASCADE)
     direction = models.CharField(null=False, max_length=10, choices=choices.direction_choices, default='unknown')
@@ -150,6 +167,10 @@ class DataPoint(models.Model):
 
 
 class Traceroute(models.Model):
+    """
+        Model for traceroute information
+        Each traceroute can have one or more associated Hops
+    """
     date = models.DateTimeField(default=timezone.now)
     origin_ip = models.GenericIPAddressField(null=False)
     dest_ip = models.GenericIPAddressField(null=False)
@@ -157,6 +178,9 @@ class Traceroute(models.Model):
 
 
 class Hop(models.Model):
+    """
+        Model for a traceroute Hop
+    """
     traceroute = models.ForeignKey(Traceroute, null=False, on_delete=models.CASCADE)
     hop_index = models.IntegerField(null=False)
     time1 = models.FloatField(null=True)
@@ -167,6 +191,10 @@ class Hop(models.Model):
 
 
 class Speedtest(models.Model):
+    """
+        Model to represent results from a web-based speedtest.
+        Note that the web-based speedtest is simpler compared to the RFC-6349 result representation
+    """
     date = models.DateTimeField(default=timezone.now)
     test_id = models.UUIDField(null=False, editable=False, unique=True)
     sid = models.CharField(max_length=32, null=False, editable=False)

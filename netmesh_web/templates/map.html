@@ -59,6 +59,16 @@
 			markers.addLayer(marker);
     {% endfor %}
 
+    {% for speedtest in speedtests %}
+			var title = "Upload: {{speedtest.upload_speed|div:1048576|stringformat:'0.2f'}} Mbps";
+			title += "Download: {{speedtest.download_speed|div:1048576|stringformat:'0.2f'}} Mbps";
+			title += "<br>Ave RTT: {{speedtest.rtt_ave|mul:1000|stringformat:'0.2f'}} ms";
+<!--            title += '<br>ID: <a href="{% url 'test_detail' speedtest.test_id %}" title="{{speedtest.test_id}}">{{ speedtest.test_id|truncatechars:9 }}</a>';-->
+			var marker = L.marker(new L.LatLng({{speedtest.ip_address.lat|stringformat:'0.3f'}}, {{speedtest.ip_address.long|stringformat:'0.3f'}}));
+			marker.bindPopup(title);
+			markers.addLayer(marker);
+    {% endfor %}
+
     map.addLayer(markers);
 
 </script>

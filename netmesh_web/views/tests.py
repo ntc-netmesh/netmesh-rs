@@ -1,5 +1,6 @@
 import djqscsv
 from django.contrib import messages as alerts
+from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.db.models import Q
 from django.http import HttpResponse
@@ -73,6 +74,7 @@ def datapoint_detail(request, id, template_name='tests/datapoint_detail.html'):
     return render(request, template_name, context)
 
 
+@login_required
 def get_csv(request):
     qs = DataPoint.objects.values('date_tested',
                                   'test_id',

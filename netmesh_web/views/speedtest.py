@@ -2,6 +2,7 @@ import djqscsv
 from crispy_forms.helper import FormHelper
 from django import forms
 from django.contrib import messages as alerts
+from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.db.models import Q
 from django.shortcuts import get_object_or_404
@@ -63,6 +64,8 @@ def speedtest_list(request, template_name='speedtest/list.html'):
     }
     return render(request, template_name, context=context)
 
+
+@login_required
 def get_csv(request):
     qs = Speedtest.objects.values('date',
                                   'test_id',

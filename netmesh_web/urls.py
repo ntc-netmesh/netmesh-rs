@@ -7,6 +7,7 @@ from netmesh_web.views import users
 from netmesh_web.views import traceroutes
 from netmesh_web.views import speedtest
 from netmesh_web.views import staff
+from netmesh_web.views import nmpro
 
 
 urlpatterns = []
@@ -64,4 +65,9 @@ urlpatterns += [
     path('staff/', staff.staff_list, name='staff'),
     path('staff/create/', staff.staff_create, name='staff_create'),
     path('staff/update/<pk>', staff.staff_update, name='staff_update'),
+]
+
+""" NMPro """
+urlpatterns += [
+    path('nmpro/', nmpro.nmpro_data_create, name='nmpro'),
 ]

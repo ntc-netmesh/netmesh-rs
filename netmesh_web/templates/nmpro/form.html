@@ -1,0 +1,12 @@
+{% extends "base_generic.html" %}
+{% load mathfilters %}
+{% load humanize %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<h1>Manual Entry: NetMaster Pro Data</h1>
+<br>
+    {% csrf_token %}
+    {% crispy datapoint_form %}
+{% endblock %}

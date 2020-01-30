@@ -41,7 +41,8 @@ urlpatterns += [
 
 """ Tests """
 urlpatterns += [
-    path('tests/', tests.test_list, name='tests'),
+    # path('tests/', tests.test_list, name='tests'),
+    path('tests/', tests.datapoint_list, name='tests'),
     path('tests/detail/<id>', tests.test_detail, name='test_detail'),
     path('datapoint/detail/<id>', tests.datapoint_detail, name='datapoint_detail'),
     path('tests/csv', tests.get_csv, name='tests_csv'),

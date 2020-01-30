@@ -112,3 +112,43 @@ def get_csv(request):
                                           filename='ntc-netmesh-rfc6349',
                                           append_datestamp=True,
                                           streaming=True)
+
+
+def datapoint_list(request, template_name='tests/list2.html'):
+    context = {}
+    if 'search' in request.GET:
+        test_lst = DataPoint.objects.all().order_by('-date_tested')
+        for term in request.GET['search'].split():
+            test_lst = test_lst.filter(Q(test_id__test_type__icontains=term) |
+                                       Q(test_id__mode__icontains=term) |
+                                       Q(test_id__ip_address__ip_address__icontains=term) |
+                                       Q(test_id__ip_address__isp__icontains=term) |
+                                       Q(test_id__agent__user__username__icontains=term)
+                                       )
+        context['search'] = True
+        alerts.info(request,
+                    _("You've searched for: '%s'") % request.GET['search'])
+    else:
+        test_lst = DataPoint.objects.all().order_by('-date_tested')
+
+    paginator = Paginator(test_lst, 15)
+    page = request.GET.get('page')
+
+    is_paginated = False
+    if paginator.num_pages > 1:
+        is_paginated = True
+
+    try:
+        tests = paginator.get_page(page)
+    except PageNotAnInteger:
+        tests = paginator.get_page(1)
+    except EmptyPage:
+        tests = paginator.get_page(paginator.num_pages)
+
+    form = SearchForm(form_action='tests')
+    context = {
+        'tests': tests,
+        'form': form,
+        'is_paginated': is_paginated
+    }
+    return render(request, template_name, context=context)

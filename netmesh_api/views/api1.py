@@ -25,7 +25,7 @@ from netmesh_api.validators import check_lat, check_long
 
 class SubmitData(APIView):
     """ Submit measurement data
-        <base_url>/api/submit/?
+        <base_url>/api/submit/
     """
     renderer_classes = (JSONRenderer,)
     authentication_classes = (TokenAuthentication,)
@@ -148,6 +148,8 @@ class RegisterClientDevice(APIView):
 
 class GetToken(APIView):
     """ API endpoint to get Agent token
+        This assumes that Agent's device hash has previously
+        been registered in the system
         <base_url>/api/gettoken/?
     """
     renderer_classes = (JSONRenderer,)
@@ -180,7 +182,7 @@ class GetToken(APIView):
 class ServerViewSet(viewsets.ReadOnlyModelViewSet):
     """
         API endpoint to retrieve list of servers
-        <base_url>/api/servers/?
+        <base_url>/api/servers/
     """
     renderer_classes = (JSONRenderer,)
 
@@ -190,8 +192,8 @@ class ServerViewSet(viewsets.ReadOnlyModelViewSet):
 
 class SubmitTraceroute(APIView):
     """ Submit traceroute data
-            <base_url>/api/submit/?
-        """
+        <base_url>/api/submit/traceroute
+    """
     renderer_classes = (JSONRenderer,)
 
     def post(self, request):

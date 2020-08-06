@@ -16,6 +16,9 @@ from netmesh_api.utils import get_isp
 
 
 class SubmitSpeedtestData(APIView):
+    """ Submit speedtest data from Netmesh-web-speedtest-server
+        <base_url>/api/submit/speedtest
+    """
     renderer_classes = (JSONRenderer,)
 
     def post(self, request):

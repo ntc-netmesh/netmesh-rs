@@ -6,28 +6,79 @@
 
 import ast
 import json
-import random
-from datetime import datetime
-
 import pytz
+import random
 import requests
 
-username = "agent1"
-password = ""
-uuid = "6817ca74-4e23-4e16-a004-feae757a45c0"
+from datetime import datetime
+
+# account variables
+staff = "staff1"
+staffpwd = "staff1"
+agent = "newagent"
+agentpwd = "newagent"
+agent_uuid = ""
 url = "http://localhost:8000"
-server1 = "066182e8-e56b-40a8-8ee9-d92dce71e07e"
-server2 = "6e2a72bf-b5d1-4d32-ac83-8f6cd035d28e"
-server3 = "86023348-270a-4c94-bdac-877defdb17c6"
+
+# server uuids
+server1 = ""
+server2 = ""
+server3 = ""
+
+# client device hash
+hashh = ""
+
+# REGISTER CLIENT DEVICE
+
+payload = {
+    "hash": hashh
+}
+try:
+    userauth = requests.auth.HTTPBasicAuth(staff, staffpwd)
+    r = requests.post(
+        url=url + "/api/register",
+        auth=userauth,
+        data=payload
+    )
+except Exception as e:
+    print("Exiting due to status code %s: %s" % (r.status_code, r.text))
+
+if r.status_code != 200:
+    print("Exiting due to status code %s: %s" % (r.status_code, r.text))
+    quit()
+
+# GET TOKEN
+
+payload = {
+    "uuid": agent_uuid,
+    "hash": hashh
+}
+try:
+    userauth = requests.auth.HTTPBasicAuth(agent, agentpwd)
+    r = requests.post(
+        url=url + "/api/gettoken",
+        auth=userauth,
+        data=payload
+    )
+except Exception as e:
+    print("Exiting due to status code %s: %s" % (r.status_code, r.text))
+
+if r.status_code != 200:
+    print("Exiting due to status code %s: %s" % (r.status_code, r.text))
+    quit()
+
+
+# SUBMIT DATA
 
 data_point = {
-    "uuid": uuid,
+    "uuid": agent_uuid,
     "test_type": "RFC6349",
     "network": "dsl",
     "pcap": "sample.pcap",
     "lat": random.uniform(12, 13),
     "long": random.uniform(120, 122),
     "mode": random.choices(['normal', 'reverse', 'bidirectional', 'simultaneous'])[0],
+    "hash": hashh,
     "results": {
         "set1": {
             "ts": pytz.utc.localize(datetime.utcnow()),
@@ -71,21 +122,6 @@ data_point = {
         },
     }
 }
-
-creds = {
-    "username": username,
-    "password": password,
-    "uuid": uuid # agent uuid
-}
-try:
-    # Request for Agent token
-    r = requests.post(url=url+"/api/register", data=creds)
-except Exception as e:
-    print("Exiting due to status code %s: %s" % (r.status_code, r.text))
-
-if r.status_code != 200:
-    print("Exiting due to status code %s: %s" % (r.status_code, r.text))
-    quit()
 
 mytoken = ast.literal_eval(r.text)['Token']
 data_json = json.dumps(data_point, default=str)

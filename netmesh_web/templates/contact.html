@@ -13,6 +13,23 @@
 {% bootstrap_messages %}
 
 {% block content %}
+
+<style>
+	#contact-regional-offices .card-columns {
+        -webkit-column-count: 1;
+        -moz-column-count: 1;
+		column-count: 1;
+	}
+
+	@media (min-width: 992px) {
+		#contact-regional-offices .card-columns {
+			-webkit-column-count: 3;
+			-moz-column-count: 3;
+			column-count: 3;
+		}
+	}
+</style>
+
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
     <h1 class="h1">Contact Us</h1>
 </div>
@@ -25,99 +42,900 @@
 <br>
 <br>
 
-<h4>Central Office</h4>
-<p> BIR Road, East Triangle, Diliman, Quezon City, Metro Manila, Philippines, 1101 <br>
-    Tel No: +632 8924 4042, +632 8924 4048 <br>
-    Fax No: +632 8921 7128</p>
+<h3>Central Office</h3>
+<hr>
+<dt>Address</dt>
+<dd>BIR Road, East Triangle, Diliman, Quezon City, Metro Manila, Philippines, 1101</dd>
+
+<dt>Tel. No.</dt>
+<dd>
+	(02) 8924 4042
+	<br>
+	(02) 8924 4048
+</dd>
+
+<dt>Fax No.</dt>
+<dd>
+	(02) 8921 7128
+</dd>
 
 <br>
-<h4>Regional Offices</h4>
+<br>
+<div id="contact-regional-offices">
+	<h3>Regional Offices</h3>
+	<hr>
+	
+	<h4 class="my-3">
+		NCR
+	</h4>
+	<div class="card-columns mb-4">
+		<div class="card">
+			<div class="card-body">
+				<h5 class="card-title">Main Office</h5>
+				<dt>Director</dt>
+				<dd>Dep. COM. Delilah F. Deles</dd>
+	
+				<dt>Address</dt>
+				<dd>NTC Bldg., BIR Rd., Diliman, Quezon City</dd>
+	
+				<dt>E-mail</dt>
+				<dd>
+					ncr.director@ntc.gov.ph
+					<br>
+					ntcncr@yahoo.com
+				</dd>
+	
+				<dt>Tel. No.</dt>
+				<dd>
+					(02) 8924 4010
+					<br>
+					(02) 8924 3779
+					<br>
+					(02) 8924 8215
+					<br>
+					(02) 8924 4075
+					<br>
+					(02) 8929 5112
+					<br>
+					(02) 8929 5108
+					<br>
+				</dd>
+	
+				<dt>Telefax No.</dt>
+				<dd>
+					(02) 8924 4072
+				</dd>
+			</div>
+		</div>
+	</div>
+	
+	<h4 class="my-3">
+		CAR
+	</h4>
+	<div class="card-columns mb-4">
+		<div class="card">
+			<div class="card-body">
+				<h5 class="card-title">Main Office</h5>
+				<dt>Director</dt>
+				<dd>Engr. Dante V. Vengua</dd>
+	
+				<dt>Address</dt>
+				<dd>Leonard Wood Road, Pacdal Circle, Baguio City</dd>
+	
+				<dt>E-mail</dt>
+				<dd>
+					car.director@ntc.gov.ph
+					<br>
+					ntc_car@yahoo.com
+					<br>
+					ntc_car.licensing@yahoo.com
+				</dd>
+	
+				<dt>Tel. No.</dt>
+				<dd>
+					(074) 304 4876 &nbsp;<span class="text-muted">Enforcement and Operations Division</span>
+					<br>
+					(074) 422 9342 &nbsp;<span class="text-muted">Finance and Administrative Division</span>
+				</dd>
+	
+				<dt>Telefax No.</dt>
+				<dd>
+					(074) 661 6131 &nbsp;<span class="text-muted">Office of the Director</span>
+				</dd>
+			</div>
+		</div>
+	</div>
+	
+	<h4 class="my-3">
+		Region I
+	</h4>
+	<div class="card-columns mb-4">
+		<div class="card">
+			<div class="card-body">
+				<h5 class="card-title">Main Office</h5>
+				<dt>Director</dt>
+				<dd>Engr. Jovita V. Chongco</dd>
+	
+				<dt>Address</dt>
+				<dd>L. Dacanay Avenue, Brgy. San Francisco, San Fernando City, La Union</dd>
+	
+				<dt>E-mail</dt>
+				<dd>
+					r1.director@ntc.gov.ph
+					<br>
+					ntcr01@yahoo.com
+					<br>
+					ntc.ilocosregion1@ntc.gov.ph
+				</dd>
+	
+				<dt>Tel. No.</dt>
+				<dd>
+					(072) 607 5654
+				</dd>
+	
+				<dt>Fax</dt>
+				<dd>
+					(072) 607 5656
+				</dd>
+			</div>
+		</div>
+		<div class="card">
+			<div class="card-body">
+				<h5 class="card-title">Dagupan Satellite Field Office</h5>
+				<dt>Director</dt>
+				<dd>Engr. Jovita V. Chongco</dd>
+	
+				<dt>Address</dt>
+				<dd>Poblacion Oeste, AB Fernandez West, Dagupan City, Pangasinan</dd>
+	
+				<dt>Tel. No.</dt>
+				<dd>
+					(075) 522 3677
+				</dd>
+			</div>
+		</div>
+	</div>
+	
+	<h4 class="my-3">
+		Region II
+	</h4>
+	<div class="card-columns mb-4">
+		<div class="card">
+			<div class="card-body">
+				<h5 class="card-title">Main Office</h5>
+				<dt>Director</dt>
+				<dd>Engr. Nelson Daquioag</dd>
+	
+				<dt>Address</dt>
+				<dd>No. 5 Pagayaya St. cor. Pavvurulun St., Carig Sur, Tuguerogarao City, Cagayan</dd>
+	
+				<dt>E-mail</dt>
+				<dd>
+					r2.director@ntc.gov.ph
+					<br>
+					region2@ntc.gov.ph
+					<br>
+					ntcr2@yahoo.com
+				</dd>
+	
+				<dt>Telefax No.</dt>
+				<dd>
+					(078) 846 7071
+				</dd>
+	
+				<dt>Tel. No.</dt>
+				<dd>
+					(078) 304 9586
+				</dd>
+			</div>
+		</div>
+		<div class="card">
+			<div class="card-body">
+				<h5 class="card-title">Santiago Field Office</h5>
+				<dt>Director</dt>
+				<dd>Engr. Alejandrino G. Tamania</dd>
+	
+				<dt>Address</dt>
+				<dd>Abuag St., Centro East, Santiago City, Isabela</dd>
+	
+				<dt>E-mail</dt>
+				<dd>
+					r2.field@ntc.gov.ph
+					<br>
+					engr.agtamania.ntcr2@gmail.com
+				</dd>
+	
+				<dt>Tel. No.</dt>
+				<dd>
+					(078) 305 1147
+				</dd>
+			</div>
+		</div>
+	</div>
+	
+	<h4 class="my-3">
+		Region III
+	</h4>
+	<div class="card-columns mb-4">
+		<div class="card">
+			<div class="card-body">
+				<h5 class="card-title">Main Office</h5>
+				<dt>Director</dt>
+				<dd>Dir. Azor L. Sitchon</dd>
+	
+				<dt>Address</dt>
+				<dd>Diosdado Macapagal Government Center, Bo. Maimpis, City of San Fernando, Pampanga</dd>
+	
+				<dt>E-mail</dt>
+				<dd>
+					r3.director@ntc.gov.ph
+					<br>
+					ntcr3@yahoo.com
+					<br>
+					dirsitchon@yahoo.com
+				</dd>
+	
+				<dt>Tel. No.</dt>
+				<dd>
+					(045) 861 7958
+					<br>
+					(045) 961 3743
+					<br>
+					(045) 861 0583
+				</dd>
+	
+				<dt>Fax No.</dt>
+				<dd>
+					(045) 861 7958
+				</dd>
+			</div>
+		</div>
+		<div class="card">
+			<div class="card-body">
+				<h5 class="card-title">SBMA Field Office</h5>
+				<dt>Director</dt>
+				<dd>Engr. Antony A. Lopez</dd>
+	
+				<dt>Address</dt>
+				<dd>Bldg. 662 Taft St, CBD Area SBF2</dd>
+	
+				<dt>E-mail</dt>
+				<dd>sbma.ntcr3@gmail.com</dd>
+	
+				<dt>Mobile No.</dt>
+				<dd>
+					0925 568 7228
+				</dd>
+			</div>
+		</div>
+	</div>
+	
+	<h4 class="my-3">
+		Region IV-A
+	</h4>
+	<div class="card-columns mb-4">
+		<div class="card">
+			<div class="card-body">
+				<h5 class="card-title">Main Office</h5>
+				<dt>Director</dt>
+				<dd>Engr. Arnold P. Barcelona</dd>
+		
+				<dt>Address</dt>
+				<dd>BAEX Compound, Bo. Bolbok, Diversion Rd., Batangas City</dd>
+		
+				<dt>E-mail</dt>
+				<dd>
+					r4.director@ntc.gov.ph
+					<br>
+					ntcr4@yahoo.com
+					<br>
+					batangas@ntcr4.com
+					<br>
+					r4.inspection2@ntc.gov.ph
+				</dd>
+		
+				<dt>Tel. No.</dt>
+				<dd>
+					(043) 723 2495
+					<br>
+					(043) 723 1245 &nbsp;<span class="text-muted">Director's Office</span>
+					<br>
+					(043) 472 1717
+				</dd>
+		
+				<dt>Telefax No.</dt>
+				<dd>
+					(043) 723 1246
+				</dd>
+			</div>
+		</div>
+		<div class="card">
+			<div class="card-body">
+				<h5 class="card-title">QC CO Base Satellite Field Office</h5>
+				<dt>Director</dt>
+				<dd>Engr. Arnold P. Barcelona</dd>
+	
+				<dt>Address</dt>
+				<dd>2/F NTC Bldg, BIR Rd, East Triangle, Diliman, Quezon City</dd>
+	
+				<dt>E-mail</dt>
+				<dd>rizalext@yahoo.com</dd>
+	
+				<dt>Mobile No.</dt>
+				<dd>
+					0918 416 5934
+				</dd>
+			</div>
+		</div>
+		<div class="card">
+			<div class="card-body">
+				<h5 class="card-title">Cavite Satelite Field Office</h5>
+				<dt>Director</dt>
+				<dd>Engr. Arnold P. Barcelona</dd>
+	
+				<dt>Address</dt>
+				<dd>Rescue 161 Bldg., LTO Compuond, Imus, Cavite</dd>
+	
+				<dt>Mobile No.</dt>
+				<dd>
+					0949 944 3685
+					<br>
+					0956 386 4740
+				</dd>
+			</div>
+		</div>
+	</div>
+	
+	<h4 class="my-3">
+		Region IV-B
+	</h4>
+	<div class="card-columns mb-4">
+		<div class="card">
+			<div class="card-body">
+				<dt>Director</dt>
+				<dd>Engr. Ronald B. Cabute</dd>
+		
+				<dt>Address</dt>
+				<dd>Unit 1, Plaza Bldg., Sto. Niño St., Brgy Ibaba East, Calapan City, Oriental Mindoro</dd>
+		
+				<dt>E-mail</dt>
+				<dd>
+					ntcr4.mimaropa@ntc.gov.ph
+					<br>
+					ntcr4.calapan@yahoo.com
+					<br>
+					ntcr4.mindoro@gmail.com
+				</dd>
+		
+				<dt>Tel. No.</dt>
+				<dd>
+					(043) 441 3225
+				</dd>
+			</div>
+		</div>
+	</div>
+	
+	<h4 class="my-3">
+		Region V
+	</h4>
+	<div class="card-columns mb-4">
+		<div class="card">
+			<div class="card-body">
+				<h5 class="card-title">Main Office</h5>
+				<dt>Director</dt>
+				<dd>Dir. Ariel H. Padilla</dd>
+		
+				<dt>Address</dt>
+				<dd>Government Center, Rawis, Legaspi City</dd>
+		
+				<dt>E-mail</dt>
+				<dd>
+					r5.director@ntc.gov.ph
+					<br>
+					ntcv_legazpi@yahoo.com
+					<br>
+					ospac5@hotmail.com
+				</dd>
+		
+				<dt>Tel. No.</dt>
+				<dd>
+					(052) 482 0400
+					<br>
+					(052) 482 0401 &nbsp;<span class="text-muted">Technical</span>
+				</dd>
+		
+				<dt>Telefax No.</dt>
+				<dd>
+					(052) 482 1039
+				</dd>
+			</div>
+		</div>
+	</div>
+	
+	<h4 class="my-3">
+		Region VI
+	</h4>
+	<div class="card-columns mb-4">
+		<div class="card">
+			<div class="card-body">
+				<h5 class="card-title">Main Office</h5>
+				<dt>Director</dt>
+				<dd>Dir. Nestor Antonio P. Monroy</dd>
+	
+				<dt>Address</dt>
+				<dd>Brgy. Quintin Salas, Jaro, Iloilo City</dd>
+	
+				<dt>E-mail</dt>
+				<dd>
+					r6.director@ntc.gov.ph
+					<br>
+					ntcr6@yahoo.com
+				</dd>
+	
+				<dt>Tel. No.</dt>
+				<dd>
+					(033) 320 2251
+					<br>
+					(033) 508-5353
+				</dd>
+			</div>
+		</div>
+	</div>
+	
+	<h4 class="my-3">
+		Region VII
+	</h4>
+	<div class="card-columns mb-4">
+		<div class="card">
+			<div class="card-body">
+				<h5 class="card-title">Main Office</h5>
+				<dt>Director</dt>
+				<dd>Ms. Sophia Lynn B. Lumantod</dd>
+	
+				<dt>Address</dt>
+				<dd>Wireless cor. M. Logarta & Lopez Jaena Sts., Subangdaku, Mandaue City, Cebu</dd>
+	
+				<dt>E-mail</dt>
+				<dd>
+					r7.director@ntc.gov.ph
+					<br>
+					ntc_vii@yahoo.com
+				</dd>
+	
+				<dt>Tel. No.</dt>
+				<dd>
+					(032) 422-6822
+					<br>
+					(032) 346-0179
+				</dd>
+			</div>
+		</div>
+	</div>
+	
+	<h4 class="my-3">
+		Region VIII
+	</h4>
+	<div class="card-columns mb-4">
+		<div class="card">
+			<div class="card-body">
+				<h5 class="card-title">Main Office</h5>
+				<dt>Director</dt>
+				<dd>Engr. Wilfredo C. Zabala</dd>
+	
+				<dt>Address</dt>
+				<dd>Army Road, 6500 Tacloban City</dd>
+	
+				<dt>E-mail</dt>
+				<dd>
+					r8.director@ntc.gov.ph
+					<br>
+					ntc8@ntc.gov.ph
+				</dd>
+	
+				<dt>Tel. No.</dt>
+				<dd>
+					(053) 325 5181
+				</dd>
+	
+				<dt>Telefax No.</dt>
+				<dd>
+					(053) 325 8519
+				</dd>
+			</div>
+		</div>
+	</div>
+	
+	<h4 class="my-3">
+		Region IX
+	</h4>
+	<div class="card-columns mb-4">
+		<div class="card">
+			<div class="card-body">
+				<h5 class="card-title">Main Office</h5>
+				<dt>Director</dt>
+				<dd>Dir. Jurmobin T. Baddiri</dd>
+		
+				<dt>Address</dt>
+				<dd>Cabatangan Hills, Zamboanga City</dd>
+		
+				<dt>E-mail</dt>
+				<dd>
+					r9.director@ntc.gov.ph
+					<br>
+					ntc_region9@yahoo.com
+				</dd>
+		
+				<dt>Tel. No.</dt>
+				<dd>
+					(062) 955 2881
+					<br>
+					(062) 955 1903
+				</dd>
+			</div>
+		</div>
+	</div>
+	
+	<h4 class="my-3">
+		Region X
+	</h4>
+	<div class="card-columns mb-4">
+		<div class="card">
+			<div class="card-body">
+				<h5 class="card-title">Main Office</h5>
+				<dt>Director</dt>
+				<dd>Dir. Teodoro D. Buenavista, Jr.</dd>
+	
+				<dt>Address</dt>
+				<dd>Palaez Blvd, Kauswagan, Caganyan de Oro City</dd>
+	
+				<dt>E-mail</dt>
+				<dd>
+					r10.director@ntc.gov.ph
+					<br>
+					region10ntc@yahoo.com
+				</dd>
+	
+	
+				<dt>Tel. No.</dt>
+				<dd>
+					(08822) 726 908
+					<br>
+					(088) 858 4800
+				</dd>
+	
+				<dt>Telefax No.</dt>
+				<dd>
+					(08822) 723 285
+				</dd>
+			</div>
+		</div>
+		<div class="card">
+			<div class="card-body">
+				<h5 class="card-title">Iligan Satellite Field Office</h5>
+				<dt>Director</dt>
+				<dd>Engr. Joel D. Siladan</dd>
+		
+				<dt>Address</dt>
+				<dd>Mezzanine Floor, Superble Bldg., Quezon Avenue, Iligan City</dd>
+		
+				<dt>E-mail</dt>
+				<dd>joelsiladan@gmail.com</dd>
+		
+				<dt>Tel. No.</dt>
+				<dd>
+					(063) 223 5001
+				</dd>
+			</div>
+		</div>
+	</div>
+	
+	<h4 class="my-3">
+		Region XI
+	</h4>
+	<div class="card-columns mb-4">
+		<div class="card">
+			<div class="card-body">
+				<h5 class="card-title">Main Office</h5>
+				<dt>Director</dt>
+				<dd>Dir. Nelson T. Cañete</dd>
+		
+				<dt>Address</dt>
+				<dd>Quimpo Blvd., Matina, Davao City</dd>
+		
+				<dt>E-mail</dt>
+				<dd>
+					r11.director@ntc.gov.ph
+					<br>
+					ntcdavao@yahoo.com.ph
+				</dd>
+		
+				<dt>Telefax No.</dt>
+				<dd>
+					(082) 296 0625
+				</dd>
+			</div>
+		</div>
+	</div>
+	
+	<h4 class="my-3">
+		Region XII
+	</h4>
+	<div class="card-columns mb-4">
+		<div class="card">
+			<div class="card-body">
+				<h5 class="card-title">Main Office</h5>
+				<dt>Director</dt>
+				<dd>Engr. Froilan B. Jamias</dd>
+		
+				<dt>Address</dt>
+				<dd>Macagba St., Brgy. Gen Paulino Santos (Barrio I), Koronadal City, South Cotobato</dd>
+		
+				<dt>E-mail</dt>
+				<dd>
+					r12.director@ntc.gov.ph
+					<br>
+					ntc_region12@yahoo.com.ph
+				</dd>
+		
+				<dt>Telefax No.</dt>
+				<dd>
+					(083) 228 9808
+					<br>
+					(083) 228 8697
+				</dd>
+			</div>
+		</div>
+	</div>
+	
+	<h4 class="my-3">
+		Region XIII
+	</h4>
+	<div class="card-columns mb-4">
+		<div class="card">
+			<div class="card-body">
+				<h5 class="card-title">Main Office</h5>
+				<dt>Director</dt>
+				<dd>Engr. Ferdinand F. Mortera</dd>
+		
+				<dt>Address</dt>
+				<dd>Purok 2, Doongan Road, Butuan City</dd>
+		
+				<dt>E-mail</dt>
+				<dd>
+					r13.director@ntc.gov.ph
+					<br>
+					ntc13@yahoo.com.ph
+				</dd>
+		
+				<dt>Telefax No.</dt>
+				<dd>
+					(085) 815 1499
+				</dd>
+			</div>
+		</div>
+	</div>
+</div>
 
-
-<div class="table-responsive">
-    <table class="table table-striped table-sm">
+<!-- <div class="table-responsive">
+    <table class="table table-hover table-bordered">
         <thead>
         <tr>
-            <th width="14%">Region</th>
+			<th width="3%">Region</th>
+			<th width="11%">Office</th>
             <th width="20%">Director</th>
             <th width="29%">Address</th>
             <th width="21%">E-mail</th>
-            <th width="16%">Tel.No.</th>
+            <th width="16%">Contact Info</th>
         </tr>
         </thead>
         <tr>
-            <td>I</td>
-            <td rowspan="2">Engr. Danilo O. Cuenca <br/></td>
-            <td>L. Dacanay Avenue, Brgy. San Francisco,<br/>
-                Brgy. San Francisco, City La Union.
+            <td>NCR</td>
+            <td>Main Office</td>
+            <td>Dep. COM. Delilah F. Deles</td>
+            <td>NTC Bldg., BIR Rd., Diliman Quezon City</td>
+            <td>
+				ncr.director@ntc.gov.ph
+				<br>
+				ntcncr@yahoo.com
+			</td>
+            <td class="text-nowrap">
+				<dt class="text-muted">Tel. No.</dt>
+				<dd>
+					(02) 8924 4010
+					<br>
+					(02) 8924 3779
+					<br>
+					(02) 8924 8215
+					<br>
+					(02) 8924 4075
+					<br>
+					(02) 8929 5112
+					<br>
+					(02) 8929 5108
+					<br>
+				</dd>
+
+				<dt class="text-muted">Telefax No.</dt>
+				<dd>
+					(02) 8924 4072
+				</dd>
             </td>
-            <td>ntc.ilocosregion1@ntc.gov.ph</td>
-            <td>(072) 607-5654<br/>
-                Fax (072) 607-5656
+		</tr>
+        <tr>
+            <td>CAR</td>
+            <td>Main Office</td>
+            <td>Engr. Dante M. Vengua</td>
+            <td>Leonard Wood Road, Pacdal Circle, Baguio City</td>
+            <td>
+				car.director@ntc.gov.ph<br/>
+				ntc_car@yahoo.com<br/>
+				ntc_car.licensing@yahoo.com<br/>
+			</td>
+            <td>
+				<dt class="text-muted">Tel. No.</dt>
+				<dd>
+					(074) 304 4876<span class="text-muted"> - Enforcement and Operations Division</span>
+					<br>
+					(074) 422 9342<span class="text-muted"> - Finance and Administrative Division</span>
+				</dd>
+
+				<dt class="text-muted">Telefax No.</dt>
+				<dd>
+					(074) 661 6131<span class="text-muted"> - Office of the Director</span>
+				</dd>
             </td>
         </tr>
         <tr>
-            <td>I - Dagupan Satellite<br/>
-                Field Ofc.
+            <td rowspan="2">I</td>
+            <td>Main Office</td>
+            <td rowspan="2">Engr. Jovita V. Chongco</td>
+            <td>L. Dacanay Avenue, Brgy. San Francisco, San Fernando City, La Union</td>
+			<td>
+				r1.director@ntc.gov.ph
+				<br>
+				ntcr01@yahoo.com
+				<br>
+				ntc.ilocosregion1@ntc.gov.ph
+			</td>
+            <td class="text-nowrap">
+				<dt class="text-muted">Tel. No.</dt>
+				<dd>
+					(072) 607 5654
+				</dd>
+
+				<dt class="text-muted">Fax</dt>
+				<dd>
+					(072) 607 5656
+				</dd>
             </td>
-            <td><p>Poblacion Oeste, AB Fernandez West, Dagupan City, Pangasinan.</p></td>
-            <td>&nbsp;</td>
-            <td>Tel. Fax. (075) 522-3677</td>
         </tr>
         <tr>
-            <td>II</td>
-            <td>Engr. Nelson Daquioag Officer-in-Charge</td>
+            <td>Dagupan Satellite Field Office</td>
+			<td>Poblacion Oeste, AB Fernandez West, Dagupan City, Pangasinan</td>
+			<td></td>
+            <td>
+				<dt class="text-muted">Tel. No.</dt>
+				<dd>
+					(075) 522 3677
+				</dd>
+			</td>
+        </tr>
+        <tr>
+			<td rowspan="2">II</td>
+			<td>Main Office</td>
+            <td>Engr. Nelson Daquioag</td>
             <td>No. 5 Pagayaya St. cor. Pavvurulun St., Carig Sur, Tuguerogarao City, Cagayan</td>
-            <td><p> ntcr2@yahoo.com </p></td>
-            <td>Tel/Fax (078) 304-1538<br/>
-                Dir.'s Ofc (078) 377-0724
+            <td>
+				r2.director@ntc.gov.ph
+				<br>
+				region2@ntc.gov.ph
+				<br>
+				ntcr2@yahoo.com
+			</td>
+            <td>
+				<dt class="text-muted">Telefax No.</dt>
+				<dd>
+					(078) 846 7071
+				</dd>
+
+				<dt class="text-muted">Tel. No.</dt>
+				<dd>
+					(078) 304 9586
+				</dd>
             </td>
         </tr>
         <tr>
-            <td>II - Santiago Field Office</td>
-            <td>Engr. Alejandrino G. Tamania Officer-in-Charge</td>
+			<td>Santiago Field Office</td>
+            <td>Engr. Alejandrino G. Tamania</td>
             <td>Abuag St., Centro East, Santiago City, Isabela</td>
-            <td><p> engr.agtamania.ntcr2@gmail.com </p></td>
-            <td>Tel/Fax (078) 305-1147<br/></td>
+            <td>
+				r2.field@ntc.gov.ph
+				<br>
+				engr.agtamania.ntcr2@gmail.com
+			</td>
+            <td>
+				<dt class="text-muted">Tel. No.</dt>
+				<dd>
+					(078) 305 1147
+				</dd>
+			</td>
         </tr>
         <tr>
-            <td>III</td>
+			<td rowspan="2">III</td>
+			<td>Main Office</td>
             <td>Dir. Azor L. Sitchon</td>
-            <td>Diosdado Macapagal Government Center<br/>
-                Bo. Maimpis, City of San Fernando, Pampanga
+            <td>
+				Diosdado Macapagal Government Center, Bo. Maimpis, City of San Fernando, Pampanga
             </td>
-            <td>ntcr3@yahoo.com<br/>
-                dirsitchon@tahoo.com
+            <td>
+				r3.director@ntc.gov.ph
+				<br>
+				ntcr3@yahoo.com
+				<br>
+				dirsitchon@yahoo.com
             </td>
-            <td>(045) 861-7958<br/>
-                Tel. No. (045) 961-3743
+            <td>
+				<dt class="text-muted">Tel. No.</dt>
+				<dd>
+					(045) 861 7958
+					<br>
+					(045) 961 3743
+					<br>
+					(045) 861 0583
+				</dd>
+
+				<dt class="text-muted">Fax No.</dt>
+				<dd>
+					(045) 861 7958
+				</dd>
             </td>
         </tr>
         <tr>
-            <td>III - SBMA Field Ofc</td>
+            <td>SBMA Field Office</td>
             <td>Engr. Antony A. Lopez</td>
             <td>Bldg. 662 Taft St, CBD Area SBF2</td>
             <td>sbma.ntcr3@gmail.com</td>
-            <td>(0925) 568-7228</td>
+            <td>
+				<dt class="text-muted">Mobile No.</dt>
+				<dd>
+					0925 568 7228
+				</dd>
+			</td>
         </tr>
         <tr>
-            <td>IV</td>
-            <td rowspan="4">Dir. Joselito C. Leynes</td>
-            <td>BAEX Compound, Bo. Bolbok, Diversion Rd. <br/>
-                Batangas City
+			<td rowspan="3">IV-A</td>
+			<td>Main</td>
+            <td rowspan="3">Engr. Arnold P. Barcelona</td>
+            <td>BAEX Compound, Bo. Bolbok, Diversion Rd., Batangas City
             </td>
-            <td><p>ntcr4@yahoo.com<br/>
-                batangas@ntcr4.com r4.inspection2@ntc.gov.ph<br/>
-            </p></td>
-            <td>Tel/Fax (043) 723-1246<br/>
-                Tel (043) 723-2495<br/>
-                Dir's Ofc(043) 723-1245
+            <td>
+				r4.director@ntc.gov.ph
+				<br>
+				ntcr4@yahoo.com
+				<br>
+				batangas@ntcr4.com
+				<br>
+				r4.inspection2@ntc.gov.ph
+			</td>
+            <td>
+				<dt class="text-muted">Tel. No.</dt>
+				<dd>
+					(043) 723 2495
+					<br>
+					(043) 723 1245<span class="text-muted"> - Director's Office</span>
+					<br>
+					(043) 472 1717
+				</dd>
+
+				<dt class="text-muted">Telefax No.</dt>
+				<dd>
+					(043) 723 1246
+				</dd>
             </td>
         </tr>
         <tr>
             <td>IV-QC CO Base Satelite Field Office</td>
-            <td>2/F NTC Bldg, BIR Rd, East Triangle, Diliman,<br/>
-                Quezon City
+            <td>2/F NTC Bldg, BIR Rd, East Triangle, Diliman, Quezon City
             </td>
             <td>rizalext@yahoo.com</td>
             <td>(0918) 416-5934</td>
@@ -251,29 +1069,8 @@
             <td>ntc13@yahoo.com</td>
             <td>Tel/Fax (085) 815-1499<br/></td>
         </tr>
-        <tr>
-            <td>CAR</td>
-            <td>Engr. Dante M. Vengua Officer-in-Charge</td>
-            <td>Leonard Wood Rd., Pacdal Circle, Baguio City</td>
-            <td>ntc_car@yahoo.com<br/>
-                ntc_car.licensing@yahoo.com<br/></td>
-            <td>Tech'I (074) 304-4876<br/>
-                Admin (074) 422-9342<br/>
-                (074) 661-6131
-            </td>
-        </tr>
-        <tr>
-            <td>NCR</td>
-            <td>Dep. COM. Delilah F. Deles</td>
-            <td>NTC Bldg., BIR Rd., Diliman Quezon City</td>
-            <td>ntcncr@yahoo.com</td>
-            <td><p>Direct Line/Trunkline<br/>
-                9295108; 9244072/75/10<br/>
-            </p></td>
-        </tr>
     </table>
-
-</div>
+</div> -->
 
 
 {% endblock %}

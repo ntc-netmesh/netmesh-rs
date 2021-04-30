@@ -30,4 +30,4 @@ six==1.12.0
 snowflake==0.0.3
 sqlparse==0.3.0
 unicodecsv==0.14.1
-urllib3==1.25.3
+urllib3==1.25.8
